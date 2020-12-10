@@ -40,7 +40,12 @@ android {
         )
     }
 
-    sourceSets["main"].java.srcDir("src/main/kotlin")
+    sourceSets {
+        getByName("main").java.srcDir("src/main/kotlin")
+        getByName("androidTest").java.srcDir("src/androidTest/kotlin")
+    }
+
+    packagingOptions.excludes.addAll(setOf("META-INF/AL2.0", "META-INF/LGPL2.1"))
 }
 
 dependencies {
@@ -49,6 +54,18 @@ dependencies {
     implementation(Dependency.Room.runtime)
     implementation(Dependency.Room.roomKtx)
     implementation(Dependency.Dagger.runtime)
+
+    androidTestImplementation(Dependency.junit)
+    androidTestImplementation(Dependency.ArchCore.testing)
+    androidTestImplementation(Dependency.Kotlin.coroutinesTest)
+    androidTestImplementation(Dependency.Room.testing)
+    androidTestImplementation(Dependency.Espresso.core)
+    androidTestImplementation(Dependency.Espresso.contrib)
+    androidTestImplementation(Dependency.AndroidTest.core)
+    androidTestImplementation(Dependency.AndroidTest.coreKtx)
+    androidTestImplementation(Dependency.AndroidTest.extJunit)
+    androidTestImplementation(Dependency.AndroidTest.runner)
+    androidTestImplementation(Dependency.AndroidTest.rules)
 
     kapt(Dependency.Dagger.compiler)
 
