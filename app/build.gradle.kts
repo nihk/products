@@ -53,6 +53,13 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
+    implementation(project(":core"))
+    implementation(project(":di"))
+    implementation(project(":uiutils"))
+    implementation(project(":productlist"))
+    implementation(project(":productdetail"))
+    implementation(project(":localproducts"))
+
     implementation(Dependency.Kotlin.stdlib)
     implementation(Dependency.Activity.activityKtx)
     implementation(Dependency.appCompat)
