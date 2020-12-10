@@ -18,7 +18,7 @@ class DefaultProductListRepository @Inject constructor(
         emit(ProductsState.Loading(dao.queryAll().first()))
 
         val flow = try {
-            val products = service.productsData().entries.toLocalProducts()
+            val products = service.cart().entries.toLocalProducts()
             dao.nukeThenInsert(products)
             dao.queryAll().map { ProductsState.Success(it) }
         } catch (throwable: Throwable) {
