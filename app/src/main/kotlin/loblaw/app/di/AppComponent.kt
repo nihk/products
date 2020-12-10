@@ -6,6 +6,7 @@ import dagger.BindsInstance
 import dagger.Component
 import loblaw.app.ui.AppFragmentFactory
 import loblaw.localproducts.di.LocalProductsModule
+import loblaw.productdetail.di.ProductDetailModule
 import loblaw.productlist.di.ProductListModule
 import loblaw.remoteproducts.di.RemoteProductsModule
 
@@ -15,7 +16,8 @@ import loblaw.remoteproducts.di.RemoteProductsModule
         AppModule::class,
         ProductListModule::class,
         RemoteProductsModule::class,
-        LocalProductsModule::class
+        LocalProductsModule::class,
+        ProductDetailModule::class
     ]
 )
 interface AppComponent {
