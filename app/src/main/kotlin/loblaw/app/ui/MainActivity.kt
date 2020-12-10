@@ -7,9 +7,10 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.fragment
 import loblaw.app.R
 import loblaw.app.navigation.AppNavGraph
+import loblaw.productlist.ui.OnProductClicked
 import loblaw.productlist.ui.ProductListFragment
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+class MainActivity : AppCompatActivity(R.layout.activity_main), OnProductClicked {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,5 +29,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 fragment<ProductListFragment>(AppNavGraph.Destination.productList)
             }
         }
+    }
+
+    override fun onProductClicked(id: String) {
+        // todo
     }
 }

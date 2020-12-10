@@ -18,8 +18,8 @@ class DefaultProductListRepository @Inject constructor(
         emit(ProductsState.Loading(dao.queryAll().first()))
 
         val flow = try {
-            val remoteProducts = service.products()
-            dao.nukeThenInsert(remoteProducts.toLocalProducts())
+            val products = service.productsData().entries.toLocalProducts()
+            dao.nukeThenInsert(products)
             dao.queryAll().map { ProductsState.Success(it) }
         } catch (throwable: Throwable) {
             logger.e("Failed to get products", throwable)

@@ -50,4 +50,5 @@ dependencies {
     implementation(Dependency.inject)
     implementation(Dependency.Fragment.runtime)
     implementation(Dependency.Fragment.runtimeKtx)
+    implementation(Dependency.recyclerView)
 }
