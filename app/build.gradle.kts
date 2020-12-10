@@ -59,6 +59,7 @@ dependencies {
     implementation(project(":productlist"))
     implementation(project(":productdetail"))
     implementation(project(":localproducts"))
+    implementation(project(":remoteproducts"))
 
     implementation(Dependency.Kotlin.stdlib)
     implementation(Dependency.Activity.activityKtx)
