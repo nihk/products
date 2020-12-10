@@ -1,9 +1,6 @@
 package loblaw.localproducts.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 import loblaw.localproducts.models.Product
 
@@ -37,4 +34,10 @@ interface ProductsDao {
         """
     )
     suspend fun queryById(id: String): Product?
+
+    @Transaction
+    suspend fun nukeThenInsert(products: List<Product>): List<Long> {
+        nuke()
+        return insert(products)
+    }
 }

@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import loblaw.remoteproducts.R
-import loblaw.remoteproducts.services.RemoteProductsService
+import loblaw.remoteproducts.services.ProductsService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -15,17 +15,17 @@ object RemoteProductsModule {
 
     @Reusable
     @Provides
-    fun remoteProductsService(
+    fun productsService(
         appResources: Resources,
         retrofitBuilder: Retrofit.Builder,
         moshiConverterFactory: MoshiConverterFactory,
         okHttpClient: OkHttpClient
-    ): RemoteProductsService {
+    ): ProductsService {
         return retrofitBuilder
             .addConverterFactory(moshiConverterFactory)
             .client(okHttpClient)
             .baseUrl(appResources.getString(R.string.base_url))
             .build()
-            .create(RemoteProductsService::class.java)
+            .create(ProductsService::class.java)
     }
 }

@@ -25,6 +25,7 @@ import loblaw.app.ui.AppFragmentFactory
 import loblaw.core.Logger
 import loblaw.core.MulticastLogger
 import loblaw.di.annotations.AppContext
+import loblaw.localproducts.dao.ProductsDaoProvider
 
 @Module
 abstract class AppModule {
@@ -100,4 +101,7 @@ abstract class AppModule {
     @Binds
     @IntoSet
     abstract fun timberInitializer(timberInitializer: TimberInitializer): Initializer
+
+    @Binds
+    abstract fun productsDaoProvider(appDatabase: AppDatabase): ProductsDaoProvider
 }
