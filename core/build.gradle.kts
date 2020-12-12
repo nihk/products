@@ -3,7 +3,7 @@ plugins {
     kotlin("jvm")
 }
 
-sourceSets["main"].java.srcDir("src/main/kotlin")
+jvmConfig()
 
 dependencies {
     implementation(Dependency.Kotlin.stdlib)

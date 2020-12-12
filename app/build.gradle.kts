@@ -4,18 +4,11 @@ plugins {
     kotlin("kapt")
 }
 
-android {
-    compileSdkVersion(BuildVersion.compileSdk)
-    buildToolsVersion(BuildVersion.buildTools)
-
+androidAppConfig {
     defaultConfig {
         applicationId = "loblaw.app"
-        minSdkVersion(BuildVersion.minSdk)
-        targetSdkVersion(BuildVersion.targetSdk)
-        multiDexEnabled = true
         versionCode = 1
         versionName = "1.0"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         kapt {
             arguments {
@@ -24,29 +17,6 @@ android {
             }
         }
     }
-
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-        }
-    }
-
-    buildFeatures {
-        buildConfig = true
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-        freeCompilerArgs = listOf("-Xopt-in=kotlin.time.ExperimentalTime")
-    }
-
-    sourceSets["main"].java.srcDir("src/main/kotlin")
 }
 
 dependencies {
