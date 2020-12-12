@@ -20,8 +20,6 @@ androidAppConfig {
 }
 
 dependencies {
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-
     implementation(project(":core"))
     implementation(project(":di"))
     implementation(project(":uiutils"))
@@ -30,7 +28,6 @@ dependencies {
     implementation(project(":localproducts"))
     implementation(project(":remoteproducts"))
 
-    implementation(Dependency.Kotlin.stdlib)
     implementation(Dependency.Activity.activityKtx)
     implementation(Dependency.appCompat)
     implementation(Dependency.coreKtx)

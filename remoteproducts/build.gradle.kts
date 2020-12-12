@@ -7,8 +7,6 @@ plugins {
 androidLibraryConfig()
 
 dependencies {
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-
     implementation(Dependency.Retrofit.runtime)
     implementation(Dependency.Retrofit.moshi)
     implementation(Dependency.Moshi.runtime)

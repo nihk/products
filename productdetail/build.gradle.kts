@@ -9,14 +9,11 @@ androidLibraryConfig {
 }
 
 dependencies {
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-
     implementation(project(":core"))
     implementation(project(":di"))
     implementation(project(":localproducts"))
     implementation(project(":uiutils"))
 
-    implementation(Dependency.Kotlin.stdlib)
     implementation(Dependency.inject)
     implementation(Dependency.Dagger.runtime)
     implementation(Dependency.Fragment.runtime)

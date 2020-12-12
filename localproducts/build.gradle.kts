@@ -9,8 +9,6 @@ androidLibraryConfig {
 }
 
 dependencies {
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-
     implementation(Dependency.Room.runtime)
     implementation(Dependency.Room.roomKtx)
     implementation(Dependency.Dagger.runtime)

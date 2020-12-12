@@ -14,6 +14,6 @@ allprojects {
     repositories.addProjectDefaults()
 }
 
-tasks.register("clean", Delete::class) {
+task<Delete>("clean") {
     delete(rootProject.buildDir)
 }

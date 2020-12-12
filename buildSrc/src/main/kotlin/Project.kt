@@ -4,6 +4,7 @@ import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.tasks.SourceSetContainer
+import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.get
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -72,6 +73,8 @@ private fun <T : BaseExtension> Project.androidConfig() = android<T>().apply {
     testOptions {
         animationsDisabled = true
     }
+}.also {
+    defaultDependencies()
 }
 
 private fun <T : BaseExtension> Project.android(): T {
@@ -82,4 +85,13 @@ private fun <T : BaseExtension> Project.android(): T {
 fun Project.jvmConfig() {
     val sourceSets = extensions.getByName("sourceSets") as SourceSetContainer
     sourceSets["main"].java.srcDir("src/main/kotlin")
+
+    defaultDependencies()
+}
+
+private fun Project.defaultDependencies() {
+    dependencies {
+        "implementation"(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+        "implementation"(Dependency.Kotlin.stdlib)
+    }
 }
