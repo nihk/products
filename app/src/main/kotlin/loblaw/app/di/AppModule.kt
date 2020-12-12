@@ -40,15 +40,13 @@ abstract class AppModule {
         fun appResources(application: Application): Resources = application.resources
 
         @Provides
-        fun retrofitBuilder() = Retrofit.Builder()
+        fun retrofitBuilder(): Retrofit.Builder = Retrofit.Builder()
 
         @Provides
         fun moshiConverterFactory(): MoshiConverterFactory = MoshiConverterFactory.create()
 
         @Provides
-        fun okHttpClientBuilder(): OkHttpClient.Builder {
-            return OkHttpClient.Builder()
-        }
+        fun okHttpClientBuilder(): OkHttpClient.Builder = OkHttpClient.Builder()
 
         @Provides
         fun httpLogger(logger: Logger): HttpLoggingInterceptor.Logger {

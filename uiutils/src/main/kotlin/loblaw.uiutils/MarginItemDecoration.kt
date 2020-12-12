@@ -8,8 +8,10 @@ class MarginItemDecoration(
     private val spacePx: Int
 ) : RecyclerView.ItemDecoration() {
     override fun getItemOffsets(
-        outRect: Rect, view: View,
-        parent: RecyclerView, state: RecyclerView.State
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
+        state: RecyclerView.State
     ) {
         with(outRect) {
             if (parent.getChildAdapterPosition(view) == 0) {

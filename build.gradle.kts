@@ -7,7 +7,7 @@ buildscript {
 }
 
 plugins {
-    benManesVersions
+    `ben-manes-versions`
 }
 
 allprojects {
