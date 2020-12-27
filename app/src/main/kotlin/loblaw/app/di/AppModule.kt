@@ -27,7 +27,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 @Module
 abstract class AppModule {
 
-    @Module
     companion object {
         @Provides
         fun appContext(application: Application): Context = application.applicationContext
