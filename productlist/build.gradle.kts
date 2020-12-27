@@ -10,7 +10,6 @@ androidLibraryConfig {
 
 dependencies {
     implementation(project(":core"))
-    implementation(project(":di"))
     implementation(project(":remoteproducts"))
     implementation(project(":localproducts"))
     implementation(project(":uiutils"))

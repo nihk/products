@@ -1,6 +1,5 @@
 package loblaw.productlist.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -16,17 +15,12 @@ import javax.inject.Inject
 import kotlin.math.roundToInt
 
 class ProductListFragment @Inject constructor(
-    vmFactory: ProductListViewModel.Factory
+    vmFactory: ProductListViewModel.Factory,
+    private val onProductClicked: OnProductClicked
 ): Fragment(R.layout.product_list_fragment) {
 
     private val viewModel by viewModels<ProductListViewModel> { vmFactory }
-    private lateinit var onProductClicked: OnProductClicked
     private val adapter by lazy { ProductListAdapter(onProductClicked) }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        onProductClicked = context as OnProductClicked
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

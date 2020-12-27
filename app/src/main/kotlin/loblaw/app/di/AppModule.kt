@@ -3,7 +3,6 @@ package loblaw.app.di
 import android.app.Application
 import android.content.Context
 import android.content.res.Resources
-import androidx.fragment.app.FragmentFactory
 import androidx.room.Room
 import androidx.room.RoomDatabase.JournalMode
 import dagger.Binds
@@ -11,21 +10,19 @@ import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import dagger.multibindings.IntoSet
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import loblaw.app.AppConfig
 import loblaw.app.BuildConfigAppConfig
 import loblaw.app.data.AppDatabase
 import loblaw.app.initializers.Initializer
 import loblaw.app.initializers.TimberInitializer
 import loblaw.app.logging.TimberLogger
-import loblaw.app.ui.AppFragmentFactory
 import loblaw.core.Logger
 import loblaw.core.MulticastLogger
-import loblaw.di.annotations.AppContext
 import loblaw.localproducts.dao.ProductsDaoProvider
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 @Module
 abstract class AppModule {
@@ -33,7 +30,6 @@ abstract class AppModule {
     @Module
     companion object {
         @Provides
-        @AppContext
         fun appContext(application: Application): Context = application.applicationContext
 
         @Provides
@@ -72,7 +68,7 @@ abstract class AppModule {
 
         @AppScope
         @Provides
-        fun appDatabase(@AppContext appContext: Context, appConfig: AppConfig): AppDatabase {
+        fun appDatabase(appContext: Context, appConfig: AppConfig): AppDatabase {
             return Room.databaseBuilder(appContext, AppDatabase::class.java, AppDatabase.name)
                 .apply {
                     if (appConfig.isDebug) {
@@ -82,9 +78,6 @@ abstract class AppModule {
                 .build()
         }
     }
-
-    @Binds
-    abstract fun fragmentFactory(appFragmentFactory: AppFragmentFactory): FragmentFactory
 
     @Binds
     abstract fun buildConfigAppConfig(buildConfigAppConfig: BuildConfigAppConfig): AppConfig

@@ -1,6 +1,6 @@
 package loblaw.productlist.ui
 
-import androidx.test.core.app.launchActivity
+import androidx.fragment.app.testing.launchFragment
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -19,7 +19,7 @@ class ProductListFragmentTest {
     fun loadingStateShowsLoading() {
         val loading = flowOf(ProductsState.Loading())
 
-        launchFragment(loading)
+        launchProductList(loading)
 
         onView(withId(R.id.progress_bar))
             .check(matches(isDisplayed()))
@@ -29,7 +29,7 @@ class ProductListFragmentTest {
     fun successStateShowsProducts() {
         val success = flowOf(ProductsState.Success(products))
 
-        launchFragment(success)
+        launchProductList(success)
 
         onView(withId(R.id.recycler_view))
             .check(matches(atPosition(0, hasDescendant(withText("RAPID CLEAR® Spot Gel")))))
@@ -39,7 +39,7 @@ class ProductListFragmentTest {
     fun errorStateWithNoProductsShowsErrorMessage() {
         val error = flowOf(ProductsState.Error(Exception()))
 
-        launchFragment(error)
+        launchProductList(error)
 
         onView(withId(R.id.error_message))
             .check(matches(isDisplayed()))
@@ -49,23 +49,31 @@ class ProductListFragmentTest {
     fun errorStateWithProductsDoesNotShowErrorMessage() {
         val error = flowOf(ProductsState.Error(Exception(), products))
 
-        launchFragment(error)
+        launchProductList(error)
 
         onView(withId(R.id.error_message))
             .check(matches(not(isDisplayed())))
     }
 
-    private fun launchFragment(
+    private fun launchProductList(
         products: Flow<ProductsState>
     ) {
         val repository = object : ProductListRepository {
             override fun products(): Flow<ProductsState> = products
         }
         val vmFactory = ProductListViewModel.Factory(repository)
-        val fragment = ProductListFragment(vmFactory)
+        val onProductClicked = FakeOnProductClicked()
 
-        launchActivity<TestActivity>().onActivity {
-            it.replaceFragment(fragment)
+        launchFragment(themeResId = R.style.Theme_MaterialComponents_DayNight_DarkActionBar) {
+            ProductListFragment(vmFactory, onProductClicked)
         }
+    }
+}
+
+private class FakeOnProductClicked : OnProductClicked {
+    var clickedId: String? = null
+
+    override fun onProductClicked(id: String) {
+        clickedId = id
     }
 }

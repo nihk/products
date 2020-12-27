@@ -1,12 +1,11 @@
 package loblaw.app.di
 
 import android.app.Application
-import loblaw.app.initializers.AppInitializers
 import dagger.BindsInstance
 import dagger.Component
-import loblaw.app.ui.AppFragmentFactory
+import loblaw.app.di.main.MainComponent
+import loblaw.app.initializers.AppInitializers
 import loblaw.localproducts.di.LocalProductsModule
-import loblaw.productdetail.di.ProductDetailModule
 import loblaw.productlist.di.ProductListModule
 import loblaw.remoteproducts.di.RemoteProductsModule
 
@@ -14,19 +13,20 @@ import loblaw.remoteproducts.di.RemoteProductsModule
 @Component(
     modules = [
         AppModule::class,
+        SubcomponentsModule::class,
         ProductListModule::class,
         RemoteProductsModule::class,
-        LocalProductsModule::class,
-        ProductDetailModule::class
+        LocalProductsModule::class
     ]
 )
 interface AppComponent {
 
     val appInitializers: AppInitializers
-    val appFragmentFactory: AppFragmentFactory
 
     @Component.Factory
     interface Factory {
         fun application(@BindsInstance application: Application): AppComponent
     }
+
+    fun mainComponentFactory(): MainComponent.Factory
 }

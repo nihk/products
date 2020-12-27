@@ -21,7 +21,6 @@ androidAppConfig {
 
 dependencies {
     implementation(project(":core"))
-    implementation(project(":di"))
     implementation(project(":uiutils"))
     implementation(project(":productlist"))
     implementation(project(":productdetail"))

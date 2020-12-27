@@ -1,4 +1,4 @@
-package loblaw.di.annotations
+package loblaw.app.di.main
 
 import androidx.fragment.app.Fragment
 import dagger.MapKey
