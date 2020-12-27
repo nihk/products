@@ -1,2 +1,2 @@
-include(":app", ":core", "uiutils", ":remoteproducts", ":localproducts", ":productlist", ":productdetail")
+include(":app", ":core", ":uiutils", ":testutils", ":remoteproducts", ":localproducts", ":productlist", ":productdetail")
 rootProject.name = "loblaw-digital-mobile-assignment"

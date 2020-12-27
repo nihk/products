@@ -1,16 +1,21 @@
 package loblaw.productlist.ui
 
-import androidx.fragment.app.testing.launchFragment
+import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.ViewMatchers.*
+import coil.ImageLoader
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import loblaw.productlist.R
 import loblaw.productlist.repository.ProductListRepository
 import loblaw.productlist.state.ProductsState
 import loblaw.productlist.vm.ProductListViewModel
+import loblaw.testutils.FakeImageLoader
 import org.hamcrest.CoreMatchers.not
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class ProductListFragmentTest {
@@ -32,7 +37,7 @@ class ProductListFragmentTest {
         launchProductList(success)
 
         onView(withId(R.id.recycler_view))
-            .check(matches(atPosition(0, hasDescendant(withText("RAPID CLEAR® Spot Gel")))))
+            .check(matches(atPosition(0, hasDescendant(withText(products.first().name)))))
     }
 
     @Test
@@ -55,17 +60,31 @@ class ProductListFragmentTest {
             .check(matches(not(isDisplayed())))
     }
 
+    @Test
+    fun clickingProductInvokesCallbackWithCorrectId() {
+        val success = flowOf(ProductsState.Success(products))
+        val onProductClicked = FakeOnProductClicked()
+
+        launchProductList(success, onProductClicked)
+
+        onView(withId(R.id.recycler_view))
+            .perform(actionOnItemAtPosition<ProductViewHolder>(0, click()))
+
+        assertEquals(products.first().id, onProductClicked.clickedId)
+    }
+
     private fun launchProductList(
-        products: Flow<ProductsState>
+        products: Flow<ProductsState>,
+        onProductClicked: OnProductClicked = FakeOnProductClicked(),
+        imageLoader: ImageLoader = FakeImageLoader()
     ) {
         val repository = object : ProductListRepository {
             override fun products(): Flow<ProductsState> = products
         }
         val vmFactory = ProductListViewModel.Factory(repository)
-        val onProductClicked = FakeOnProductClicked()
 
-        launchFragment(themeResId = R.style.Theme_MaterialComponents_DayNight_DarkActionBar) {
-            ProductListFragment(vmFactory, onProductClicked)
+        launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents_DayNight_DarkActionBar) {
+            ProductListFragment(vmFactory, onProductClicked, imageLoader)
         }
     }
 }

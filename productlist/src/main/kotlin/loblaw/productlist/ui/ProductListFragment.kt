@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import coil.ImageLoader
 import loblaw.productlist.R
 import loblaw.productlist.databinding.ProductListFragmentBinding
 import loblaw.productlist.vm.ProductListViewModel
@@ -16,11 +17,12 @@ import kotlin.math.roundToInt
 
 class ProductListFragment @Inject constructor(
     vmFactory: ProductListViewModel.Factory,
-    private val onProductClicked: OnProductClicked
+    private val onProductClicked: OnProductClicked,
+    private val imageLoader: ImageLoader
 ): Fragment(R.layout.product_list_fragment) {
 
     private val viewModel by viewModels<ProductListViewModel> { vmFactory }
-    private val adapter by lazy { ProductListAdapter(onProductClicked) }
+    private val adapter by lazy { ProductListAdapter(onProductClicked, imageLoader) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

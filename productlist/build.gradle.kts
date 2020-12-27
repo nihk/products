@@ -39,6 +39,7 @@ dependencies {
     testImplementation(Dependency.ArchCore.testing)
     testImplementation(Dependency.Kotlin.coroutinesTest)
 
+    androidTestImplementation(project(":testutils"))
     androidTestImplementation(Dependency.Moshi.runtime)
     androidTestImplementation(Dependency.Moshi.adapters)
     androidTestImplementation(Dependency.Espresso.core)

@@ -6,6 +6,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import coil.ImageLoader
 import coil.load
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -15,7 +16,8 @@ import loblaw.productdetail.vm.ProductDetailViewModel
 import javax.inject.Inject
 
 class ProductDetailFragment @Inject constructor(
-    vmFactory: ProductDetailViewModel.Factory
+    vmFactory: ProductDetailViewModel.Factory,
+    private val imageLoader: ImageLoader
 ) : Fragment(R.layout.product_detail_fragment) {
 
     private val viewModel by viewModels<ProductDetailViewModel> {
@@ -28,7 +30,7 @@ class ProductDetailFragment @Inject constructor(
         viewModel.product()
             .onEach { product ->
                 with(binding) {
-                    image.load(product.imageUrl)
+                    image.load(product.imageUrl, imageLoader)
                     name.text = product.name
                     price.text = product.price
                     type.text = getString(R.string.product_type_formatter, product.type)

@@ -46,6 +46,7 @@ dependencies {
     implementation(Dependency.timber)
     implementation(Dependency.okhttpLoggingInterceptor)
     implementation(Dependency.multidex)
+    implementation(Dependency.coil)
 
     kapt(Dependency.Room.compiler)
     kapt(Dependency.Dagger.compiler)

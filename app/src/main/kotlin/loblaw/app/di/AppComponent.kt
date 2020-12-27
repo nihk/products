@@ -8,6 +8,7 @@ import loblaw.app.initializers.AppInitializers
 import loblaw.localproducts.di.LocalProductsModule
 import loblaw.productlist.di.ProductListModule
 import loblaw.remoteproducts.di.RemoteProductsModule
+import loblaw.uiutils.di.UiUtilsModule
 
 @AppScope
 @Component(
@@ -16,7 +17,8 @@ import loblaw.remoteproducts.di.RemoteProductsModule
         SubcomponentsModule::class,
         ProductListModule::class,
         RemoteProductsModule::class,
-        LocalProductsModule::class
+        LocalProductsModule::class,
+        UiUtilsModule::class
     ]
 )
 interface AppComponent {

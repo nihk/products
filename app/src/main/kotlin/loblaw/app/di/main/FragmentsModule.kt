@@ -9,7 +9,6 @@ import loblaw.productlist.ui.ProductListFragment
 
 @Module
 abstract class FragmentsModule {
-
     @Binds
     @IntoMap
     @FragmentKey(ProductListFragment::class)

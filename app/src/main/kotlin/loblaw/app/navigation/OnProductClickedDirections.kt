@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import loblaw.productdetail.ui.ProductDetailFragment
 import loblaw.productlist.ui.OnProductClicked
 
-class DefaultOnProductClicked(
+class OnProductClickedDirections(
     private val navController: () -> NavController
 ) : OnProductClicked {
 

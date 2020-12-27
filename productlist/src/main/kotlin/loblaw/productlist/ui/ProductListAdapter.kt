@@ -4,11 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import coil.ImageLoader
 import loblaw.localproducts.models.Product
 import loblaw.productlist.R
 
 class ProductListAdapter(
-    private val onProductClicked: OnProductClicked
+    private val onProductClicked: OnProductClicked,
+    private val imageLoader: ImageLoader
 ) : ListAdapter<Product, ProductViewHolder>(ProductDiffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         return LayoutInflater.from(parent.context)
@@ -17,7 +19,7 @@ class ProductListAdapter(
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        holder.bind(getItem(position), onProductClicked)
+        holder.bind(getItem(position), onProductClicked, imageLoader)
     }
 }
 
