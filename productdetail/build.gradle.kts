@@ -26,7 +26,6 @@ dependencies {
     implementation(Dependency.Navigation.fragmentKtx)
     implementation(Dependency.multidex)
     implementation(Dependency.coil)
-    implementation(Dependency.Lifecycle.liveDataKtx)
     implementation(Dependency.Lifecycle.viewModelKtx)
     implementation(Dependency.Room.runtime)
     implementation(Dependency.Room.roomKtx)

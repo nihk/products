@@ -1,8 +1,9 @@
 package loblaw.productlist.vm
 
-import androidx.lifecycle.*
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.*
 import loblaw.localproducts.models.Product
 import loblaw.productlist.repository.ProductListRepository
 import loblaw.productlist.state.ProductsState
@@ -12,29 +13,20 @@ class ProductListViewModel(
     repository: ProductListRepository
 ) : ViewModel() {
 
-    private val productsState = MutableLiveData<ProductsState>()
+    private val productsState = MutableSharedFlow<ProductsState>(replay = 1)
 
-    val products: LiveData<List<Product>> = MediatorLiveData<List<Product>>().apply {
-        addSource(productsState) { state ->
-            if (state.products != null) {
-                value = state.products
-            }
-        }
-    }
+    val products: Flow<List<Product>> = productsState.map { state -> state.products }
+        .filterNotNull()
 
-    val loading: LiveData<Boolean> = productsState.map { state -> state is ProductsState.Loading }
+    val loading: Flow<Boolean> = productsState.map { state -> state is ProductsState.Loading }
 
-    val error: LiveData<Throwable?> = productsState.map { state ->
-        if (state is ProductsState.Error) {
-            state.throwable
-        } else {
-            null
-        }
+    val error: Flow<Throwable?> = productsState.map { state ->
+        (state as? ProductsState.Error)?.throwable
     }
 
     init {
         repository.products()
-            .onEach { state -> productsState.value = state }
+            .onEach(productsState::emit)
             .launchIn(viewModelScope)
     }
 
