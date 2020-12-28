@@ -40,17 +40,9 @@ dependencies {
     testImplementation(Dependency.Kotlin.coroutinesTest)
 
     androidTestImplementation(project(":testutils"))
+    defaultAndroidTestDependencies()
     androidTestImplementation(Dependency.Moshi.runtime)
     androidTestImplementation(Dependency.Moshi.adapters)
-    androidTestImplementation(Dependency.Espresso.core)
-    androidTestImplementation(Dependency.Espresso.contrib)
-    androidTestImplementation(Dependency.AndroidTest.core)
-    androidTestImplementation(Dependency.AndroidTest.coreKtx)
-    androidTestImplementation(Dependency.AndroidTest.extJunit)
-    androidTestImplementation(Dependency.AndroidTest.runner)
-    androidTestImplementation(Dependency.AndroidTest.rules)
-    androidTestImplementation(Dependency.Mockito.core)
-    androidTestImplementation(Dependency.Mockito.android)
 
     kapt(Dependency.Dagger.compiler)
 

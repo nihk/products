@@ -17,13 +17,7 @@ dependencies {
     androidTestImplementation(Dependency.ArchCore.testing)
     androidTestImplementation(Dependency.Kotlin.coroutinesTest)
     androidTestImplementation(Dependency.Room.testing)
-    androidTestImplementation(Dependency.Espresso.core)
-    androidTestImplementation(Dependency.Espresso.contrib)
-    androidTestImplementation(Dependency.AndroidTest.core)
-    androidTestImplementation(Dependency.AndroidTest.coreKtx)
-    androidTestImplementation(Dependency.AndroidTest.extJunit)
-    androidTestImplementation(Dependency.AndroidTest.runner)
-    androidTestImplementation(Dependency.AndroidTest.rules)
+    defaultAndroidTestDependencies()
 
     kapt(Dependency.Dagger.compiler)
 
