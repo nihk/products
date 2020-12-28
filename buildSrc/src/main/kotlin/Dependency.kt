@@ -39,6 +39,18 @@ object Dependency {
     object Dagger {
         const val runtime = "com.google.dagger:dagger:${Version.dagger}"
         const val compiler = "com.google.dagger:dagger-compiler:${Version.dagger}"
+
+        object Hilt {
+            const val plugin = "com.google.dagger:hilt-android-gradle-plugin:${Version.hilt}"
+            const val runtime = "com.google.dagger:hilt-android:${Version.hilt}"
+            const val testing = "com.google.dagger:hilt-android-testing:${Version.hilt}"
+            const val compiler = "com.google.dagger:hilt-android-compiler:${Version.hilt}"
+
+            object Jetpack {
+                const val lifecycleViewModel = "androidx.hilt:hilt-lifecycle-viewmodel:${Version.hiltJetpack}"
+                const val compiler = "androidx.hilt:hilt-compiler:${Version.hiltJetpack}"
+            }
+        }
     }
 
     object Espresso {
