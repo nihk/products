@@ -8,7 +8,7 @@ import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.get
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-fun Project.androidAppConfig(extras: (BaseAppModuleExtension.() -> Unit)? = null) = androidConfig<BaseAppModuleExtension>().run {
+fun Project.androidAppConfig(extras: (BaseAppModuleExtension.() -> Unit) = {}) = androidConfig<BaseAppModuleExtension>().run {
     defaultConfig {
         buildToolsVersion(BuildVersion.buildTools)
         multiDexEnabled = true
@@ -18,15 +18,15 @@ fun Project.androidAppConfig(extras: (BaseAppModuleExtension.() -> Unit)? = null
         buildConfig = true
     }
 
-    extras?.invoke(this)
+    extras()
 }
 
-fun Project.androidLibraryConfig(extras: (LibraryExtension.() -> Unit)? = null) = androidConfig<LibraryExtension>().run {
+fun Project.androidLibraryConfig(extras: (LibraryExtension.() -> Unit) = {}) = androidConfig<LibraryExtension>().run {
     buildFeatures {
         buildConfig = false
     }
 
-    extras?.invoke(this)
+    extras()
 }
 
 private fun <T : BaseExtension> Project.androidConfig() = android<T>().apply {
