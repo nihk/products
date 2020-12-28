@@ -7,8 +7,8 @@ import androidx.navigation.createGraph
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.fragment
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.EntryPointAccessors
 import loblaw.app.R
+import loblaw.app.di.entryPoint
 import loblaw.app.di.main.MainEntryPoint
 import loblaw.app.navigation.AppNavGraph
 import loblaw.productdetail.ui.ProductDetailFragment
@@ -19,9 +19,7 @@ import loblaw.uiutils.defaultAnimations
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        supportFragmentManager.fragmentFactory = EntryPointAccessors.fromActivity(this, MainEntryPoint::class.java)
-            .fragmentFactory
-
+        supportFragmentManager.fragmentFactory = entryPoint<MainEntryPoint>().fragmentFactory
         super.onCreate(savedInstanceState)
         createNavGraph()
     }
