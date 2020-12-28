@@ -6,7 +6,7 @@ import loblaw.productlist.ui.OnProductClicked
 import javax.inject.Inject
 
 class OnProductClickedDirections @Inject constructor(
-    private val navController: () -> NavController
+    private val navController: @JvmSuppressWildcards () -> NavController
 ) : OnProductClicked {
 
     override fun onProductClicked(id: String) {

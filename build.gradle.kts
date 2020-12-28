@@ -3,6 +3,7 @@ buildscript {
     dependencies {
         classpath(Dependency.androidGradlePlugin)
         classpath(Dependency.Kotlin.plugin)
+        classpath(Dependency.Dagger.Hilt.plugin)
     }
 }
 

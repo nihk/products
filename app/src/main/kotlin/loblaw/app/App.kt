@@ -1,22 +1,18 @@
 package loblaw.app
 
 import android.app.Application
-import loblaw.app.di.AppComponent
-import loblaw.app.di.AppComponentProvider
-import loblaw.app.di.DaggerAppComponent
+import dagger.hilt.android.HiltAndroidApp
+import loblaw.app.initializers.AppInitializers
+import javax.inject.Inject
 
-@Suppress("unused")
-class App : Application(),
-    AppComponentProvider {
+@HiltAndroidApp
+class App : Application() {
 
-    override val appComponent: AppComponent by lazy {
-        DaggerAppComponent
-            .factory()
-            .application(this)
-    }
+    @Inject
+    lateinit var appInitializers: AppInitializers
 
     override fun onCreate() {
         super.onCreate()
-        appComponent.appInitializers.initialize()
+        appInitializers.initialize()
     }
 }

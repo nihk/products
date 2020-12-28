@@ -4,6 +4,8 @@ import android.content.res.Resources
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import loblaw.remoteproducts.R
 import loblaw.remoteproducts.services.ProductsService
 import okhttp3.OkHttpClient
@@ -11,6 +13,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 @Module
+@InstallIn(SingletonComponent::class)
 object RemoteProductsModule {
 
     @Reusable

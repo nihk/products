@@ -2,6 +2,7 @@ plugins {
     `android-application`
     kotlin("android")
     kotlin("kapt")
+    hilt
 }
 
 androidAppConfig {
@@ -38,6 +39,7 @@ dependencies {
     implementation(Dependency.Navigation.fragmentKtx)
     implementation(Dependency.Navigation.uiKtx)
     implementation(Dependency.Dagger.runtime)
+    implementation(Dependency.Dagger.Hilt.runtime)
     implementation(Dependency.Retrofit.runtime)
     implementation(Dependency.Retrofit.moshi)
     implementation(Dependency.Moshi.runtime)
@@ -50,4 +52,5 @@ dependencies {
 
     kapt(Dependency.Room.compiler)
     kapt(Dependency.Dagger.compiler)
+    kapt(Dependency.Dagger.Hilt.compiler)
 }

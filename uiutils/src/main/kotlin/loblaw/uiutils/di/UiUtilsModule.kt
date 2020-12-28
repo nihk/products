@@ -5,11 +5,13 @@ import coil.ImageLoader
 import coil.imageLoader
 import dagger.Module
 import dagger.Provides
-import dagger.Reusable
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 
 @Module
+@InstallIn(SingletonComponent::class)
 object UiUtilsModule {
-    @Reusable
     @Provides
-    fun defaultImageLoader(appContext: Context): ImageLoader = appContext.imageLoader
+    fun defaultImageLoader(@ApplicationContext appContext: Context): ImageLoader = appContext.imageLoader
 }

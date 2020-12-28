@@ -9,6 +9,9 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
 import loblaw.app.AppConfig
 import loblaw.app.BuildConfigAppConfig
@@ -23,14 +26,13 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Singleton
 
 @Module
+@InstallIn(SingletonComponent::class)
 abstract class AppModule {
 
     companion object {
-        @Provides
-        fun appContext(application: Application): Context = application.applicationContext
-
         @Provides
         fun appResources(application: Application): Resources = application.resources
 
@@ -65,9 +67,9 @@ abstract class AppModule {
                 .build()
         }
 
-        @AppScope
+        @Singleton
         @Provides
-        fun appDatabase(appContext: Context, appConfig: AppConfig): AppDatabase {
+        fun appDatabase(@ApplicationContext appContext: Context, appConfig: AppConfig): AppDatabase {
             return Room.databaseBuilder(appContext, AppDatabase::class.java, AppDatabase.name)
                 .apply {
                     if (appConfig.isDebug) {

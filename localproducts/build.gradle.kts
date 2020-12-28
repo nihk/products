@@ -2,6 +2,7 @@ plugins {
     `android-library`
     kotlin("android")
     kotlin("kapt")
+    hilt
 }
 
 androidLibraryConfig {
@@ -12,6 +13,7 @@ dependencies {
     implementation(Dependency.Room.runtime)
     implementation(Dependency.Room.roomKtx)
     implementation(Dependency.Dagger.runtime)
+    implementation(Dependency.Dagger.Hilt.runtime)
 
     androidTestImplementation(Dependency.junit)
     androidTestImplementation(Dependency.ArchCore.testing)
@@ -20,6 +22,7 @@ dependencies {
     defaultAndroidTestDependencies()
 
     kapt(Dependency.Dagger.compiler)
+    kapt(Dependency.Dagger.Hilt.compiler)
 
     kaptAndroidTest(Dependency.Room.compiler)
 }

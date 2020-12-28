@@ -2,6 +2,7 @@ plugins {
     `android-library`
     kotlin("android")
     kotlin("kapt")
+    hilt
 }
 
 androidLibraryConfig()
@@ -14,6 +15,8 @@ dependencies {
     implementation(Dependency.Navigation.uiKtx)
     implementation(Dependency.coil)
     implementation(Dependency.Dagger.runtime)
+    implementation(Dependency.Dagger.Hilt.runtime)
 
     kapt(Dependency.Dagger.compiler)
+    kapt(Dependency.Dagger.Hilt.compiler)
 }
