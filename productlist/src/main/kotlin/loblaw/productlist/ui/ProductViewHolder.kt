@@ -16,7 +16,8 @@ class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             name.text = product.name
             price.text = product.price
             image.load(product.imageUrl, imageLoader)
-            card.setOnClickListener { onProductClicked.onProductClicked(product.id) }
+            image.transitionName = product.id
+            card.setOnClickListener { onProductClicked.onProductClicked(product.id, image) }
         }
     }
 }

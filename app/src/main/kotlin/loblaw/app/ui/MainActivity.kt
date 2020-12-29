@@ -2,7 +2,6 @@ package loblaw.app.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.createGraph
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.fragment
@@ -13,7 +12,6 @@ import loblaw.app.di.main.MainEntryPoint
 import loblaw.app.navigation.AppNavGraph
 import loblaw.productdetail.ui.ProductDetailFragment
 import loblaw.productlist.ui.ProductListFragment
-import loblaw.uiutils.defaultAnimations
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
@@ -33,22 +31,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 id = AppNavGraph.id,
                 startDestination = AppNavGraph.Destination.productList
             ) {
-                productList()
-                productDetail()
+                fragment<ProductListFragment>(AppNavGraph.Destination.productList)
+                fragment<ProductDetailFragment>(AppNavGraph.Destination.productDetail)
             }
         }
-    }
-
-    private fun NavGraphBuilder.productList() {
-        fragment<ProductListFragment>(AppNavGraph.Destination.productList) {
-            action(AppNavGraph.Action.productDetail) {
-                destinationId = AppNavGraph.Destination.productDetail
-                navOptions { defaultAnimations() }
-            }
-        }
-    }
-
-    private fun NavGraphBuilder.productDetail() {
-        fragment<ProductDetailFragment>(AppNavGraph.Destination.productDetail)
     }
 }

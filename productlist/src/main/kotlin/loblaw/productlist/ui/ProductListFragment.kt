@@ -2,10 +2,13 @@ package loblaw.productlist.ui
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import coil.ImageLoader
+import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import loblaw.productlist.R
@@ -29,10 +32,24 @@ class ProductListFragment @Inject constructor(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        prepareTransitions()
+
         with(ProductListFragmentBinding.bind(view)) {
             recyclerView.addItemDecoration(MarginItemDecoration(resources.getDimension(R.dimen.item_outer_gap).roundToInt()))
             recyclerView.adapter = adapter
             observeViewModel(this@with)
+        }
+    }
+
+    private fun prepareTransitions() {
+        postponeEnterTransition()
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
+    }
+
+    private fun startTransitions() {
+        (view?.parent as? ViewGroup)?.doOnPreDraw {
+            startPostponedEnterTransition()
         }
     }
 
@@ -50,6 +67,7 @@ class ProductListFragment @Inject constructor(
         viewModel.products
             .onEach { products ->
                 adapter.submitList(products)
+                startTransitions()
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
 

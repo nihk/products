@@ -118,6 +118,10 @@ object Dependency {
         const val testing = "androidx.room:room-testing:${Version.room}"
     }
 
+    object Transition {
+        const val runtimeKtx = "androidx.transition:transition-ktx:${Version.transition}"
+    }
+
     object Work {
         const val runtime = "androidx.work:work-runtime:${Version.work}"
         const val runtimeKtx = "androidx.work:work-runtime-ktx:${Version.work}"

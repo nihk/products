@@ -1,5 +1,6 @@
 package loblaw.productlist.ui
 
+import android.widget.ImageView
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -92,7 +93,7 @@ class ProductListFragmentTest {
 private class FakeOnProductClicked : OnProductClicked {
     var clickedId: String? = null
 
-    override fun onProductClicked(id: String) {
+    override fun onProductClicked(id: String, image: ImageView) {
         clickedId = id
     }
 }

@@ -35,6 +35,7 @@ object Version {
     const val robolectric = "4.3.1"
     const val room = "2.3.0-alpha04"
     const val timber = "4.7.1"
+    const val transition = "1.4.0-rc01"
     const val vectorDrawable = "1.2.0-alpha02"
     const val work = "2.4.0-rc01"
 }

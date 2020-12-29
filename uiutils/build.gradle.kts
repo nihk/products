@@ -12,10 +12,10 @@ dependencies {
     implementation(Dependency.Fragment.runtime)
     implementation(Dependency.Fragment.runtimeKtx)
     implementation(Dependency.recyclerView)
-    implementation(Dependency.Navigation.uiKtx)
     implementation(Dependency.coil)
     implementation(Dependency.Dagger.runtime)
     implementation(Dependency.Dagger.Hilt.runtime)
+    implementation(Dependency.Transition.runtimeKtx)
 
     kapt(Dependency.Dagger.compiler)
     kapt(Dependency.Dagger.Hilt.compiler)

@@ -29,6 +29,7 @@ dependencies {
     implementation(Dependency.Lifecycle.viewModelKtx)
     implementation(Dependency.Room.runtime)
     implementation(Dependency.Room.roomKtx)
+    implementation(Dependency.Transition.runtimeKtx)
 
     // https://twitter.com/ianhlake/status/1059604904795230209
     debugImplementation(Dependency.Fragment.testing)

@@ -20,13 +20,16 @@
             android:layout_marginStart="@dimen/item_inner_gap"
             android:layout_marginTop="@dimen/item_inner_gap"
             android:layout_marginEnd="@dimen/item_inner_gap"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toTopOf="@+id/price"
             app:layout_constraintEnd_toEndOf="@id/image_start"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_chainStyle="spread_inside"
             tools:text="RAPID CLEAR® Spot Gel" />
 
         <TextView
@@ -42,8 +45,8 @@
             app:layout_constraintEnd_toEndOf="@id/image_start"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/name"
-            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintTop_toBottomOf="@+id/name"
+            app:layout_constraintVertical_bias="0.0"
             tools:text="$11.99" />
 
         <androidx.constraintlayout.widget.Guideline

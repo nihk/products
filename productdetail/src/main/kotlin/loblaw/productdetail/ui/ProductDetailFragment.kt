@@ -1,5 +1,6 @@
 package loblaw.productdetail.ui
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
@@ -8,6 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import coil.ImageLoader
 import coil.load
+import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import loblaw.productdetail.R
@@ -20,17 +23,34 @@ class ProductDetailFragment @Inject constructor(
     private val imageLoader: ImageLoader
 ) : Fragment(R.layout.product_detail_fragment) {
 
-    private val viewModel by viewModels<ProductDetailViewModel> {
-        vmFactory.create(arguments?.getString(KEY_ID)!!)
+    private val viewModel by viewModels<ProductDetailViewModel> { vmFactory.create(id) }
+    private val id: String get() = arguments?.getString(KEY_ID)!!
+
+    private fun prepareTransitions() {
+        sharedElementEnterTransition = MaterialContainerTransform().apply {
+            scrimColor = Color.TRANSPARENT
+        }
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
+        postponeEnterTransition()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        prepareTransitions()
+
         val binding = ProductDetailFragmentBinding.bind(view)
+        binding.image.transitionName = id
+
         viewModel.product()
             .onEach { product ->
                 with(binding) {
-                    image.load(product.imageUrl, imageLoader)
+                    image.load(product.imageUrl, imageLoader) {
+                        listener(
+                            onSuccess = { _, _ -> startPostponedEnterTransition() },
+                            onError = { _, _ -> startPostponedEnterTransition() }
+                        )
+                    }
                     name.text = product.name
                     price.text = product.price
                     type.text = getString(R.string.product_type_formatter, product.type)
@@ -44,9 +64,7 @@ class ProductDetailFragment @Inject constructor(
         private const val KEY_ID = "id"
 
         fun bundle(id: String): Bundle {
-            return bundleOf(
-                KEY_ID to id
-            )
+            return bundleOf(KEY_ID to id)
         }
     }
 }
