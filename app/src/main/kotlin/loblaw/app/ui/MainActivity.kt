@@ -14,7 +14,7 @@ import loblaw.productdetail.ui.ProductDetailFragment
 import loblaw.productlist.ui.ProductListFragment
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+class MainActivity : AppCompatActivity(R.layout.main_activity) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportFragmentManager.fragmentFactory = entryPoint<MainEntryPoint>().fragmentFactory
