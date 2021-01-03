@@ -27,7 +27,7 @@ class ProductListFragment @Inject constructor(
     private val imageLoader: ImageLoader
 ): Fragment(R.layout.product_list_fragment) {
 
-    private val viewModel by viewModels<ProductListViewModel> { vmFactory }
+    private val viewModel by viewModels<ProductListViewModel> { vmFactory.create(this) }
     private val adapter by lazy { ProductListAdapter(onProductClicked, imageLoader) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

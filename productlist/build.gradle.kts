@@ -31,6 +31,7 @@ dependencies {
     implementation(Dependency.Lifecycle.viewModel)
     implementation(Dependency.Room.runtime)
     implementation(Dependency.Room.roomKtx)
+    implementation(Dependency.savedState)
 
     // https://twitter.com/ianhlake/status/1059604904795230209
     debugImplementation(Dependency.Fragment.testing)

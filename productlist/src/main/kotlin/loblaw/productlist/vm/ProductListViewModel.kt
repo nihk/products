@@ -1,8 +1,10 @@
 package loblaw.productlist.vm
 
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.savedstate.SavedStateRegistryOwner
 import kotlinx.coroutines.flow.*
 import loblaw.localproducts.models.Product
 import loblaw.productlist.repository.ProductListRepository
@@ -10,7 +12,8 @@ import loblaw.productlist.state.ProductsState
 import javax.inject.Inject
 
 class ProductListViewModel(
-    repository: ProductListRepository
+    repository: ProductListRepository,
+    private val handle: SavedStateHandle
 ) : ViewModel() {
 
     private val productsState = MutableSharedFlow<ProductsState>(replay = 1)
@@ -30,12 +33,18 @@ class ProductListViewModel(
             .launchIn(viewModelScope)
     }
 
-    class Factory @Inject constructor(
-        private val repository: ProductListRepository
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            @Suppress("UNCHECKED_CAST")
-            return ProductListViewModel(repository) as T
+    class Factory @Inject constructor(private val repository: ProductListRepository) {
+        fun create(owner: SavedStateRegistryOwner): AbstractSavedStateViewModelFactory {
+            return object : AbstractSavedStateViewModelFactory(owner, null) {
+                override fun <T : ViewModel?> create(
+                    key: String,
+                    modelClass: Class<T>,
+                    handle: SavedStateHandle,
+                ): T {
+                    @Suppress("UNCHECKED_CAST")
+                    return ProductListViewModel(repository, handle) as T
+                }
+            }
         }
     }
 }
