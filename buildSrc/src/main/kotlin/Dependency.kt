@@ -17,6 +17,7 @@ object Dependency {
     const val recyclerView = "androidx.recyclerview:recyclerview:${Version.recyclerView}"
     const val robolectric = "org.robolectric:robolectric:${Version.robolectric}"
     const val savedState = "androidx.savedstate:savedstate-ktx:${Version.savedState}"
+    const val security = "androidx.security:security-crypto:${Version.security}"
     const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:${Version.swipeRefreshLayout}"
     const val timber = "com.jakewharton.timber:timber:${Version.timber}"
     const val transition = "androidx.transition:transition-ktx:${Version.transition}"

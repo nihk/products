@@ -30,6 +30,7 @@ object Version {
     const val okhttpLoggingInterceptor = "4.10.0-RC1"
     const val photoView = "2.3.0"
     const val savedState = "1.1.0-rc01"
+    const val security = "1.1.0-alpha03"
     const val swipeRefreshLayout = "1.1.0"
     const val recyclerView = "1.2.0-beta01"
     const val retrofit = "2.9.0"
