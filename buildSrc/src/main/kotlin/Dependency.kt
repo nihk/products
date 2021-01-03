@@ -1,27 +1,26 @@
 object Dependency {
-    const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Version.constraintLayout}"
-    const val timber = "com.jakewharton.timber:timber:${Version.timber}"
-    const val junit = "junit:junit:${Version.junit}"
-    const val hamcrest = "org.hamcrest:hamcrest-all:${Version.hamcrest}"
+    const val activity = "androidx.activity:activity-ktx:${Version.activity}"
     const val androidGradlePlugin = "com.android.tools.build:gradle:${Version.androidGradlePlugin}"
-    const val robolectric = "org.robolectric:robolectric:${Version.robolectric}"
-    const val inject = "javax.inject:javax.inject:${Version.inject}"
-    const val photoView = "com.github.chrisbanes:PhotoView:${Version.photoView}"
-    const val okhttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Version.okhttpLoggingInterceptor}"
-    const val multidex = "androidx.multidex:multidex:${Version.multidex}"
-    const val coil = "io.coil-kt:coil:${Version.coil}"
     const val annotation = "androidx.annotation:annotation:${Version.annotation}"
     const val appCompat = "androidx.appcompat:appcompat:${Version.appCompat}"
-    const val recyclerView = "androidx.recyclerview:recyclerview:${Version.recyclerView}"
-    const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:${Version.swipeRefreshLayout}"
     const val cardView = "androidx.cardview:cardview:${Version.cardView}"
-    const val material = "com.google.android.material:material:${Version.material}"
+    const val coil = "io.coil-kt:coil:${Version.coil}"
+    const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Version.constraintLayout}"
     const val coreKtx = "androidx.core:core-ktx:${Version.coreKtx}"
+    const val hamcrest = "org.hamcrest:hamcrest-all:${Version.hamcrest}"
+    const val inject = "javax.inject:javax.inject:${Version.inject}"
+    const val junit = "junit:junit:${Version.junit}"
+    const val material = "com.google.android.material:material:${Version.material}"
+    const val multidex = "androidx.multidex:multidex:${Version.multidex}"
+    const val okhttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Version.okhttpLoggingInterceptor}"
+    const val photoView = "com.github.chrisbanes:PhotoView:${Version.photoView}"
+    const val recyclerView = "androidx.recyclerview:recyclerview:${Version.recyclerView}"
+    const val robolectric = "org.robolectric:robolectric:${Version.robolectric}"
+    const val savedState = "androidx.savedstate:savedstate-ktx:${Version.savedState}"
+    const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:${Version.swipeRefreshLayout}"
+    const val timber = "com.jakewharton.timber:timber:${Version.timber}"
+    const val transition = "androidx.transition:transition-ktx:${Version.transition}"
     const val vectorDrawable = "androidx.vectordrawable:vectordrawable:${Version.vectorDrawable}"
-    
-    object Activity {
-        const val activityKtx = "androidx.activity:activity-ktx:${Version.activity}"
-    }
 
     object AndroidTest {
         const val core = "androidx.test:core:${Version.androidTest}"
@@ -61,8 +60,7 @@ object Dependency {
     }
 
     object Fragment {
-        const val runtime = "androidx.fragment:fragment:${Version.fragment}"
-        const val runtimeKtx = "androidx.fragment:fragment-ktx:${Version.fragment}"
+        const val runtime = "androidx.fragment:fragment-ktx:${Version.fragment}"
         const val testing = "androidx.fragment:fragment-testing:${Version.fragment}"
     }
 
@@ -79,8 +77,8 @@ object Dependency {
         const val runtime = "androidx.lifecycle:lifecycle-runtime:${Version.lifecycle}"
         const val java8 = "androidx.lifecycle:lifecycle-common-java8:${Version.lifecycle}"
         const val compiler = "androidx.lifecycle:lifecycle-compiler:${Version.lifecycle}"
-        const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.lifecycle}"
-        const val liveDataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:${Version.lifecycle}"
+        const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.lifecycle}"
+        const val liveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Version.lifecycle}"
     }
 
     object Mockito {
@@ -95,12 +93,9 @@ object Dependency {
     }
 
     object Navigation {
-        const val runtime = "androidx.navigation:navigation-runtime:${Version.navigation}"
-        const val runtimeKtx = "androidx.navigation:navigation-runtime-ktx:${Version.navigation}"
-        const val fragment = "androidx.navigation:navigation-fragment:${Version.navigation}"
-        const val fragmentKtx = "androidx.navigation:navigation-fragment-ktx:${Version.navigation}"
-        const val ui = "androidx.navigation:navigation-ui:${Version.navigation}"
-        const val uiKtx = "androidx.navigation:navigation-ui-ktx:${Version.navigation}"
+        const val runtime = "androidx.navigation:navigation-runtime-ktx:${Version.navigation}"
+        const val fragment = "androidx.navigation:navigation-fragment-ktx:${Version.navigation}"
+        const val ui = "androidx.navigation:navigation-ui-ktx:${Version.navigation}"
         const val safeArgsPlugin = "androidx.navigation:navigation-safe-args-gradle-plugin:${Version.navigation}"
         const val testing = "androidx.navigation:navigation-testing:${Version.navigation}"
     }
@@ -118,13 +113,8 @@ object Dependency {
         const val testing = "androidx.room:room-testing:${Version.room}"
     }
 
-    object Transition {
-        const val runtimeKtx = "androidx.transition:transition-ktx:${Version.transition}"
-    }
-
     object Work {
-        const val runtime = "androidx.work:work-runtime:${Version.work}"
-        const val runtimeKtx = "androidx.work:work-runtime-ktx:${Version.work}"
+        const val runtime = "androidx.work:work-runtime-ktx:${Version.work}"
         const val testing = "androidx.work:work-testing:${Version.work}"
         const val firebase = "androidx.work:work-firebase:${Version.work}"
     }
