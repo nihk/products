@@ -7,6 +7,7 @@ object Version {
     const val androidTest = "1.3.0-rc01"
     const val androidTestJunit = "1.1.2-rc01"
     const val benManesVersions = "0.36.0"
+    const val biometric = "1.2.0-alpha01"
     const val cardView = "1.0.0"
     const val coil = "1.1.0"
     const val constraintLayout = "2.1.0-alpha2"

@@ -3,6 +3,7 @@ object Dependency {
     const val androidGradlePlugin = "com.android.tools.build:gradle:${Version.androidGradlePlugin}"
     const val annotation = "androidx.annotation:annotation:${Version.annotation}"
     const val appCompat = "androidx.appcompat:appcompat:${Version.appCompat}"
+    const val biometric = "androidx.biometric:biometric:${Version.biometric}"
     const val cardView = "androidx.cardview:cardview:${Version.cardView}"
     const val coil = "io.coil-kt:coil:${Version.coil}"
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Version.constraintLayout}"
