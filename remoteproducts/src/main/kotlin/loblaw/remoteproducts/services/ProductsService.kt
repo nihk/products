@@ -5,6 +5,6 @@ import retrofit2.http.GET
 
 interface ProductsService {
 
-    @GET("r2vq/2ac197145db3f6cdf1a353feb744cf8e/raw/b1e722f608b00ddde138a0eef2261c6ffc8b08d7/cart.json")
+    @GET("nihk/de4ceb2c95633c10196e9f7f067ccfe3/raw/7aac0af7a7c5867ee7958796221df40dfd89f4c8/cart.json")
     suspend fun cart(): Cart
 }
