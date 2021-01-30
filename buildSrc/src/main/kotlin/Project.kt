@@ -49,6 +49,10 @@ private fun <T : BaseExtension> Project.androidConfig() = android<T>().apply {
         }
     }
 
+    buildFeatures.apply {
+        viewBinding = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8

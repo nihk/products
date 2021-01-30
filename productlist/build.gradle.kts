@@ -5,9 +5,7 @@ plugins {
     hilt
 }
 
-androidLibraryConfig {
-    buildFeatures.viewBinding = true
-}
+androidLibraryConfig()
 
 dependencies {
     implementation(project(":core"))
