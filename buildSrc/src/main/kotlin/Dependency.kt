@@ -37,6 +37,18 @@ object Dependency {
         const val testing = "androidx.arch.core:core-testing:${Version.archCore}"
     }
 
+    object Compose {
+        const val runtime = "androidx.compose.runtime:runtime:${Version.compose}"
+        const val foundation = "androidx.compose.foundation:foundation:${Version.compose}"
+        const val `foundation-layout` = "androidx.compose.foundation:foundation-layout:${Version.compose}"
+        const val ui = "androidx.compose.ui:ui:${Version.compose}"
+        const val `ui-tooling` = "androidx.compose.ui:ui-tooling:${Version.compose}"
+        const val `ui-test` = "androidx.compose.ui:ui-test-junit4:${Version.compose}"
+        const val material = "androidx.compose.material:material:${Version.compose}"
+        const val `material-icons-core` = "androidx.compose.material:material-icons-core:${Version.compose}"
+        const val `material-icons-extended` = "androidx.compose.material:material-icons-extended:${Version.compose}"
+    }
+
     object Dagger {
         const val runtime = "com.google.dagger:dagger:${Version.dagger}"
         const val compiler = "com.google.dagger:dagger-compiler:${Version.dagger}"

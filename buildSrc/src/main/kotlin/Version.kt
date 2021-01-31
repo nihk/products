@@ -10,6 +10,7 @@ object Version {
     const val biometric = "1.2.0-alpha01"
     const val cardView = "1.0.0"
     const val coil = "1.1.1"
+    const val compose = "1.0.0-alpha11"
     const val constraintLayout = "2.1.0-alpha2"
     const val coreKtx = "1.5.0-beta01"
     const val coroutines = "1.4.2"
