@@ -61,6 +61,7 @@ private fun <T : BaseExtension> Project.androidConfig() = android<T>().apply {
     tasks.withType(KotlinCompile::class.java) {
         kotlinOptions {
             jvmTarget = JavaVersion.VERSION_1_8.toString()
+            useIR = true
             freeCompilerArgs = listOf(
                 "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"
             )

@@ -38,6 +38,7 @@ object Dependency {
     }
 
     object Compose {
+        const val compiler = "androidx.compose.compiler:compiler:${Version.compose}"
         const val runtime = "androidx.compose.runtime:runtime:${Version.compose}"
         const val foundation = "androidx.compose.foundation:foundation:${Version.compose}"
         const val `foundation-layout` = "androidx.compose.foundation:foundation-layout:${Version.compose}"
