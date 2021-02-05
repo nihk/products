@@ -8,6 +8,7 @@ object Dependency {
     const val coil = "io.coil-kt:coil:${Version.coil}"
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Version.constraintLayout}"
     const val coreKtx = "androidx.core:core-ktx:${Version.coreKtx}"
+    const val dataStore = "androidx.datastore:datastore:${Version.dataStore}"
     const val hamcrest = "org.hamcrest:hamcrest-all:${Version.hamcrest}"
     const val inject = "javax.inject:javax.inject:${Version.inject}"
     const val junit = "junit:junit:${Version.junit}"
@@ -35,6 +36,14 @@ object Dependency {
     object ArchCore {
         const val runtime = "androidx.arch.core:core-runtime:${Version.archCore}"
         const val testing = "androidx.arch.core:core-testing:${Version.archCore}"
+    }
+
+    object Camera {
+        const val core = "androidx.camera:camera-core:${Version.cameraX}"
+        const val camera2 = "androidx.camera:camera-camera2:${Version.cameraX}"
+        const val lifecycle = "androidx.camera:camera-lifecycle:${Version.cameraX}"
+        const val view = "androidx.camera:camera-view:${Version.cameraXExt}"
+        const val extensions = "androidx.camera:camera-extensions:${Version.cameraXExt}"
     }
 
     object Compose {
@@ -72,6 +81,15 @@ object Dependency {
         const val idlingResource = "androidx.test.espresso:espresso-idling-resource:${Version.espresso}"
         const val contrib = "androidx.test.espresso:espresso-contrib:${Version.espresso}"
         const val intents = "androidx.test.espresso:espresso-intents:${Version.espresso}"
+    }
+
+    object ExoPlayer {
+        const val runtime = "com.google.android.exoplayer:exoplayer:${Version.exoPlayer}"
+        const val core = "com.google.android.exoplayer:exoplayer-core:${Version.exoPlayer}"
+        const val dash = "com.google.android.exoplayer:exoplayer-dash:${Version.exoPlayer}"
+        const val hls = "com.google.android.exoplayer:exoplayer-hls:${Version.exoPlayer}"
+        const val smoothstreaming = "com.google.android.exoplayer:exoplayer-smoothstreaming:${Version.exoPlayer}"
+        const val ui = "com.google.android.exoplayer:exoplayer-ui:${Version.exoPlayer}"
     }
 
     object Fragment {
