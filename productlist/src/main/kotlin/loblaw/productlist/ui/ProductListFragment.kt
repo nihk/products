@@ -25,20 +25,23 @@ class ProductListFragment @Inject constructor(
     vmFactory: ProductListViewModel.Factory,
     private val onProductClicked: OnProductClicked,
     private val imageLoader: ImageLoader
-): Fragment(R.layout.product_list_fragment) {
+) : Fragment(R.layout.product_list_fragment) {
 
     private val viewModel by viewModels<ProductListViewModel> { vmFactory.create(this) }
-    private val adapter by lazy { ProductListAdapter(onProductClicked, imageLoader) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val binding = ProductListFragmentBinding.bind(view)
         prepareTransitions()
 
-        with(ProductListFragmentBinding.bind(view)) {
-            recyclerView.addItemDecoration(MarginItemDecoration(resources.getDimension(R.dimen.item_outer_gap).roundToInt()))
-            recyclerView.adapter = adapter
-            observeViewModel(this@with)
+        val adapter = ProductListAdapter(onProductClicked, imageLoader)
+
+        binding.recyclerView.run {
+            addItemDecoration(MarginItemDecoration(resources.getDimension(R.dimen.item_outer_gap).roundToInt()))
+            this.adapter = adapter
         }
+
+        observeViewModel(binding, adapter)
     }
 
     private fun prepareTransitions() {
@@ -53,7 +56,7 @@ class ProductListFragment @Inject constructor(
         }
     }
 
-    private fun observeViewModel(binding: ProductListFragmentBinding) {
+    private fun observeViewModel(binding: ProductListFragmentBinding, adapter: ProductListAdapter) {
         viewModel.loading
             .onEach { isLoading ->
                 if (isLoading) {

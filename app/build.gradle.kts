@@ -50,6 +50,8 @@ dependencies {
     implementation(Dependency.multidex)
     implementation(Dependency.coil)
 
+    debugImplementation(Dependency.leakCanary)
+
     kapt(Dependency.Room.compiler)
     kapt(Dependency.Dagger.compiler)
     kapt(Dependency.Dagger.Hilt.compiler)

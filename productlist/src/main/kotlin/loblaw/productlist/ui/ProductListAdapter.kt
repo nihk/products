@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import coil.ImageLoader
 import loblaw.localproducts.models.Product
-import loblaw.productlist.R
+import loblaw.productlist.databinding.ProductItemBinding
 
 class ProductListAdapter(
     private val onProductClicked: OnProductClicked,
@@ -14,7 +14,7 @@ class ProductListAdapter(
 ) : ListAdapter<Product, ProductViewHolder>(ProductDiffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         return LayoutInflater.from(parent.context)
-            .inflate(R.layout.product_item, parent, false)
+            .let { inflater -> ProductItemBinding.inflate(inflater, parent, false) }
             .let(::ProductViewHolder)
     }
 

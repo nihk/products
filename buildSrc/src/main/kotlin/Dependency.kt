@@ -12,6 +12,7 @@ object Dependency {
     const val hamcrest = "org.hamcrest:hamcrest-all:${Version.hamcrest}"
     const val inject = "javax.inject:javax.inject:${Version.inject}"
     const val junit = "junit:junit:${Version.junit}"
+    const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Version.leakCanary}"
     const val material = "com.google.android.material:material:${Version.material}"
     const val multidex = "androidx.multidex:multidex:${Version.multidex}"
     const val okhttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Version.okhttpLoggingInterceptor}"
