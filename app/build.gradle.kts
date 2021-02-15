@@ -46,7 +46,7 @@ dependencies {
     implementation(Dependency.Room.runtime)
     implementation(Dependency.Room.roomKtx)
     implementation(Dependency.timber)
-    implementation(Dependency.okhttpLoggingInterceptor)
+    implementation(Dependency.OkHttp.loggingInterceptor)
     implementation(Dependency.multidex)
     implementation(Dependency.coil)
 

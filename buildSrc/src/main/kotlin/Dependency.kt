@@ -15,7 +15,6 @@ object Dependency {
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Version.leakCanary}"
     const val material = "com.google.android.material:material:${Version.material}"
     const val multidex = "androidx.multidex:multidex:${Version.multidex}"
-    const val okhttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Version.okhttpLoggingInterceptor}"
     const val photoView = "com.github.chrisbanes:PhotoView:${Version.photoView}"
     const val recyclerView = "androidx.recyclerview:recyclerview:${Version.recyclerView}"
     const val robolectric = "org.robolectric:robolectric:${Version.robolectric}"
@@ -25,6 +24,7 @@ object Dependency {
     const val timber = "com.jakewharton.timber:timber:${Version.timber}"
     const val transition = "androidx.transition:transition-ktx:${Version.transition}"
     const val vectorDrawable = "androidx.vectordrawable:vectordrawable:${Version.vectorDrawable}"
+    const val webkit = "androidx.webkit:webkit:${Version.webkit}"
 
     object AndroidTest {
         const val core = "androidx.test:core:${Version.androidTest}"
@@ -132,6 +132,11 @@ object Dependency {
         const val ui = "androidx.navigation:navigation-ui-ktx:${Version.navigation}"
         const val safeArgsPlugin = "androidx.navigation:navigation-safe-args-gradle-plugin:${Version.navigation}"
         const val testing = "androidx.navigation:navigation-testing:${Version.navigation}"
+    }
+
+    object OkHttp {
+        const val runtime = "com.squareup.okhttp3:okhttp:${Version.okHttp}"
+        const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Version.okHttp}"
     }
 
     object Retrofit {

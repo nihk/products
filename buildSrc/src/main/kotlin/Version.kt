@@ -34,7 +34,7 @@ object Version {
     const val moshi = "1.11.0"
     const val multidex = "2.0.1"
     const val navigation = "2.3.3"
-    const val okhttpLoggingInterceptor = "4.10.0-RC1"
+    const val okHttp = "4.10.0-RC1"
     const val photoView = "2.3.0"
     const val savedState = "1.1.0-rc01"
     const val security = "1.1.0-alpha03"
@@ -46,5 +46,6 @@ object Version {
     const val timber = "4.7.1"
     const val transition = "1.4.0"
     const val vectorDrawable = "1.2.0-alpha02"
+    const val webkit = "1.4.0"
     const val work = "2.4.0-rc01"
 }
