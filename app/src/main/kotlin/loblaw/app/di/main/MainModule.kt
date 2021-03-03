@@ -1,9 +1,10 @@
 package loblaw.app.di.main
 
 import android.app.Activity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentFactory
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -20,8 +21,10 @@ abstract class MainModule {
 
     companion object {
         @Provides
-        fun navController(activity: Activity): @JvmSuppressWildcards () -> NavController {
-            return { activity.findNavController(R.id.navHostContainer) }
+        fun navController(activity: Activity): NavController {
+            val navHostFragment = (activity as AppCompatActivity).supportFragmentManager
+                .findFragmentById(R.id.navHostContainer) as NavHostFragment
+            return navHostFragment.navController
         }
     }
 

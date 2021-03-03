@@ -2,8 +2,8 @@ package loblaw.app.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import androidx.navigation.createGraph
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.fragment
 import dagger.hilt.android.AndroidEntryPoint
 import loblaw.app.R
@@ -17,16 +17,14 @@ import loblaw.productlist.ui.ProductListFragment
 class MainActivity : AppCompatActivity(R.layout.main_activity) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        supportFragmentManager.fragmentFactory = entryPoint<MainEntryPoint>().fragmentFactory
+        val entryPoint = entryPoint<MainEntryPoint>()
+        supportFragmentManager.fragmentFactory = entryPoint.fragmentFactory
         super.onCreate(savedInstanceState)
-        createNavGraph()
+        createNavGraph(entryPoint.navController)
     }
 
-    private fun createNavGraph() {
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.navHostContainer) as NavHostFragment
-
-        navHostFragment.navController.apply {
+    private fun createNavGraph(navController: NavController) {
+        navController.apply {
             graph = createGraph(
                 id = AppNavGraph.id,
                 startDestination = AppNavGraph.Destination.productList

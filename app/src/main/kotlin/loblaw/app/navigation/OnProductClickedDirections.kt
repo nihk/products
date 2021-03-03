@@ -8,11 +8,11 @@ import loblaw.productlist.ui.OnProductClicked
 import javax.inject.Inject
 
 class OnProductClickedDirections @Inject constructor(
-    private val navController: @JvmSuppressWildcards () -> NavController
+    private val navController: NavController
 ) : OnProductClicked {
 
     override fun onProductClicked(id: String, image: ImageView) {
-        navController().navigate(
+        navController.navigate(
             AppNavGraph.Destination.productDetail,
             ProductDetailFragment.bundle(id),
             null,
