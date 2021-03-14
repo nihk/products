@@ -1,6 +1,6 @@
 package loblaw.core
 
 interface Logger {
-    fun d(message: String)
-    fun e(message: String, throwable: Throwable? = null)
+    fun d(message: String? = null)
+    fun e(message: String? = null, throwable: Throwable? = null)
 }

@@ -6,11 +6,11 @@ import javax.inject.Inject
 
 class TimberLogger @Inject constructor() : Logger {
 
-    override fun d(message: String) {
+    override fun d(message: String?) {
         Timber.d(message)
     }
 
-    override fun e(message: String, throwable: Throwable?) {
+    override fun e(message: String?, throwable: Throwable?) {
         Timber.e(throwable, message)
     }
 }

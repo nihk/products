@@ -20,6 +20,8 @@ import loblaw.app.initializers.Initializer
 import loblaw.app.initializers.StrictModeInitializer
 import loblaw.app.initializers.TimberInitializer
 import loblaw.app.logging.TimberLogger
+import loblaw.asyncutils.DefaultCoroutineDispatchers
+import loblaw.asyncutils.CoroutineDispatchers
 import loblaw.core.Logger
 import loblaw.core.MulticastLogger
 import loblaw.localproducts.dao.ProductsDaoProvider
@@ -101,4 +103,7 @@ abstract class AppModule {
 
     @Binds
     abstract fun productsDaoProvider(appDatabase: AppDatabase): ProductsDaoProvider
+
+    @Binds
+    abstract fun defaultDispatchers(defaultCoroutineDispatchers: DefaultCoroutineDispatchers): CoroutineDispatchers
 }
