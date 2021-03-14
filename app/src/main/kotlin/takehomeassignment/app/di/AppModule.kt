@@ -14,7 +14,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
 import takehomeassignment.asyncutils.CoroutineDispatchers
-import takehomeassignment.asyncutils.DefaultCoroutineDispatchers
+import takehomeassignment.asyncutils.StandardCoroutineDispatchers
 import takehomeassignment.core.Logger
 import takehomeassignment.core.MulticastLogger
 import takehomeassignment.localproducts.dao.ProductsDaoProvider
@@ -105,5 +105,5 @@ abstract class AppModule {
     abstract fun productsDaoProvider(appDatabase: AppDatabase): ProductsDaoProvider
 
     @Binds
-    abstract fun defaultDispatchers(defaultCoroutineDispatchers: DefaultCoroutineDispatchers): CoroutineDispatchers
+    abstract fun defaultDispatchers(standardCoroutineDispatchers: StandardCoroutineDispatchers): CoroutineDispatchers
 }
