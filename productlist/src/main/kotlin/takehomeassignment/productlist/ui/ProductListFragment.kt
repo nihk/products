@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -17,9 +18,7 @@ import takehomeassignment.productlist.R
 import takehomeassignment.productlist.databinding.ProductListFragmentBinding
 import takehomeassignment.productlist.vm.ProductListViewModel
 import takehomeassignment.uiutils.MarginItemDecoration
-import takehomeassignment.uiutils.gone
-import takehomeassignment.uiutils.isEmpty
-import takehomeassignment.uiutils.visible
+import takehomeassignment.uiutils.isNotEmpty
 
 class ProductListFragment @Inject constructor(
     vmFactory: ProductListViewModel.Factory,
@@ -58,11 +57,7 @@ class ProductListFragment @Inject constructor(
     private fun observeViewModel(binding: ProductListFragmentBinding, adapter: ProductListAdapter) {
         viewModel.loading
             .onEach { isLoading ->
-                if (isLoading) {
-                    binding.progressBar.visible()
-                } else {
-                    binding.progressBar.gone()
-                }
+                binding.progressBar.isGone = !isLoading
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
 
@@ -75,11 +70,7 @@ class ProductListFragment @Inject constructor(
 
         viewModel.error
             .onEach { throwable ->
-                if (throwable != null && adapter.isEmpty) {
-                    binding.errorMessage.visible()
-                } else {
-                    binding.errorMessage.gone()
-                }
+                binding.errorMessage.isGone = throwable == null || adapter.isNotEmpty
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
