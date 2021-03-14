@@ -1,8 +1,8 @@
 package takehomeassignment.app.logging
 
+import javax.inject.Inject
 import takehomeassignment.core.Logger
 import timber.log.Timber
-import javax.inject.Inject
 
 class TimberLogger @Inject constructor() : Logger {
 

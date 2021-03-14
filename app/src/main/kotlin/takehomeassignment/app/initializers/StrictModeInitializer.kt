@@ -3,11 +3,11 @@ package takehomeassignment.app.initializers
 import android.os.Build
 import android.os.StrictMode
 import android.os.strictmode.Violation
+import javax.inject.Inject
 import kotlinx.coroutines.asExecutor
 import takehomeassignment.app.config.AppConfig
 import takehomeassignment.asyncutils.CoroutineDispatchers
 import takehomeassignment.core.Logger
-import javax.inject.Inject
 
 class StrictModeInitializer @Inject constructor(
     private val appConfig: AppConfig,
@@ -43,7 +43,7 @@ class StrictModeInitializer @Inject constructor(
         StrictMode.VmPolicy.Builder()
             .detectLeakedSqlLiteObjects()
             // Disabled until this bug is resolved: https://issuetracker.google.com/issues/167533582
-            //.detectLeakedClosableObjects()
+//            .detectLeakedClosableObjects()
             .apply {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                     penaltyListener(ioExecutor) { violation: Violation ->

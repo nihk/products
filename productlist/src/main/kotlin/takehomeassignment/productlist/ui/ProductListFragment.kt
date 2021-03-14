@@ -9,6 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import coil.ImageLoader
 import com.google.android.material.transition.MaterialSharedAxis
+import javax.inject.Inject
+import kotlin.math.roundToInt
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import takehomeassignment.productlist.R
@@ -18,8 +20,6 @@ import takehomeassignment.uiutils.MarginItemDecoration
 import takehomeassignment.uiutils.gone
 import takehomeassignment.uiutils.isEmpty
 import takehomeassignment.uiutils.visible
-import javax.inject.Inject
-import kotlin.math.roundToInt
 
 class ProductListFragment @Inject constructor(
     vmFactory: ProductListViewModel.Factory,

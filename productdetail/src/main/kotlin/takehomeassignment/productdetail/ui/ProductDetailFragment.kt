@@ -11,12 +11,12 @@ import coil.ImageLoader
 import coil.load
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
+import javax.inject.Inject
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import takehomeassignment.productdetail.R
 import takehomeassignment.productdetail.databinding.ProductDetailFragmentBinding
 import takehomeassignment.productdetail.vm.ProductDetailViewModel
-import javax.inject.Inject
 
 class ProductDetailFragment @Inject constructor(
     vmFactory: ProductDetailViewModel.Factory,

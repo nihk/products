@@ -2,8 +2,8 @@ package takehomeassignment.app
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
-import takehomeassignment.app.initializers.AppInitializers
 import javax.inject.Inject
+import takehomeassignment.app.initializers.AppInitializers
 
 @HiltAndroidApp
 class App : Application() {

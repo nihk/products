@@ -10,7 +10,7 @@ internal fun List<takehomeassignment.remoteproducts.models.Product>.toLocalProdu
                 imageUrl = image,
                 name = name,
                 price = price,
-                type =type
+                type = type
             )
         }
     }

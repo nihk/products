@@ -1,11 +1,15 @@
 package takehomeassignment.productlist.repository
 
-import kotlinx.coroutines.flow.*
+import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import takehomeassignment.core.Logger
 import takehomeassignment.localproducts.dao.ProductsDao
 import takehomeassignment.productlist.state.ProductsState
 import takehomeassignment.remoteproducts.services.ProductsService
-import javax.inject.Inject
 
 class DefaultProductListRepository @Inject constructor(
     private val service: ProductsService,

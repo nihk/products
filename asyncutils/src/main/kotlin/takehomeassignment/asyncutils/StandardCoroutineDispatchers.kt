@@ -1,8 +1,8 @@
 package takehomeassignment.asyncutils
 
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import javax.inject.Inject
 
 class StandardCoroutineDispatchers @Inject constructor() : CoroutineDispatchers {
     override val main: CoroutineDispatcher get() = Dispatchers.Main

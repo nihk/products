@@ -6,18 +6,21 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import coil.ImageLoader
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import org.hamcrest.CoreMatchers.not
+import org.junit.Assert.assertEquals
+import org.junit.Test
 import takehomeassignment.productlist.R
 import takehomeassignment.productlist.repository.ProductListRepository
 import takehomeassignment.productlist.state.ProductsState
 import takehomeassignment.productlist.vm.ProductListViewModel
 import takehomeassignment.testutils.FakeImageLoader
-import org.hamcrest.CoreMatchers.not
-import org.junit.Assert.assertEquals
-import org.junit.Test
 
 class ProductListFragmentTest {
 

@@ -2,11 +2,11 @@ package takehomeassignment.productlist.ui
 
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import takehomeassignment.localproducts.models.Product
 import takehomeassignment.productlist.repository.toLocalProducts
 import takehomeassignment.remoteproducts.models.Cart
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
 val products by lazy {
     ProductsData.get("cart.json")

@@ -6,11 +6,11 @@ import dagger.Provides
 import dagger.Reusable
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import takehomeassignment.remoteproducts.R
-import takehomeassignment.remoteproducts.services.ProductsService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import takehomeassignment.remoteproducts.R
+import takehomeassignment.remoteproducts.services.ProductsService
 
 @Module
 @InstallIn(SingletonComponent::class)

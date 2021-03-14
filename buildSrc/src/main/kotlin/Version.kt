@@ -27,6 +27,7 @@ object Version {
     const val inject = "1"
     const val junit = "4.13.2"
     const val kotlin = "1.4.30"
+    const val ktlintGradle = "10.0.0"
     const val leakCanary = "2.6"
     const val lifecycle = "2.3.0"
     const val material = "1.4.0-alpha01"

@@ -5,11 +5,16 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.savedstate.SavedStateRegistryOwner
-import kotlinx.coroutines.flow.*
+import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import takehomeassignment.localproducts.models.Product
 import takehomeassignment.productlist.repository.ProductListRepository
 import takehomeassignment.productlist.state.ProductsState
-import javax.inject.Inject
 
 class ProductListViewModel(
     repository: ProductListRepository,

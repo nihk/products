@@ -1,8 +1,8 @@
 package takehomeassignment.app.initializers
 
+import javax.inject.Inject
 import takehomeassignment.app.config.AppConfig
 import timber.log.Timber
-import javax.inject.Inject
 
 class TimberInitializer @Inject constructor(
     private val appConfig: AppConfig

@@ -9,10 +9,12 @@ buildscript {
 
 plugins {
     `ben-manes-versions`
+    `ktlint-gradle`
 }
 
 allprojects {
     repositories.addProjectDefaults()
+    apply(plugin = Plugin.ktlintGradle)
 }
 
 task<Delete>("clean") {

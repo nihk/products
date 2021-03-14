@@ -10,10 +10,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
-import takehomeassignment.productlist.ui.OnProductClicked
 import takehomeassignment.app.R
 import takehomeassignment.app.navigation.OnProductClickedDirections
 import takehomeassignment.app.ui.AppFragmentFactory
+import takehomeassignment.productlist.ui.OnProductClicked
 
 @Module
 @InstallIn(ActivityComponent::class)

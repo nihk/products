@@ -3,13 +3,13 @@ package takehomeassignment.productdetail.vm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import takehomeassignment.localproducts.dao.ProductsDao
 import takehomeassignment.localproducts.models.Product
-import javax.inject.Inject
 
 class ProductDetailViewModel(
     private val dao: ProductsDao,

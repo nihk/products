@@ -1,10 +1,12 @@
 package takehomeassignment.localproducts.dao
 
 import kotlinx.coroutines.runBlocking
-import takehomeassignment.localproducts.models.Product
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Rule
 import org.junit.Test
+import takehomeassignment.localproducts.models.Product
 
 class ProductsDaoTest {
 

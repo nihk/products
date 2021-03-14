@@ -1,7 +1,7 @@
 package takehomeassignment.remoteproducts.services
 
-import takehomeassignment.remoteproducts.models.Cart
 import retrofit2.http.GET
+import takehomeassignment.remoteproducts.models.Cart
 
 interface ProductsService {
 

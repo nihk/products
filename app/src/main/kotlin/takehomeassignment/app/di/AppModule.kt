@@ -13,11 +13,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
-import takehomeassignment.asyncutils.CoroutineDispatchers
-import takehomeassignment.asyncutils.StandardCoroutineDispatchers
-import takehomeassignment.core.Logger
-import takehomeassignment.core.MulticastLogger
-import takehomeassignment.localproducts.dao.ProductsDaoProvider
+import javax.inject.Singleton
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -29,7 +25,11 @@ import takehomeassignment.app.initializers.Initializer
 import takehomeassignment.app.initializers.StrictModeInitializer
 import takehomeassignment.app.initializers.TimberInitializer
 import takehomeassignment.app.logging.TimberLogger
-import javax.inject.Singleton
+import takehomeassignment.asyncutils.CoroutineDispatchers
+import takehomeassignment.asyncutils.StandardCoroutineDispatchers
+import takehomeassignment.core.Logger
+import takehomeassignment.core.MulticastLogger
+import takehomeassignment.localproducts.dao.ProductsDaoProvider
 
 @Module
 @InstallIn(SingletonComponent::class)
