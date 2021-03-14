@@ -6,6 +6,7 @@ import org.gradle.api.Project
 import org.gradle.api.tasks.SourceSetContainer
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.get
+import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 fun Project.androidAppConfig(extras: (BaseAppModuleExtension.() -> Unit) = {}) = androidConfig<BaseAppModuleExtension>().run {
@@ -58,7 +59,7 @@ private fun <T : BaseExtension> Project.androidConfig() = android<T>().apply {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    tasks.withType(KotlinCompile::class.java) {
+    tasks.withType<KotlinCompile>().configureEach {
         kotlinOptions {
             jvmTarget = JavaVersion.VERSION_1_8.toString()
             useIR = true
