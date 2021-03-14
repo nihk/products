@@ -1,4 +1,6 @@
-This project divides its features in Gradle modules. This structure makes clear the boundaries
+This is a base project I use for take home assignments.
+
+It divides its features in Gradle modules. This structure makes clear the boundaries
 of each module, e.g. the `productlist` module has only the dimens.xml, strings.xml, layout files,
 et al., that it cares about.
 
