@@ -11,6 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import coil.ImageLoader
+import javax.inject.Provider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import org.hamcrest.CoreMatchers.not
@@ -86,9 +87,10 @@ class ProductListFragmentTest {
             override fun products(): Flow<ProductsState> = products
         }
         val vmFactory = ProductListViewModel.Factory(repository)
+        val adapterFactory = Provider { ProductListAdapter(onProductClicked, imageLoader) }
 
         launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents_DayNight_DarkActionBar) {
-            ProductListFragment(vmFactory, onProductClicked, imageLoader)
+            ProductListFragment(vmFactory, adapterFactory)
         }
     }
 }

@@ -5,10 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import coil.ImageLoader
+import javax.inject.Inject
 import takehomeassignment.localproducts.models.Product
 import takehomeassignment.productlist.databinding.ProductItemBinding
 
-class ProductListAdapter(
+class ProductListAdapter @Inject constructor(
     private val onProductClicked: OnProductClicked,
     private val imageLoader: ImageLoader
 ) : ListAdapter<Product, ProductViewHolder>(ProductDiffCallback) {
