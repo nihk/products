@@ -14,6 +14,7 @@ class StrictModeInitializer @Inject constructor(
     private val logger: Logger,
     private val dispatchers: CoroutineDispatchers
 ) : Initializer {
+
     override fun initialize() {
         if (!appConfig.isDeveloperMode) {
             return
