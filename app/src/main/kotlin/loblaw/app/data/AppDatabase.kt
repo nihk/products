@@ -11,6 +11,6 @@ import loblaw.localproducts.models.Product
 )
 abstract class AppDatabase : RoomDatabase(), ProductsDaoProvider {
     companion object {
-        const val name = "loblaw_products.db"
+        const val name = "products.db"
     }
 }

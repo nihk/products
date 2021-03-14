@@ -13,10 +13,11 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
-import loblaw.app.AppConfig
-import loblaw.app.BuildConfigAppConfig
+import loblaw.app.config.AppConfig
+import loblaw.app.config.GradleAppConfig
 import loblaw.app.data.AppDatabase
 import loblaw.app.initializers.Initializer
+import loblaw.app.initializers.StrictModeInitializer
 import loblaw.app.initializers.TimberInitializer
 import loblaw.app.logging.TimberLogger
 import loblaw.core.Logger
@@ -72,7 +73,7 @@ abstract class AppModule {
         fun appDatabase(@ApplicationContext appContext: Context, appConfig: AppConfig): AppDatabase {
             return Room.databaseBuilder(appContext, AppDatabase::class.java, AppDatabase.name)
                 .apply {
-                    if (appConfig.isDebug) {
+                    if (appConfig.isDeveloperMode) {
                         setJournalMode(JournalMode.TRUNCATE)
                     }
                 }
@@ -81,7 +82,7 @@ abstract class AppModule {
     }
 
     @Binds
-    abstract fun buildConfigAppConfig(buildConfigAppConfig: BuildConfigAppConfig): AppConfig
+    abstract fun gradleAppConfig(gradleAppConfig: GradleAppConfig): AppConfig
 
     @Binds
     abstract fun multicastLogger(multicastLogger: MulticastLogger): Logger
@@ -93,6 +94,10 @@ abstract class AppModule {
     @Binds
     @IntoSet
     abstract fun timberInitializer(timberInitializer: TimberInitializer): Initializer
+
+    @Binds
+    @IntoSet
+    abstract fun strictModeInitializer(strictModeInitializer: StrictModeInitializer): Initializer
 
     @Binds
     abstract fun productsDaoProvider(appDatabase: AppDatabase): ProductsDaoProvider

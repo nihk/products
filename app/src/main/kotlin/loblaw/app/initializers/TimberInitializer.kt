@@ -1,6 +1,6 @@
 package loblaw.app.initializers
 
-import loblaw.app.AppConfig
+import loblaw.app.config.AppConfig
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -9,8 +9,10 @@ class TimberInitializer @Inject constructor(
 ) : Initializer {
 
     override fun initialize() {
-        if (appConfig.isDebug) {
-            Timber.plant(Timber.DebugTree())
+        if (!appConfig.isDeveloperMode) {
+            return
         }
+
+        Timber.plant(Timber.DebugTree())
     }
 }

@@ -7,7 +7,7 @@ plugins {
 
 androidAppConfig {
     defaultConfig {
-        applicationId = "loblaw.app"
+        applicationId = "app.products"
         versionCode = 1
         versionName = "1.0"
 
@@ -34,7 +34,6 @@ dependencies {
     implementation(Dependency.vectorDrawable)
     implementation(Dependency.constraintLayout)
     implementation(Dependency.material)
-    implementation(Dependency.photoView)
     implementation(Dependency.Navigation.runtime)
     implementation(Dependency.Navigation.fragment)
     implementation(Dependency.Navigation.ui)

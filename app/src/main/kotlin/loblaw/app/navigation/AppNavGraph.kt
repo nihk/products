@@ -1,10 +1,10 @@
 package loblaw.app.navigation
 
 object AppNavGraph {
-    const val id = 1
+    val id = IdGenerator.next()
 
     object Destination {
-        const val productList = 2
-        const val productDetail = 3
+        val productList = IdGenerator.next()
+        val productDetail = IdGenerator.next()
     }
 }
