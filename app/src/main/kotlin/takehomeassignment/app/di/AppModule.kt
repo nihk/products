@@ -21,6 +21,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import takehomeassignment.app.config.AppConfig
 import takehomeassignment.app.config.GradleAppConfig
 import takehomeassignment.app.data.AppDatabase
+import takehomeassignment.app.initializers.AppInitializers
 import takehomeassignment.app.initializers.Initializer
 import takehomeassignment.app.initializers.StrictModeInitializer
 import takehomeassignment.app.initializers.TimberInitializer
@@ -100,6 +101,9 @@ abstract class AppModule {
     @Binds
     @IntoSet
     abstract fun strictModeInitializer(strictModeInitializer: StrictModeInitializer): Initializer
+
+    @Binds
+    abstract fun appInitializers(appInitializers: AppInitializers): Initializer
 
     @Binds
     abstract fun productsDaoProvider(appDatabase: AppDatabase): ProductsDaoProvider
