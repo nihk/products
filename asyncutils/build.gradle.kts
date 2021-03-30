@@ -6,6 +6,6 @@ plugins {
 jvmConfig()
 
 dependencies {
-    implementation(Dependency.inject)
-    implementation(Dependency.Kotlin.coroutines)
+    implementation(Dependencies.inject)
+    implementation(Dependencies.Kotlin.coroutines)
 }

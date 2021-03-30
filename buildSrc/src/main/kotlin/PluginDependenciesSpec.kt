@@ -3,18 +3,18 @@ import org.gradle.plugin.use.PluginDependenciesSpec
 import org.gradle.plugin.use.PluginDependencySpec
 
 val PluginDependenciesSpec.`android-application`: PluginDependencySpec
-    get() = id(Plugin.androidApplication)
+    get() = id(Plugins.androidApplication)
 
 val PluginDependenciesSpec.`android-library`: PluginDependencySpec
-    get() = id(Plugin.androidLibrary)
+    get() = id(Plugins.androidLibrary)
 
 val PluginDependenciesSpec.hilt: PluginDependencySpec
-    get() = id(Plugin.daggerHilt)
+    get() = id(Plugins.daggerHilt)
 
 // ./gradlew dependencyUpdates
 val PluginDependenciesSpec.`ben-manes-versions`: PluginDependencySpec
-    get() = id(Plugin.benManesVersions) version Version.benManesVersions
+    get() = id(Plugins.benManesVersions) version Versions.benManesVersions
 
 // ./gradlew ktlintCheck
 val PluginDependenciesSpec.`ktlint-gradle`: PluginDependencySpec
-    get() = id(Plugin.ktlintGradle) version Version.ktlintGradle
+    get() = id(Plugins.ktlintGradle) version Versions.ktlintGradle

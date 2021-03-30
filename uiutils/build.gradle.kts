@@ -8,14 +8,14 @@ plugins {
 androidLibraryConfig()
 
 dependencies {
-    implementation(Dependency.inject)
-    implementation(Dependency.Fragment.runtime)
-    implementation(Dependency.recyclerView)
-    implementation(Dependency.coil)
-    implementation(Dependency.Dagger.runtime)
-    implementation(Dependency.Dagger.Hilt.runtime)
-    implementation(Dependency.transition)
+    implementation(Dependencies.inject)
+    implementation(Dependencies.Fragment.runtime)
+    implementation(Dependencies.recyclerView)
+    implementation(Dependencies.coil)
+    implementation(Dependencies.Dagger.runtime)
+    implementation(Dependencies.Dagger.Hilt.runtime)
+    implementation(Dependencies.transition)
 
-    kapt(Dependency.Dagger.compiler)
-    kapt(Dependency.Dagger.Hilt.compiler)
+    kapt(Dependencies.Dagger.compiler)
+    kapt(Dependencies.Dagger.Hilt.compiler)
 }

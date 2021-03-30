@@ -10,19 +10,19 @@ androidLibraryConfig {
 }
 
 dependencies {
-    implementation(Dependency.Room.runtime)
-    implementation(Dependency.Room.roomKtx)
-    implementation(Dependency.Dagger.runtime)
-    implementation(Dependency.Dagger.Hilt.runtime)
+    implementation(Dependencies.Room.runtime)
+    implementation(Dependencies.Room.roomKtx)
+    implementation(Dependencies.Dagger.runtime)
+    implementation(Dependencies.Dagger.Hilt.runtime)
 
-    androidTestImplementation(Dependency.junit)
-    androidTestImplementation(Dependency.ArchCore.testing)
-    androidTestImplementation(Dependency.Kotlin.coroutinesTest)
-    androidTestImplementation(Dependency.Room.testing)
+    androidTestImplementation(Dependencies.junit)
+    androidTestImplementation(Dependencies.ArchCore.testing)
+    androidTestImplementation(Dependencies.Kotlin.coroutinesTest)
+    androidTestImplementation(Dependencies.Room.testing)
     defaultAndroidTestDependencies()
 
-    kapt(Dependency.Dagger.compiler)
-    kapt(Dependency.Dagger.Hilt.compiler)
+    kapt(Dependencies.Dagger.compiler)
+    kapt(Dependencies.Dagger.Hilt.compiler)
 
-    kaptAndroidTest(Dependency.Room.compiler)
+    kaptAndroidTest(Dependencies.Room.compiler)
 }

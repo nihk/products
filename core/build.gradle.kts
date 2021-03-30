@@ -6,5 +6,5 @@ plugins {
 jvmConfig()
 
 dependencies {
-    implementation(Dependency.inject)
+    implementation(Dependencies.inject)
 }

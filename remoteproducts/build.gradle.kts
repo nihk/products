@@ -8,14 +8,14 @@ plugins {
 androidLibraryConfig()
 
 dependencies {
-    implementation(Dependency.Retrofit.runtime)
-    implementation(Dependency.Retrofit.moshi)
-    implementation(Dependency.Moshi.runtime)
-    implementation(Dependency.Moshi.adapters)
-    implementation(Dependency.Dagger.runtime)
-    implementation(Dependency.Dagger.Hilt.runtime)
+    implementation(Dependencies.Retrofit.runtime)
+    implementation(Dependencies.Retrofit.moshi)
+    implementation(Dependencies.Moshi.runtime)
+    implementation(Dependencies.Moshi.adapters)
+    implementation(Dependencies.Dagger.runtime)
+    implementation(Dependencies.Dagger.Hilt.runtime)
 
-    kapt(Dependency.Dagger.compiler)
-    kapt(Dependency.Dagger.Hilt.compiler)
-    kapt(Dependency.Moshi.kotlinCodegen)
+    kapt(Dependencies.Dagger.compiler)
+    kapt(Dependencies.Dagger.Hilt.compiler)
+    kapt(Dependencies.Moshi.kotlinCodegen)
 }

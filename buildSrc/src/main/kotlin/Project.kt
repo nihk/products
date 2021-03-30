@@ -97,6 +97,6 @@ fun Project.jvmConfig() {
 private fun Project.defaultDependencies() {
     dependencies {
         "implementation"(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-        "implementation"(Dependency.Kotlin.stdlib)
+        "implementation"(Dependencies.Kotlin.stdlib)
     }
 }

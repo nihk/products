@@ -6,5 +6,5 @@ plugins {
 androidLibraryConfig()
 
 dependencies {
-    implementation(Dependency.coil)
+    implementation(Dependencies.coil)
 }
