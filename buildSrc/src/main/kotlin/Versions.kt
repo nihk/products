@@ -1,7 +1,7 @@
 object Versions {
     const val activity = "1.3.0-alpha04"
     const val annotation = "1.2.0-alpha01"
-    const val androidGradlePlugin = "4.1.2"
+    const val androidGradlePlugin = "4.1.3"
     const val appCompat = "1.3.0-beta01"
     const val archCore = "2.1.0"
     const val androidTest = "1.3.0"
@@ -26,7 +26,7 @@ object Versions {
     const val hiltJetpack = "1.0.0-alpha01"
     const val inject = "1"
     const val junit = "4.13.2"
-    const val kotlin = "1.4.30"
+    const val kotlin = "1.4.31"
     const val ktlintGradle = "10.0.0"
     const val leakCanary = "2.6"
     const val lifecycle = "2.3.0"
