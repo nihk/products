@@ -55,9 +55,7 @@ class ProductListRobot {
     }
 
     fun assertErrorMessage(isDisplayed: Boolean) {
-        val matcher = if (isDisplayed) isDisplayed() else not(
-            isDisplayed()
-        )
+        val matcher = if (isDisplayed) isDisplayed() else not(isDisplayed())
         onView(withId(R.id.error_message))
             .check(matches(matcher))
     }
