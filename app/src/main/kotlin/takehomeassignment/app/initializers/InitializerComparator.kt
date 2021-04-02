@@ -4,7 +4,7 @@ package takehomeassignment.app.initializers
  * Sometimes [Initializer]s are dependent on other [Initializer]s. This class helps sort them into
  * the appropriate order for initialization, based on the passed-in [priorities].
  */
-class AppInitializersComparator(
+class InitializerComparator(
     private val priorities: List<Class<out Initializer>>
 ) : Comparator<Initializer> {
     override fun compare(first: Initializer, second: Initializer): Int {

@@ -22,7 +22,7 @@ import takehomeassignment.app.config.AppConfig
 import takehomeassignment.app.config.GradleAppConfig
 import takehomeassignment.app.data.AppDatabase
 import takehomeassignment.app.initializers.AppInitializers
-import takehomeassignment.app.initializers.AppInitializersComparator
+import takehomeassignment.app.initializers.InitializerComparator
 import takehomeassignment.app.initializers.Initializer
 import takehomeassignment.app.initializers.StrictModeInitializer
 import takehomeassignment.app.initializers.TimberInitializer
@@ -85,11 +85,11 @@ abstract class AppModule {
         }
 
         @Provides
-        fun appInitializersComparator(): AppInitializersComparator {
+        fun initializersComparator(): InitializerComparator {
             val priorities = listOf<Class<out Initializer>>(
                 TimberInitializer::class.java
             )
-            return AppInitializersComparator(priorities)
+            return InitializerComparator(priorities)
         }
     }
 

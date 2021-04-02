@@ -4,7 +4,7 @@ import javax.inject.Inject
 
 class AppInitializers @Inject constructor(
     private val initializers: Set<@JvmSuppressWildcards Initializer>,
-    private val comparator: AppInitializersComparator
+    private val comparator: InitializerComparator
 ) : Initializer {
 
     override fun initialize() {
