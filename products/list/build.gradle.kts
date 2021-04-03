@@ -8,10 +8,10 @@ plugins {
 androidLibraryConfig()
 
 dependencies {
-    implementation(project(":core"))
-    implementation(project(":products:remote"))
-    implementation(project(":products:local"))
-    implementation(project(":utils:ui"))
+    implementation(project(Modules.core))
+    implementation(project(Modules.Products.remote))
+    implementation(project(Modules.Products.local))
+    implementation(project(Modules.Utils.ui))
 
     implementation(Dependencies.inject)
     implementation(Dependencies.Dagger.runtime)
@@ -37,7 +37,7 @@ dependencies {
     testImplementation(Dependencies.junit)
     testImplementation(Dependencies.ArchCore.testing)
     testImplementation(Dependencies.Kotlin.coroutinesTest)
-    androidTestImplementation(project(":utils:test"))
+    androidTestImplementation(project(Modules.Utils.test))
 
     defaultAndroidTestDependencies()
     androidTestImplementation(Dependencies.Moshi.runtime)

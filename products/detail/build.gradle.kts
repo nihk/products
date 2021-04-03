@@ -7,9 +7,9 @@ plugins {
 androidLibraryConfig()
 
 dependencies {
-    implementation(project(":core"))
-    implementation(project(":products:local"))
-    implementation(project(":utils:ui"))
+    implementation(project(Modules.core))
+    implementation(project(Modules.Products.local))
+    implementation(project(Modules.Utils.ui))
 
     implementation(Dependencies.inject)
     implementation(Dependencies.Dagger.runtime)

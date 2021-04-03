@@ -21,13 +21,13 @@ androidAppConfig {
 }
 
 dependencies {
-    implementation(project(":core"))
-    implementation(project(":utils:ui"))
-    implementation(project(":utils:async"))
-    implementation(project(":products:list"))
-    implementation(project(":products:detail"))
-    implementation(project(":products:local"))
-    implementation(project(":products:remote"))
+    implementation(project(Modules.core))
+    implementation(project(Modules.Utils.ui))
+    implementation(project(Modules.Utils.async))
+    implementation(project(Modules.Products.list))
+    implementation(project(Modules.Products.detail))
+    implementation(project(Modules.Products.local))
+    implementation(project(Modules.Products.remote))
 
     implementation(Dependencies.activity)
     implementation(Dependencies.appCompat)
