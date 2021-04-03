@@ -4,21 +4,21 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
-import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.transition.MaterialSharedAxis
-import javax.inject.Inject
-import javax.inject.Provider
-import kotlin.math.roundToInt
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import takehomeassignment.productlist.R
 import takehomeassignment.productlist.databinding.ProductListFragmentBinding
 import takehomeassignment.productlist.vm.ProductListViewModel
 import takehomeassignment.uiutils.MarginItemDecoration
-import takehomeassignment.uiutils.isNotEmpty
+import takehomeassignment.uiutils.isEmpty
+import javax.inject.Inject
+import javax.inject.Provider
+import kotlin.math.roundToInt
 
 class ProductListFragment @Inject constructor(
     vmFactory: ProductListViewModel.Factory,
@@ -57,7 +57,7 @@ class ProductListFragment @Inject constructor(
     private fun observeViewModel(binding: ProductListFragmentBinding, adapter: ProductListAdapter) {
         viewModel.loading
             .onEach { isLoading ->
-                binding.progressBar.isGone = !isLoading
+                binding.progressBar.isVisible = isLoading
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
 
@@ -70,7 +70,7 @@ class ProductListFragment @Inject constructor(
 
         viewModel.error
             .onEach { throwable ->
-                binding.errorMessage.isGone = throwable == null || adapter.isNotEmpty
+                binding.errorMessage.isVisible = throwable != null && adapter.isEmpty
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
