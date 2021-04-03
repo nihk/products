@@ -90,6 +90,7 @@ private fun <T : BaseExtension> Project.android(): T {
 fun Project.jvmConfig() {
     val sourceSets = extensions.getByName("sourceSets") as SourceSetContainer
     sourceSets["main"].java.srcDir("src/main/kotlin")
+    sourceSets["test"].java.srcDir("src/test/kotlin")
 
     defaultDependencies()
 }
