@@ -9,7 +9,7 @@ androidLibraryConfig()
 dependencies {
     implementation(project(":core"))
     implementation(project(":localproducts"))
-    implementation(project(":uiutils"))
+    implementation(project(":utils-ui"))
 
     implementation(Dependencies.inject)
     implementation(Dependencies.Dagger.runtime)

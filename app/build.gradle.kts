@@ -22,8 +22,8 @@ androidAppConfig {
 
 dependencies {
     implementation(project(":core"))
-    implementation(project(":uiutils"))
-    implementation(project(":asyncutils"))
+    implementation(project(":utils-ui"))
+    implementation(project(":utils-async"))
     implementation(project(":productlist"))
     implementation(project(":productdetail"))
     implementation(project(":localproducts"))

@@ -1,9 +1,9 @@
 include(
     ":app",
     ":core",
-    ":uiutils",
-    ":testutils",
-    ":asyncutils",
+    ":utils-ui",
+    ":utils-test",
+    ":utils-async",
     ":remoteproducts",
     ":localproducts",
     ":productlist",

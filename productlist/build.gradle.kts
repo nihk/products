@@ -11,7 +11,7 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":remoteproducts"))
     implementation(project(":localproducts"))
-    implementation(project(":uiutils"))
+    implementation(project(":utils-ui"))
 
     implementation(Dependencies.inject)
     implementation(Dependencies.Dagger.runtime)
@@ -37,8 +37,8 @@ dependencies {
     testImplementation(Dependencies.junit)
     testImplementation(Dependencies.ArchCore.testing)
     testImplementation(Dependencies.Kotlin.coroutinesTest)
+    androidTestImplementation(project(":utils-test"))
 
-    androidTestImplementation(project(":testutils"))
     defaultAndroidTestDependencies()
     androidTestImplementation(Dependencies.Moshi.runtime)
     androidTestImplementation(Dependencies.Moshi.adapters)
