@@ -25,9 +25,7 @@ class ProductDetailViewModel(
         }
     }
 
-    class Factory @Inject constructor(
-        private val dao: ProductsDao
-    ) {
+    class Factory @Inject constructor(private val dao: ProductsDao) {
         fun create(id: String): ViewModelProvider.Factory {
             return object : ViewModelProvider.Factory {
                 override fun <T : ViewModel?> create(modelClass: Class<T>): T {

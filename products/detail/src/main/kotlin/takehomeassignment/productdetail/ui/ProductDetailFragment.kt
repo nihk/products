@@ -11,9 +11,11 @@ import coil.ImageLoader
 import coil.load
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import takehomeassignment.productdetail.R
 import takehomeassignment.productdetail.databinding.ProductDetailFragmentBinding
 import takehomeassignment.productdetail.vm.ProductDetailViewModel
@@ -42,22 +44,21 @@ class ProductDetailFragment @Inject constructor(
         val binding = ProductDetailFragmentBinding.bind(view)
         binding.image.transitionName = id
 
-        viewModel.product()
-            .onEach { product ->
-                with(binding) {
-                    image.load(product.imageUrl, imageLoader) {
-                        listener(
-                            onSuccess = { _, _ -> startPostponedEnterTransition() },
-                            onError = { _, _ -> startPostponedEnterTransition() }
-                        )
-                    }
-                    name.text = product.name
-                    price.text = product.price
-                    type.text = getString(R.string.product_type_formatter, product.type)
-                    code.text = getString(R.string.product_code_formatter, product.id)
+        viewLifecycleOwner.lifecycleScope.launch {
+            val product = viewModel.product().first()
+            with(binding) {
+                image.load(product.imageUrl, imageLoader) {
+                    listener(
+                        onSuccess = { _, _ -> startPostponedEnterTransition() },
+                        onError = { _, _ -> startPostponedEnterTransition() }
+                    )
                 }
+                name.text = product.name
+                price.text = product.price
+                type.text = getString(R.string.product_type_formatter, product.type)
+                code.text = getString(R.string.product_code_formatter, product.id)
             }
-            .launchIn(viewLifecycleOwner.lifecycleScope)
+        }
     }
 
     companion object {
