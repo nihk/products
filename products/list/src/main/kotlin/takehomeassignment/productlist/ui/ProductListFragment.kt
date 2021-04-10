@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import takehomeassignment.productlist.R
 import takehomeassignment.productlist.databinding.ProductListFragmentBinding
+import takehomeassignment.productlist.state.ProductsState
 import takehomeassignment.productlist.vm.ProductListViewModel
 import takehomeassignment.uiutils.MarginItemDecoration
 import takehomeassignment.uiutils.isEmpty
@@ -39,7 +40,17 @@ class ProductListFragment @Inject constructor(
             this.adapter = adapter
         }
 
-        observeViewModel(binding, adapter)
+        viewModel.productsStates()
+            .onEach { state ->
+                state.products?.let { products ->
+                    adapter.submitList(products)
+                    startTransitions()
+                }
+
+                binding.progressBar.isVisible = state is ProductsState.Loading
+                binding.errorMessage.isVisible = state is ProductsState.Error && adapter.isEmpty
+            }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun prepareTransitions() {
@@ -52,26 +63,5 @@ class ProductListFragment @Inject constructor(
         (view?.parent as? ViewGroup)?.doOnPreDraw {
             startPostponedEnterTransition()
         }
-    }
-
-    private fun observeViewModel(binding: ProductListFragmentBinding, adapter: ProductListAdapter) {
-        viewModel.loading
-            .onEach { isLoading ->
-                binding.progressBar.isVisible = isLoading
-            }
-            .launchIn(viewLifecycleOwner.lifecycleScope)
-
-        viewModel.products
-            .onEach { products ->
-                adapter.submitList(products)
-                startTransitions()
-            }
-            .launchIn(viewLifecycleOwner.lifecycleScope)
-
-        viewModel.error
-            .onEach { throwable ->
-                binding.errorMessage.isVisible = throwable != null && adapter.isEmpty
-            }
-            .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 }

@@ -9,9 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import takehomeassignment.localproducts.models.Product
 import takehomeassignment.productlist.repository.ProductListRepository
 import takehomeassignment.productlist.state.ProductsState
 import javax.inject.Inject
@@ -21,20 +19,12 @@ class ProductListViewModel(
     private val handle: SavedStateHandle
 ) : ViewModel() {
 
-    private val productsState = MutableStateFlow<ProductsState?>(null)
-
-    val products: Flow<List<Product>> = productsState.map { state -> state?.products }
-        .filterNotNull()
-
-    val loading: Flow<Boolean> = productsState.map { state -> state is ProductsState.Loading }
-
-    val error: Flow<Throwable?> = productsState.map { state ->
-        (state as? ProductsState.Error)?.throwable
-    }
+    private val productsStates = MutableStateFlow<ProductsState?>(null)
+    fun productsStates(): Flow<ProductsState> = productsStates.filterNotNull()
 
     init {
         repository.products()
-            .onEach(productsState::emit)
+            .onEach(productsStates::emit)
             .launchIn(viewModelScope)
     }
 
