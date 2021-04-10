@@ -5,9 +5,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.savedstate.SavedStateRegistryOwner
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -15,15 +14,16 @@ import kotlinx.coroutines.flow.onEach
 import takehomeassignment.localproducts.models.Product
 import takehomeassignment.productlist.repository.ProductListRepository
 import takehomeassignment.productlist.state.ProductsState
+import javax.inject.Inject
 
 class ProductListViewModel(
     repository: ProductListRepository,
     private val handle: SavedStateHandle
 ) : ViewModel() {
 
-    private val productsState = MutableSharedFlow<ProductsState>(replay = 1)
+    private val productsState = MutableStateFlow<ProductsState?>(null)
 
-    val products: Flow<List<Product>> = productsState.map { state -> state.products }
+    val products: Flow<List<Product>> = productsState.map { state -> state?.products }
         .filterNotNull()
 
     val loading: Flow<Boolean> = productsState.map { state -> state is ProductsState.Loading }
