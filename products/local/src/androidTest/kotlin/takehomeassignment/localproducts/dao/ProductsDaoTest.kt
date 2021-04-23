@@ -12,7 +12,7 @@ class ProductsDaoTest {
 
     @get:Rule
     val database = InMemoryDatabaseRule(FakeDatabase::class.java)
-    val dao get() = database.database.productsDao()
+    val dao get() = database.database().productsDao()
 
     @Test
     fun queryByIdGetsCorrectProduct() = runBlocking {

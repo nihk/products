@@ -11,11 +11,11 @@ class InMemoryDatabaseRule<T>(
 ) : TestWatcher()
         where T : RoomDatabase {
 
-    private var _database: T? = null
-    val database: T get() = _database!!
+    private var database: T? = null
+    fun database(): T = requireNotNull(database)
 
     override fun starting(description: Description) {
-        _database = Room.inMemoryDatabaseBuilder(
+        database = Room.inMemoryDatabaseBuilder(
             ApplicationProvider.getApplicationContext(),
             clazz
         ).allowMainThreadQueries()
@@ -23,6 +23,6 @@ class InMemoryDatabaseRule<T>(
     }
 
     override fun finished(description: Description?) {
-        _database?.close()
+        database?.close()
     }
 }

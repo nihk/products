@@ -47,5 +47,7 @@ class FakeImageLoader : ImageLoader {
         )
     }
 
+    override fun newBuilder() = error("unused")
+
     override fun shutdown() = Unit
 }
