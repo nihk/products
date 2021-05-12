@@ -45,6 +45,7 @@ private fun <T : BaseExtension> Project.androidConfig() = android<T>().apply {
         }
         getByName("release") {
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
             consumerProguardFiles("consumer-rules.pro")
         }
