@@ -1,6 +1,7 @@
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
+import com.android.build.gradle.internal.dsl.BuildType
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.tasks.SourceSetContainer
@@ -8,11 +9,18 @@ import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.io.File
 
 fun Project.androidAppConfig(extras: (BaseAppModuleExtension.() -> Unit) = {}) = androidConfig<BaseAppModuleExtension>().run {
     defaultConfig {
         buildToolsVersion(BuildVersion.buildTools)
         multiDexEnabled = true
+    }
+
+    buildTypes {
+        listOf(getByName(BuildTypes.DebugMinified), getByName(BuildTypes.Release)).forEach { buildType ->
+            buildType.isShrinkResources = true
+        }
     }
 
     buildFeatures {
@@ -40,14 +48,15 @@ private fun <T : BaseExtension> Project.androidConfig() = android<T>().apply {
     }
 
     buildTypes {
-        getByName("debug") {
+        getByName(BuildTypes.Debug) {
             isMinifyEnabled = false
         }
-        getByName("release") {
-            isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-            consumerProguardFiles("consumer-rules.pro")
+        create(BuildTypes.DebugMinified) {
+            signingConfig  = signingConfigs.getByName(BuildTypes.Debug)
+            minify(defaultProguardFile())
+        }
+        getByName(BuildTypes.Release) {
+            minify(defaultProguardFile())
         }
     }
 
@@ -101,4 +110,14 @@ private fun Project.defaultDependencies() {
         "implementation"(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
         "implementation"(Dependencies.Kotlin.stdlib)
     }
+}
+
+private fun BaseExtension.defaultProguardFile(): File {
+    return getDefaultProguardFile("proguard-android.txt")
+}
+
+private fun BuildType.minify(defaultProguardFile: File) {
+    isMinifyEnabled = true
+    proguardFiles(defaultProguardFile, "proguard-rules.pro")
+    consumerProguardFiles("consumer-rules.pro")
 }
