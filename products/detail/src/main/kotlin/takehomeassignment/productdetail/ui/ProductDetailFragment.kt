@@ -11,10 +11,8 @@ import coil.ImageLoader
 import coil.load
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
-import kotlinx.coroutines.flow.first
 import javax.inject.Inject
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import takehomeassignment.productdetail.R
 import takehomeassignment.productdetail.databinding.ProductDetailFragmentBinding
@@ -45,7 +43,7 @@ class ProductDetailFragment @Inject constructor(
         binding.image.transitionName = id
 
         viewLifecycleOwner.lifecycleScope.launch {
-            val product = viewModel.product().first()
+            val product = viewModel.product.first()
             with(binding) {
                 image.load(product.imageUrl, imageLoader) {
                     listener(
