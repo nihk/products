@@ -40,7 +40,7 @@ class ProductListFragment @Inject constructor(
             this.adapter = adapter
         }
 
-        viewModel.productsStates()
+        viewModel.productsStates
             .onEach { state ->
                 state.products?.let { products ->
                     adapter.submitList(products)
