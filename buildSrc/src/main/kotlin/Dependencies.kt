@@ -115,11 +115,6 @@ object Dependencies {
         const val liveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
     }
 
-    object Mockito {
-        const val core = "org.mockito:mockito-core:${Versions.mockito}"
-        const val android = "org.mockito:mockito-android:${Versions.mockito}"
-    }
-
     object Moshi {
         const val runtime = "com.squareup.moshi:moshi:${Versions.moshi}"
         const val kotlinCodegen = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshi}"
