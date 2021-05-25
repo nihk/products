@@ -37,6 +37,7 @@ dependencies {
     testImplementation(Dependencies.junit)
     testImplementation(Dependencies.ArchCore.testing)
     testImplementation(Dependencies.Kotlin.coroutinesTest)
+    testImplementation(project(Modules.Utils.test))
     androidTestImplementation(project(Modules.Utils.test))
 
     defaultAndroidTestDependencies()
