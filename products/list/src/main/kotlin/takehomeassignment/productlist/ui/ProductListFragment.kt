@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import takehomeassignment.productlist.R
 import takehomeassignment.productlist.databinding.ProductListFragmentBinding
-import takehomeassignment.productlist.state.ProductsState
+import takehomeassignment.productlist.vm.ProductsViewState
 import takehomeassignment.productlist.vm.ProductListViewModel
 import takehomeassignment.uiutils.MarginItemDecoration
 import takehomeassignment.uiutils.isEmpty
@@ -47,8 +47,8 @@ class ProductListFragment @Inject constructor(
                     startTransitions()
                 }
 
-                binding.progressBar.isVisible = state is ProductsState.Loading
-                binding.errorMessage.isVisible = state is ProductsState.Error && adapter.isEmpty
+                binding.progressBar.isVisible = state is ProductsViewState.Loading
+                binding.errorMessage.isVisible = state is ProductsViewState.Error && adapter.isEmpty
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }

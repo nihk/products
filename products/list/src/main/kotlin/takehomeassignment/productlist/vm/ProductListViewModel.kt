@@ -9,9 +9,10 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import takehomeassignment.productlist.repository.ProductListRepository
+import takehomeassignment.productlist.repository.ProductsResult
 
 class ProductListViewModel(
     repository: ProductListRepository,
@@ -19,8 +20,18 @@ class ProductListViewModel(
 ) : ViewModel() {
 
     val productsStates = repository.products()
-        .stateIn(scope = viewModelScope, started = SharingStarted.Lazily, initialValue = null)
-        .filterNotNull()
+        .map { result ->
+            when (result) {
+                is ProductsResult.Cached -> ProductsViewState.Loading(result.products)
+                is ProductsResult.Fresh -> ProductsViewState.Success(result.products)
+                is ProductsResult.Error -> ProductsViewState.Error(result.throwable, result.products)
+            }
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = ProductsViewState.Loading()
+        )
 
     class Factory @AssistedInject constructor(
         private val repository: ProductListRepository,

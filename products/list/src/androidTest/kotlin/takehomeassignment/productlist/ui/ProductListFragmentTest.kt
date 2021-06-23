@@ -1,36 +1,36 @@
 package takehomeassignment.productlist.ui
 
 import org.junit.Test
-import takehomeassignment.productlist.state.ProductsState
+import takehomeassignment.productlist.repository.ProductsResult
 
 class ProductListFragmentTest {
     @Test
     fun loadingStateShowsLoading() = productList {
-        render(ProductsState.Loading())
+        render(ProductsResult.Cached(emptyList()))
         assertIsLoading()
     }
 
     @Test
     fun successStateShowsProducts() = productList {
-        render(ProductsState.Success(products))
+        render(ProductsResult.Fresh(products))
         assertProductNameIsDisplayed(position = 0, products.first().name)
     }
 
     @Test
     fun errorStateWithNoProductsShowsErrorMessage() = productList {
-        render(ProductsState.Error(Exception()))
+        render(ProductsResult.Error(Exception(), emptyList()))
         assertErrorMessage(isDisplayed = true)
     }
 
     @Test
     fun errorStateWithProductsDoesNotShowErrorMessage() = productList {
-        render(ProductsState.Error(Exception(), products))
+        render(ProductsResult.Error(Exception(), products))
         assertErrorMessage(isDisplayed = false)
     }
 
     @Test
     fun clickingProductInvokesCallbackWithCorrectId() = productList {
-        render(ProductsState.Success(products))
+        render(ProductsResult.Fresh(products))
         clickOn(position = 0)
         assertProductWasClicked(id = products.first().id)
     }

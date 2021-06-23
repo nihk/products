@@ -19,7 +19,7 @@ import org.hamcrest.CoreMatchers.not
 import org.junit.Assert.assertEquals
 import takehomeassignment.productlist.R
 import takehomeassignment.productlist.repository.ProductListRepository
-import takehomeassignment.productlist.state.ProductsState
+import takehomeassignment.productlist.repository.ProductsResult
 import takehomeassignment.productlist.vm.ProductListViewModel
 import takehomeassignment.testutils.FakeImageLoader
 
@@ -29,15 +29,15 @@ fun productList(block: ProductListRobot.() -> Unit) {
 }
 
 class ProductListRobot {
-    private val states = MutableStateFlow<ProductsState?>(null)
+    private val results = MutableStateFlow<ProductsResult?>(null)
     private val onProductClicked = FakeOnProductClicked()
 
     init {
         launchProductList()
     }
 
-    fun render(state: ProductsState) {
-        states.value = state
+    fun render(result: ProductsResult) {
+        results.value = result
     }
 
     fun clickOn(position: Int) {
@@ -67,7 +67,7 @@ class ProductListRobot {
 
     private fun launchProductList() {
         val repository = object : ProductListRepository {
-            override fun products(): Flow<ProductsState> = states.filterNotNull()
+            override fun products(): Flow<ProductsResult> = results.filterNotNull()
         }
         val vmFactory = object : ProductListViewModel.Factory.Factory {
             override fun create(owner: SavedStateRegistryOwner): ProductListViewModel.Factory {
