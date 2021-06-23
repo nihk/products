@@ -2,6 +2,7 @@ package takehomeassignment.productlist.ui
 
 import android.widget.ImageView
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.savedstate.SavedStateRegistryOwner
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -11,11 +12,11 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import javax.inject.Provider
-import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import org.hamcrest.CoreMatchers.not
+import org.junit.Assert.assertEquals
 import takehomeassignment.productlist.R
 import takehomeassignment.productlist.repository.ProductListRepository
 import takehomeassignment.productlist.state.ProductsState
@@ -68,7 +69,11 @@ class ProductListRobot {
         val repository = object : ProductListRepository {
             override fun products(): Flow<ProductsState> = states.filterNotNull()
         }
-        val vmFactory = ProductListViewModel.Factory(repository)
+        val vmFactory = object : ProductListViewModel.Factory.Factory {
+            override fun create(owner: SavedStateRegistryOwner): ProductListViewModel.Factory {
+                return ProductListViewModel.Factory(repository, owner)
+            }
+        }
         val adapterFactory = Provider { ProductListAdapter(onProductClicked, FakeImageLoader()) }
 
         launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents_DayNight_DarkActionBar) {

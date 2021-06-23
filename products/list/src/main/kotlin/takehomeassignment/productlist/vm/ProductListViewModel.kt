@@ -5,7 +5,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.savedstate.SavedStateRegistryOwner
-import javax.inject.Inject
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.stateIn
@@ -20,18 +22,22 @@ class ProductListViewModel(
         .stateIn(scope = viewModelScope, started = SharingStarted.Lazily, initialValue = null)
         .filterNotNull()
 
-    class Factory @Inject constructor(private val repository: ProductListRepository) {
-        fun create(owner: SavedStateRegistryOwner): AbstractSavedStateViewModelFactory {
-            return object : AbstractSavedStateViewModelFactory(owner, null) {
-                override fun <T : ViewModel?> create(
-                    key: String,
-                    modelClass: Class<T>,
-                    handle: SavedStateHandle,
-                ): T {
-                    @Suppress("UNCHECKED_CAST")
-                    return ProductListViewModel(repository, handle) as T
-                }
-            }
+    class Factory @AssistedInject constructor(
+        private val repository: ProductListRepository,
+        @Assisted owner: SavedStateRegistryOwner
+    ) : AbstractSavedStateViewModelFactory(owner, null) {
+        override fun <T : ViewModel?> create(
+            key: String,
+            modelClass: Class<T>,
+            handle: SavedStateHandle
+        ): T {
+            @Suppress("UNCHECKED_CAST")
+            return ProductListViewModel(repository, handle) as T
+        }
+
+        @AssistedFactory
+        interface Factory {
+            fun create(owner: SavedStateRegistryOwner): ProductListViewModel.Factory
         }
     }
 }

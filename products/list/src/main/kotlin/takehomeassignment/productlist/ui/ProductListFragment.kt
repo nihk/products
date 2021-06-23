@@ -22,7 +22,7 @@ import javax.inject.Provider
 import kotlin.math.roundToInt
 
 class ProductListFragment @Inject constructor(
-    vmFactory: ProductListViewModel.Factory,
+    vmFactory: ProductListViewModel.Factory.Factory,
     private val adapterFactory: Provider<ProductListAdapter>
 ) : Fragment(R.layout.product_list_fragment) {
 

@@ -88,6 +88,27 @@ private fun <T : BaseExtension> Project.androidConfig() = android<T>().apply {
     testOptions {
         animationsDisabled = true
     }
+
+    packagingOptions {
+        setExcludes(
+            setOf(
+                "META-INF/DEPENDENCIES",
+                "LICENSE.txt",
+                "META-INF/LICENSE",
+                "META-INF/LICENSE.txt",
+                "META-INF/license.txt",
+                "NOTICE.txt",
+                "META-INF/NOTICE",
+                "META-INF/NOTICE.txt",
+                "META-INF/notice.txt",
+                "META-INF/ASL2.0",
+                "META-INF/AL2.0",
+                "META-INF/LGPL2.1",
+                "META-INF/MANIFEST.MF",
+                "META-INF/proguard/coroutines.pro",
+            )
+        )
+    }
 }.also {
     defaultDependencies()
 }
