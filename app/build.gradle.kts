@@ -16,6 +16,7 @@ androidAppConfig {
                 arg("room.schemaLocation", "$projectDir/schemas")
                 arg("room.incremental", true)
             }
+            correctErrorTypes = true // https://dagger.dev/hilt/gradle-setup.html
         }
     }
 }
