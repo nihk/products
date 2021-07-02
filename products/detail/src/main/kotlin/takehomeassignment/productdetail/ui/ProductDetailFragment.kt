@@ -3,7 +3,6 @@ package takehomeassignment.productdetail.ui
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -25,7 +24,7 @@ class ProductDetailFragment @Inject constructor(
 ) : Fragment(R.layout.product_detail_fragment) {
 
     private val viewModel by viewModels<ProductDetailViewModel> { vmFactory.create(id) }
-    private val id: String get() = arguments?.getString(KEY_ID)!!
+    private val id: String get() = arguments?.getString(ARG_ID)!!
 
     private fun prepareTransitions() {
         sharedElementEnterTransition = MaterialContainerTransform().apply {
@@ -62,10 +61,11 @@ class ProductDetailFragment @Inject constructor(
     }
 
     companion object {
-        private const val KEY_ID = "id"
+        const val ARG_ID = "id"
+        const val ROUTE = "products/detail/{id}"
 
-        fun bundle(id: String): Bundle {
-            return bundleOf(KEY_ID to id)
+        fun route(id: String): String {
+            return ROUTE.replace("{id}", id)
         }
     }
 }

@@ -13,10 +13,8 @@ class OnProductClickedDirections @Inject constructor(
 
     override fun onProductClicked(id: String, image: ImageView) {
         navController.navigate(
-            AppNavGraph.Destination.productDetail,
-            ProductDetailFragment.bundle(id),
-            null,
-            FragmentNavigatorExtras(image to id)
+            route = ProductDetailFragment.route(id),
+            navigatorExtras = FragmentNavigatorExtras(image to id)
         )
     }
 }

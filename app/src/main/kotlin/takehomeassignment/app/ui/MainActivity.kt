@@ -3,13 +3,13 @@ package takehomeassignment.app.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.navigation.createGraph
 import androidx.navigation.fragment.fragment
 import dagger.hilt.android.AndroidEntryPoint
 import takehomeassignment.app.R
 import takehomeassignment.app.di.entryPoint
 import takehomeassignment.app.di.main.MainEntryPoint
-import takehomeassignment.app.navigation.AppNavGraph
 import takehomeassignment.productdetail.ui.ProductDetailFragment
 import takehomeassignment.productlist.ui.ProductListFragment
 
@@ -25,12 +25,13 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
 
     private fun createNavGraph(navController: NavController) {
         navController.apply {
-            graph = createGraph(
-                id = AppNavGraph.id,
-                startDestination = AppNavGraph.Destination.productList
-            ) {
-                fragment<ProductListFragment>(AppNavGraph.Destination.productList)
-                fragment<ProductDetailFragment>(AppNavGraph.Destination.productDetail)
+            graph = createGraph(startDestination = ProductListFragment.ROUTE) {
+                fragment<ProductListFragment>(route = ProductListFragment.ROUTE)
+                fragment<ProductDetailFragment>(route = ProductDetailFragment.ROUTE) {
+                    argument(name = ProductDetailFragment.ARG_ID) {
+                        type = NavType.StringType
+                    }
+                }
             }
         }
     }
