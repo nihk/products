@@ -8,16 +8,11 @@ import androidx.room.RoomDatabase
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import dagger.Reusable
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
 import javax.inject.Singleton
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import takehomeassignment.app.config.AppConfig
 import takehomeassignment.app.config.GradleAppConfig
 import takehomeassignment.app.data.AppDatabase
@@ -36,41 +31,9 @@ import takehomeassignment.localproducts.dao.ProductsDaoProvider
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class AppModule {
-
     companion object {
         @Provides
         fun appResources(application: Application): Resources = application.resources
-
-        @Provides
-        fun retrofitBuilder(): Retrofit.Builder = Retrofit.Builder()
-
-        @Provides
-        fun moshiConverterFactory(): MoshiConverterFactory = MoshiConverterFactory.create()
-
-        @Provides
-        fun okHttpClientBuilder(): OkHttpClient.Builder = OkHttpClient.Builder()
-
-        @Provides
-        fun httpLogger(logger: Logger): HttpLoggingInterceptor.Logger {
-            return HttpLoggingInterceptor.Logger { message -> logger.d(message) }
-        }
-
-        @Provides
-        fun httpLoggingInterceptor(httpLogger: HttpLoggingInterceptor.Logger): HttpLoggingInterceptor {
-            return HttpLoggingInterceptor(httpLogger)
-                .also { it.level = HttpLoggingInterceptor.Level.BASIC }
-        }
-
-        @Reusable
-        @Provides
-        fun okHttpClient(
-            builder: OkHttpClient.Builder,
-            httpLoggingInterceptor: HttpLoggingInterceptor
-        ): OkHttpClient {
-            return builder
-                .addInterceptor(httpLoggingInterceptor)
-                .build()
-        }
 
         @Singleton
         @Provides
