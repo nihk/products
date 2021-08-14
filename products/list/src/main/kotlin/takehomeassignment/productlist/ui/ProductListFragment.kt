@@ -40,6 +40,10 @@ class ProductListFragment @Inject constructor(
             this.adapter = adapter
         }
 
+        binding.retry.setOnClickListener {
+            viewModel.fetchProducts()
+        }
+
         viewModel.productsStates
             .onEach { state ->
                 state.products?.let { products ->
