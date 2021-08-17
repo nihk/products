@@ -19,6 +19,10 @@ androidAppConfig {
             correctErrorTypes = true // https://dagger.dev/hilt/gradle-setup.html
         }
     }
+
+    hilt {
+        enableExperimentalClasspathAggregation = true
+    }
 }
 
 dependencies {
@@ -33,7 +37,6 @@ dependencies {
     implementation(Dependencies.activity)
     implementation(Dependencies.appCompat)
     implementation(Dependencies.coreKtx)
-    implementation(Dependencies.vectorDrawable)
     implementation(Dependencies.constraintLayout)
     implementation(Dependencies.material)
     implementation(Dependencies.Navigation.runtime)
@@ -41,15 +44,10 @@ dependencies {
     implementation(Dependencies.Navigation.ui)
     implementation(Dependencies.Dagger.runtime)
     implementation(Dependencies.Dagger.Hilt.runtime)
-    implementation(Dependencies.Retrofit.runtime)
-    implementation(Dependencies.Retrofit.moshi)
-    implementation(Dependencies.Moshi.runtime)
     implementation(Dependencies.Room.runtime)
     implementation(Dependencies.Room.roomKtx)
     implementation(Dependencies.timber)
-    implementation(Dependencies.OkHttp.loggingInterceptor)
     implementation(Dependencies.multidex)
-    implementation(Dependencies.coil)
 
     debugImplementation(Dependencies.leakCanary)
 
