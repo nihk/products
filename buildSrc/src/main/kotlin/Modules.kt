@@ -16,4 +16,12 @@ object Modules {
         const val test = "$utils:test"
         const val ui = "$utils:ui"
     }
+
+    object Samples {
+        private const val samples = ":samples"
+        object Products {
+            private const val products = "$samples:products"
+            const val detail = "$products:detail"
+        }
+    }
 }

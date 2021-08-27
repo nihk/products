@@ -7,6 +7,7 @@ include(
     ":products:remote",
     ":products:local",
     ":products:list",
-    ":products:detail"
+    ":products:detail",
+    ":samples:products:detail"
 )
 rootProject.name = "products"
