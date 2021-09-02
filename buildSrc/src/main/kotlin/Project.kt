@@ -2,6 +2,7 @@ import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import com.android.build.gradle.internal.dsl.BuildType
+import java.io.File
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.tasks.SourceSetContainer
@@ -9,7 +10,6 @@ import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.io.File
 
 fun Project.androidAppConfig(extras: (BaseAppModuleExtension.() -> Unit) = {}) = androidConfig<BaseAppModuleExtension>().run {
     defaultConfig {
@@ -79,12 +79,6 @@ private fun <T : BaseExtension> Project.androidConfig() = android<T>().apply {
         }
     }
 
-    sourceSets {
-        getByName("main").java.srcDir("src/main/kotlin")
-        getByName("test").java.srcDir("src/test/kotlin")
-        getByName("androidTest").java.srcDir("src/androidTest/kotlin")
-    }
-
     testOptions {
         animationsDisabled = true
     }
@@ -108,10 +102,6 @@ private fun <T : BaseExtension> Project.android(): T {
 }
 
 fun Project.jvmConfig() {
-    val sourceSets = extensions.getByName("sourceSets") as SourceSetContainer
-    sourceSets["main"].java.srcDir("src/main/kotlin")
-    sourceSets["test"].java.srcDir("src/test/kotlin")
-
     defaultDependencies()
 }
 
