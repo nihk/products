@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import takehomeassignment.productlist.repository.ProductListRepository
@@ -23,24 +24,26 @@ class ProductListViewModel(
     private val handle: SavedStateHandle
 ) : ViewModel() {
     private val events = MutableSharedFlow<Event>()
-    val productsStates = events.flatMapLatest { event -> handleEvent(event) }
+    val productsStates = events
+        .onStart { emit(Event.FetchProducts) }
+        .flatMapLatest { event -> processEvent(event) }
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.Eagerly,
+            started = SharingStarted.WhileSubscribed(5_000L),
             initialValue = ProductsViewState.Loading()
         )
 
-    init {
-        fetchProducts()
+    fun fetchProducts() {
+        sendEvent(Event.FetchProducts)
     }
 
-    fun fetchProducts() {
+    private fun sendEvent(event: Event) {
         viewModelScope.launch {
-            events.emit(Event.FetchProducts)
+            events.emit(event)
         }
     }
 
-    private fun handleEvent(event: Event): Flow<ProductsViewState> {
+    private fun processEvent(event: Event): Flow<ProductsViewState> {
         return when (event) {
             Event.FetchProducts -> repository.products()
                 .map { result -> result.toProductsViewState() }
