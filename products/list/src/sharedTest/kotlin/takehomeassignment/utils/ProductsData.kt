@@ -1,4 +1,4 @@
-package takehomeassignment.productlist.ui
+package takehomeassignment.utils
 
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi

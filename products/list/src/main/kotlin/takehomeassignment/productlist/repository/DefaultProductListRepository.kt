@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import takehomeassignment.core.Logger
 import takehomeassignment.localproducts.dao.ProductsDao
+import takehomeassignment.localproducts.models.Product
+import takehomeassignment.productlist.models.ViewResult
 import takehomeassignment.remoteproducts.services.ProductsService
 
 class DefaultProductListRepository @Inject constructor(
@@ -30,4 +32,11 @@ class DefaultProductListRepository @Inject constructor(
 
         emitAll(flow)
     }
+}
+
+sealed class ProductsResult {
+    abstract val products: List<Product>
+    data class Cached(override val products: List<Product>) : ProductsResult()
+    data class Fresh(override val products: List<Product>) : ProductsResult()
+    data class Error(val throwable: Throwable, override val products: List<Product>) : ProductsResult()
 }

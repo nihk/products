@@ -10,7 +10,6 @@ import takehomeassignment.productlist.repository.ProductListRepository
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class ProductListModule {
-
     @Binds
     abstract fun productListRepository(productListRepository: DefaultProductListRepository): ProductListRepository
 }

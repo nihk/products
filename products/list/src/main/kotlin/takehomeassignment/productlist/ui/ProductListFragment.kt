@@ -9,17 +9,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.transition.MaterialSharedAxis
+import javax.inject.Inject
+import javax.inject.Provider
+import kotlin.math.roundToInt
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import takehomeassignment.productlist.R
 import takehomeassignment.productlist.databinding.ProductListFragmentBinding
-import takehomeassignment.productlist.vm.ProductsViewState
+import takehomeassignment.productlist.models.FetchProductsEvent
 import takehomeassignment.productlist.vm.ProductListViewModel
 import takehomeassignment.uiutils.MarginItemDecoration
 import takehomeassignment.uiutils.isEmpty
-import javax.inject.Inject
-import javax.inject.Provider
-import kotlin.math.roundToInt
 
 class ProductListFragment @Inject constructor(
     vmFactory: ProductListViewModel.Factory.Factory,
@@ -41,18 +41,18 @@ class ProductListFragment @Inject constructor(
         }
 
         binding.retry.setOnClickListener {
-            viewModel.fetchProducts()
+            viewModel.processEvent(FetchProductsEvent)
         }
 
-        viewModel.productsStates
-            .onEach { state ->
-                state.products?.let { products ->
+        viewModel.viewStates
+            .onEach { viewState ->
+                viewState.products?.let { products ->
                     adapter.submitList(products)
                     startTransitions()
                 }
 
-                binding.progressBar.isVisible = state is ProductsViewState.Loading
-                binding.errorMessage.isVisible = state is ProductsViewState.Error && adapter.isEmpty
+                binding.progressBar.isVisible = viewState.isLoading
+                binding.errorMessage.isVisible = viewState.error != null && adapter.isEmpty
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }

@@ -5,7 +5,9 @@ plugins {
     hilt
 }
 
-androidLibraryConfig()
+androidLibraryConfig {
+    addSharedTestDirectory("src/sharedTest")
+}
 
 dependencies {
     implementation(project(Modules.core))
@@ -34,13 +36,15 @@ dependencies {
     // https://twitter.com/ianhlake/status/1059604904795230209
     debugImplementation(Dependencies.Fragment.testing)
 
+    testImplementation(project(Modules.Utils.test))
     testImplementation(Dependencies.junit)
     testImplementation(Dependencies.ArchCore.testing)
     testImplementation(Dependencies.Kotlin.coroutinesTest)
-    testImplementation(project(Modules.Utils.test))
-    androidTestImplementation(project(Modules.Utils.test))
+    testImplementation(Dependencies.Moshi.runtime)
+    testImplementation(Dependencies.Moshi.adapters)
 
     defaultAndroidTestDependencies()
+    androidTestImplementation(project(Modules.Utils.test))
     androidTestImplementation(Dependencies.Moshi.runtime)
     androidTestImplementation(Dependencies.Moshi.adapters)
 

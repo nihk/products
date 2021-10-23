@@ -121,3 +121,15 @@ private fun BuildType.minify(defaultProguardFile: File) {
     proguardFiles(defaultProguardFile, "proguard-rules.pro")
     consumerProguardFiles("consumer-rules.pro")
 }
+
+fun BaseExtension.addSharedTestDirectory(name: String) {
+    sourceSets {
+        listOf("test", "androidTest").forEach { sourceSet ->
+            getByName(sourceSet).apply {
+                resources.srcDir("$name/resources")
+                java.srcDir("$name/kotlin")
+            }
+        }
+    }
+}
+

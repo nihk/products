@@ -11,55 +11,78 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.scan
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
+import takehomeassignment.productlist.models.FetchProductsEvent
+import takehomeassignment.productlist.models.FetchProductsResult
+import takehomeassignment.productlist.models.ViewEvent
+import takehomeassignment.productlist.models.ViewResult
+import takehomeassignment.productlist.models.ViewState
 import takehomeassignment.productlist.repository.ProductListRepository
 import takehomeassignment.productlist.repository.ProductsResult
 
 class ProductListViewModel(
     private val repository: ProductListRepository,
-    private val handle: SavedStateHandle
+    private val handle: SavedStateHandle,
+    initialState: ViewState
 ) : ViewModel() {
-    private val events = MutableSharedFlow<Event>()
-    val productsStates = events
-        .onStart { emit(Event.FetchProducts) }
-        .flatMapLatest { event -> processEvent(event) }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000L),
-            initialValue = ProductsViewState.Loading()
-        )
+    val viewStates: Flow<ViewState>
+    private val viewEvents = MutableSharedFlow<ViewEvent>()
 
-    fun fetchProducts() {
-        sendEvent(Event.FetchProducts)
+    init {
+        viewEvents.toViewResults()
+            .shareIn(
+                scope = viewModelScope,
+                started = SharingStarted.Eagerly,
+                replay = 1
+            )
+            .also { viewResult ->
+                viewStates = viewResult.toViewStates(initialState)
+            }
+
+        processEvent(FetchProductsEvent)
     }
 
-    private fun sendEvent(event: Event) {
+    fun processEvent(viewEvent: ViewEvent) {
         viewModelScope.launch {
-            events.emit(event)
+            viewEvents.emit(viewEvent)
         }
     }
 
-    private fun processEvent(event: Event): Flow<ProductsViewState> {
-        return when (event) {
-            Event.FetchProducts -> repository.products()
-                .map { result -> result.toProductsViewState() }
-        }
+    private fun Flow<ViewEvent>.toViewResults(): Flow<ViewResult> {
+        return merge(
+            filterIsInstance<FetchProductsEvent>().toFetchProductsResults()
+        )
     }
 
-    private fun ProductsResult.toProductsViewState(): ProductsViewState {
-        return when (this) {
-            is ProductsResult.Cached -> ProductsViewState.Loading(products)
-            is ProductsResult.Fresh -> ProductsViewState.Success(products)
-            is ProductsResult.Error -> ProductsViewState.Error(throwable, products)
-        }
+    private fun Flow<FetchProductsEvent>.toFetchProductsResults(): Flow<ViewResult> {
+        return flatMapLatest { repository.products() }
+            .map { productsResult ->
+                FetchProductsResult(
+                    isCached = productsResult is ProductsResult.Cached,
+                    products = productsResult.products,
+                    error = (productsResult as? ProductsResult.Error)?.throwable
+                )
+            }
     }
 
-    private enum class Event {
-        FetchProducts
+    private fun Flow<ViewResult>.toViewStates(initialState: ViewState): Flow<ViewState> {
+        return scan(initialState) { viewState, viewResult ->
+            when (viewResult) {
+                is FetchProductsResult -> {
+                    viewState.copy(
+                        isLoading = viewResult.isCached,
+                        products = viewResult.products,
+                        error = viewResult.error
+                    )
+                }
+            }
+        }
     }
 
     class Factory @AssistedInject constructor(
@@ -72,7 +95,7 @@ class ProductListViewModel(
             handle: SavedStateHandle
         ): T {
             @Suppress("UNCHECKED_CAST")
-            return ProductListViewModel(repository, handle) as T
+            return ProductListViewModel(repository, handle, ViewState()) as T
         }
 
         @AssistedFactory
