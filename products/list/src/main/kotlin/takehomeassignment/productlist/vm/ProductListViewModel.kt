@@ -15,11 +15,17 @@ import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
+import takehomeassignment.core.Logger
 import takehomeassignment.productlist.models.FetchProductsEvent
 import takehomeassignment.productlist.models.FetchProductsResult
+import takehomeassignment.productlist.models.ProductClickedEffect
+import takehomeassignment.productlist.models.ProductClickedEvent
+import takehomeassignment.productlist.models.ProductClickedResult
+import takehomeassignment.productlist.models.ViewEffect
 import takehomeassignment.productlist.models.ViewEvent
 import takehomeassignment.productlist.models.ViewResult
 import takehomeassignment.productlist.models.ViewState
@@ -28,21 +34,28 @@ import takehomeassignment.productlist.repository.ProductsResult
 
 class ProductListViewModel(
     private val repository: ProductListRepository,
+    private val logger: Logger,
     private val handle: SavedStateHandle,
     initialState: ViewState
 ) : ViewModel() {
     val viewStates: Flow<ViewState>
+    val viewEffects: Flow<ViewEffect>
     private val viewEvents = MutableSharedFlow<ViewEvent>()
 
     init {
         viewEvents.toViewResults()
-            .shareIn(
+            .shareIn( // Only emit once per event in the `also` block below
                 scope = viewModelScope,
-                started = SharingStarted.Eagerly,
-                replay = 1
+                started = SharingStarted.Eagerly
             )
             .also { viewResults ->
                 viewStates = viewResults.toViewStates(initialState)
+                    .shareIn(
+                        scope = viewModelScope,
+                        started = SharingStarted.Eagerly,
+                        replay = 1 // Cache the most recent state
+                    )
+                viewEffects = viewResults.toViewEffects()
             }
 
         processEvent(FetchProductsEvent)
@@ -56,7 +69,8 @@ class ProductListViewModel(
 
     private fun Flow<ViewEvent>.toViewResults(): Flow<ViewResult> {
         return merge(
-            filterIsInstance<FetchProductsEvent>().toFetchProductsResults()
+            filterIsInstance<FetchProductsEvent>().toFetchProductsResults(),
+            filterIsInstance<ProductClickedEvent>().toProductClickedResults()
         )
     }
 
@@ -71,6 +85,11 @@ class ProductListViewModel(
             }
     }
 
+    private fun Flow<ProductClickedEvent>.toProductClickedResults(): Flow<ViewResult> {
+        return onEach { event -> logger.d("Clicked product with id: ${event.id}") }
+            .map { event -> ProductClickedResult(event.id) }
+    }
+
     private fun Flow<ViewResult>.toViewStates(initialState: ViewState): Flow<ViewState> {
         return scan(initialState) { viewState, viewResult ->
             when (viewResult) {
@@ -81,12 +100,19 @@ class ProductListViewModel(
                         error = viewResult.error
                     )
                 }
+                else -> viewState // No-op
             }
         }
     }
 
+    private fun Flow<ViewResult>.toViewEffects(): Flow<ViewEffect> {
+        return filterIsInstance<ProductClickedResult>()
+            .map { result -> ProductClickedEffect(result.id) }
+    }
+
     class Factory @AssistedInject constructor(
         private val repository: ProductListRepository,
+        private val logger: Logger,
         @Assisted owner: SavedStateRegistryOwner
     ) : AbstractSavedStateViewModelFactory(owner, null) {
         override fun <T : ViewModel?> create(
@@ -95,7 +121,7 @@ class ProductListViewModel(
             handle: SavedStateHandle
         ): T {
             @Suppress("UNCHECKED_CAST")
-            return ProductListViewModel(repository, handle, ViewState()) as T
+            return ProductListViewModel(repository, logger, handle, ViewState()) as T
         }
 
         @AssistedFactory

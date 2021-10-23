@@ -17,12 +17,15 @@ import kotlinx.coroutines.flow.onEach
 import takehomeassignment.productlist.R
 import takehomeassignment.productlist.databinding.ProductListFragmentBinding
 import takehomeassignment.productlist.models.FetchProductsEvent
+import takehomeassignment.productlist.models.ProductClickedEffect
+import takehomeassignment.productlist.models.ProductClickedEvent
 import takehomeassignment.productlist.vm.ProductListViewModel
 import takehomeassignment.uiutils.MarginItemDecoration
 import takehomeassignment.uiutils.isEmpty
 
 class ProductListFragment @Inject constructor(
     vmFactory: ProductListViewModel.Factory.Factory,
+    private val onProductClicked: OnProductClicked,
     private val adapterFactory: Provider<ProductListAdapter>
 ) : Fragment(R.layout.product_list_fragment) {
 
@@ -34,6 +37,10 @@ class ProductListFragment @Inject constructor(
         prepareTransitions()
 
         val adapter = adapterFactory.get()
+
+        adapter.productClicks()
+            .onEach { id -> viewModel.processEvent(ProductClickedEvent(id)) }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
 
         binding.recyclerView.run {
             addItemDecoration(MarginItemDecoration(resources.getDimension(R.dimen.item_outer_gap).roundToInt()))
@@ -53,6 +60,18 @@ class ProductListFragment @Inject constructor(
 
                 binding.progressBar.isVisible = viewState.isLoading
                 binding.errorMessage.isVisible = viewState.error != null && adapter.isEmpty
+            }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.viewEffects
+            .onEach { viewEffect ->
+                when (viewEffect) {
+                    is ProductClickedEffect -> {
+                        val id = viewEffect.id
+                        val image = binding.recyclerView.findViewWithTag<View>(id)
+                        onProductClicked.onProductClicked(id, image)
+                    }
+                }
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }

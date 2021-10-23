@@ -12,6 +12,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
+import takehomeassignment.NoOpLogger
 import takehomeassignment.productlist.models.ViewState
 import takehomeassignment.productlist.repository.ProductListRepository
 import takehomeassignment.productlist.repository.ProductsResult
@@ -29,11 +30,9 @@ class ProductListViewModelTest {
                 return flowOf(ProductsResult.Fresh(products))
             }
         }
-        val viewModel = ProductListViewModel(repository, SavedStateHandle(), ViewState())
+        val viewModel = ProductListViewModel(repository, NoOpLogger(), SavedStateHandle(), ViewState())
 
-        val viewState = viewModel.viewStates
-            .drop(1) // Drop the initial state
-            .first()
+        val viewState = viewModel.viewStates.first()
 
         assertEquals(products, viewState.products)
     }

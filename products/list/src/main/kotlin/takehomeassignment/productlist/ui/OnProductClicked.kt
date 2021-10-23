@@ -1,7 +1,7 @@
 package takehomeassignment.productlist.ui
 
-import android.widget.ImageView
+import android.view.View
 
 interface OnProductClicked {
-    fun onProductClicked(id: String, image: ImageView)
+    fun onProductClicked(id: String, view: View)
 }

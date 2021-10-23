@@ -1,6 +1,6 @@
 package takehomeassignment.productlist.ui
 
-import android.widget.ImageView
+import android.view.View
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.savedstate.SavedStateRegistryOwner
 import androidx.test.espresso.Espresso.onView
@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import org.hamcrest.CoreMatchers.not
 import org.junit.Assert.assertEquals
+import takehomeassignment.NoOpLogger
 import takehomeassignment.productlist.R
 import takehomeassignment.productlist.repository.ProductListRepository
 import takehomeassignment.productlist.repository.ProductsResult
@@ -71,13 +72,13 @@ class ProductListRobot {
         }
         val vmFactory = object : ProductListViewModel.Factory.Factory {
             override fun create(owner: SavedStateRegistryOwner): ProductListViewModel.Factory {
-                return ProductListViewModel.Factory(repository, owner)
+                return ProductListViewModel.Factory(repository, NoOpLogger(), owner)
             }
         }
-        val adapterFactory = Provider { ProductListAdapter(onProductClicked, FakeImageLoader()) }
+        val adapterFactory = Provider { ProductListAdapter(FakeImageLoader()) }
 
         launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents_DayNight_DarkActionBar) {
-            ProductListFragment(vmFactory, adapterFactory)
+            ProductListFragment(vmFactory, onProductClicked, adapterFactory)
         }
     }
 }
@@ -85,7 +86,7 @@ class ProductListRobot {
 private class FakeOnProductClicked : OnProductClicked {
     var clickedId: String? = null
 
-    override fun onProductClicked(id: String, image: ImageView) {
+    override fun onProductClicked(id: String, view: View) {
         clickedId = id
     }
 }

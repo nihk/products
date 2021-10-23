@@ -6,13 +6,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import coil.ImageLoader
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import takehomeassignment.localproducts.models.Product
 import takehomeassignment.productlist.databinding.ProductItemBinding
 
 class ProductListAdapter @Inject constructor(
-    private val onProductClicked: OnProductClicked,
     private val imageLoader: ImageLoader
 ) : ListAdapter<Product, ProductViewHolder>(ProductDiffCallback) {
+    private val productClicks = MutableSharedFlow<String>(extraBufferCapacity = 1)
+    fun productClicks(): Flow<String> = productClicks
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         return LayoutInflater.from(parent.context)
             .let { inflater -> ProductItemBinding.inflate(inflater, parent, false) }
@@ -20,7 +24,7 @@ class ProductListAdapter @Inject constructor(
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        holder.bind(getItem(position), onProductClicked, imageLoader)
+        holder.bind(getItem(position), productClicks, imageLoader)
     }
 }
 
