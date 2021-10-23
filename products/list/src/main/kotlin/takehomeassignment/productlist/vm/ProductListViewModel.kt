@@ -45,7 +45,7 @@ class ProductListViewModel(
 
     init {
         viewEvents.toViewResults()
-            .shareIn( // Only emit once per event in the `also` block below
+            .shareIn( // Only trigger toViewResults once in the `also` block mappings, below
                 scope = viewModelScope,
                 started = SharingStarted.Eagerly
             )
