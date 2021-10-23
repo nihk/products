@@ -2,20 +2,16 @@ package takehomeassignment.productlist.vm
 
 import androidx.lifecycle.SavedStateHandle
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.last
-import kotlinx.coroutines.flow.skip
-import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import takehomeassignment.NoOpLogger
+import takehomeassignment.productlist.models.ProductsResult
 import takehomeassignment.productlist.models.ViewState
 import takehomeassignment.productlist.repository.ProductListRepository
-import takehomeassignment.productlist.repository.ProductsResult
 import takehomeassignment.testutils.CoroutinesTestRule
 import takehomeassignment.utils.products
 

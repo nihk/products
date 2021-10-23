@@ -26,12 +26,12 @@ import takehomeassignment.productlist.models.FetchProductsResult
 import takehomeassignment.productlist.models.ProductClickedEffect
 import takehomeassignment.productlist.models.ProductClickedEvent
 import takehomeassignment.productlist.models.ProductClickedResult
+import takehomeassignment.productlist.models.ProductsResult
 import takehomeassignment.productlist.models.ViewEffect
 import takehomeassignment.productlist.models.ViewEvent
 import takehomeassignment.productlist.models.ViewResult
 import takehomeassignment.productlist.models.ViewState
 import takehomeassignment.productlist.repository.ProductListRepository
-import takehomeassignment.productlist.repository.ProductsResult
 
 class ProductListViewModel(
     private val repository: ProductListRepository,

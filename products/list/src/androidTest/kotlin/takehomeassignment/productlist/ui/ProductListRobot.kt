@@ -19,8 +19,8 @@ import org.hamcrest.CoreMatchers.not
 import org.junit.Assert.assertEquals
 import takehomeassignment.NoOpLogger
 import takehomeassignment.productlist.R
+import takehomeassignment.productlist.models.ProductsResult
 import takehomeassignment.productlist.repository.ProductListRepository
-import takehomeassignment.productlist.repository.ProductsResult
 import takehomeassignment.productlist.vm.ProductListViewModel
 import takehomeassignment.testutils.FakeImageLoader
 

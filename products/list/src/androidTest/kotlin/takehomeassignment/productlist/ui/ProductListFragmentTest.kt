@@ -1,7 +1,7 @@
 package takehomeassignment.productlist.ui
 
 import org.junit.Test
-import takehomeassignment.productlist.repository.ProductsResult
+import takehomeassignment.productlist.models.ProductsResult
 import takehomeassignment.utils.products
 
 class ProductListFragmentTest {
