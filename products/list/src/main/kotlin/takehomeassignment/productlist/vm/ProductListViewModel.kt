@@ -41,8 +41,8 @@ class ProductListViewModel(
                 started = SharingStarted.Eagerly,
                 replay = 1
             )
-            .also { viewResult ->
-                viewStates = viewResult.toViewStates(initialState)
+            .also { viewResults ->
+                viewStates = viewResults.toViewStates(initialState)
             }
 
         processEvent(FetchProductsEvent)
