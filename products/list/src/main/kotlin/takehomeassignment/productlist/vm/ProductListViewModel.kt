@@ -11,6 +11,7 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
@@ -50,6 +51,7 @@ class ProductListViewModel(
             )
             .also { viewResults ->
                 viewStates = viewResults.toViewStates(initialState)
+                    .distinctUntilChanged()
                     .shareIn(
                         scope = viewModelScope,
                         started = SharingStarted.Eagerly,
