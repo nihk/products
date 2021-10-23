@@ -126,8 +126,8 @@ fun BaseExtension.addSharedTestDirectory(name: String) {
     sourceSets {
         listOf("test", "androidTest").forEach { sourceSet ->
             getByName(sourceSet).apply {
-                resources.srcDir("$name/resources")
-                java.srcDir("$name/kotlin")
+                resources.srcDir("src/$name/resources")
+                java.srcDir("src/$name/kotlin")
             }
         }
     }

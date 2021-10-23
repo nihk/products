@@ -6,7 +6,7 @@ plugins {
 }
 
 androidLibraryConfig {
-    addSharedTestDirectory("src/sharedTest")
+    addSharedTestDirectory("sharedTest")
 }
 
 dependencies {
