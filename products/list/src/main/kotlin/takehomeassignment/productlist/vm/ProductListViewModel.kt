@@ -54,7 +54,7 @@ class ProductListViewModel(
                     .distinctUntilChanged()
                     .shareIn(
                         scope = viewModelScope,
-                        started = SharingStarted.Eagerly,
+                        started = SharingStarted.Lazily,
                         replay = 1 // Cache the most recent state
                     )
                 viewEffects = viewResults.toViewEffects()
