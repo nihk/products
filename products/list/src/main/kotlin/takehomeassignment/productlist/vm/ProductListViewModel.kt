@@ -108,8 +108,10 @@ class ProductListViewModel(
     }
 
     private fun Flow<ViewResult>.toViewEffects(): Flow<ViewEffect> {
-        return filterIsInstance<ProductClickedResult>()
-            .map { result -> ProductClickedEffect(result.id) }
+        return merge(
+            filterIsInstance<ProductClickedResult>()
+                .map { result -> ProductClickedEffect(result.id) }
+        )
     }
 
     class Factory @AssistedInject constructor(
