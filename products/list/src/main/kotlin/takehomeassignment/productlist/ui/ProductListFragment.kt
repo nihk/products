@@ -8,9 +8,9 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import coil.ImageLoader
 import com.google.android.material.transition.MaterialSharedAxis
 import javax.inject.Inject
-import javax.inject.Provider
 import kotlin.math.roundToInt
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -26,7 +26,7 @@ import takehomeassignment.uiutils.isEmpty
 class ProductListFragment @Inject constructor(
     vmFactory: ProductListViewModel.Factory.Factory,
     private val onProductClicked: OnProductClicked,
-    private val adapterFactory: Provider<ProductListAdapter>
+    private val imageLoader: ImageLoader
 ) : Fragment(R.layout.product_list_fragment) {
 
     private val viewModel by viewModels<ProductListViewModel> { vmFactory.create(this) }
@@ -36,11 +36,9 @@ class ProductListFragment @Inject constructor(
         val binding = ProductListFragmentBinding.bind(view)
         prepareTransitions()
 
-        val adapter = adapterFactory.get()
-
-        adapter.productClicks()
-            .onEach { id -> viewModel.processEvent(ProductClickedEvent(id)) }
-            .launchIn(viewLifecycleOwner.lifecycleScope)
+        val adapter = ProductListAdapter(imageLoader) { productIdClicked ->
+            viewModel.processEvent(ProductClickedEvent(productIdClicked))
+        }
 
         binding.recyclerView.run {
             addItemDecoration(MarginItemDecoration(resources.getDimension(R.dimen.item_outer_gap).roundToInt()))

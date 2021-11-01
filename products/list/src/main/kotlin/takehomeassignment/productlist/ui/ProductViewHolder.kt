@@ -3,12 +3,11 @@ package takehomeassignment.productlist.ui
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import coil.load
-import kotlinx.coroutines.flow.MutableSharedFlow
 import takehomeassignment.localproducts.models.Product
 import takehomeassignment.productlist.databinding.ProductItemBinding
 
 class ProductViewHolder(private val binding: ProductItemBinding) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(product: Product, productClicks: MutableSharedFlow<String>, imageLoader: ImageLoader) {
+    fun bind(product: Product, productClicks: (String) -> Unit, imageLoader: ImageLoader) {
         with(binding) {
             name.text = product.name
             price.text = product.price
@@ -17,7 +16,7 @@ class ProductViewHolder(private val binding: ProductItemBinding) : RecyclerView.
             image.tag = null
             card.setOnClickListener {
                 image.tag = product.id
-                productClicks.tryEmit(product.id)
+                productClicks(product.id)
             }
         }
     }

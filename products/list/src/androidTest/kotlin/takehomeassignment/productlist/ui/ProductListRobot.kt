@@ -11,7 +11,6 @@ import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import javax.inject.Provider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
@@ -75,10 +74,9 @@ class ProductListRobot {
                 return ProductListViewModel.Factory(repository, NoOpLogger(), owner)
             }
         }
-        val adapterFactory = Provider { ProductListAdapter(FakeImageLoader()) }
 
         launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents_DayNight_DarkActionBar) {
-            ProductListFragment(vmFactory, onProductClicked, adapterFactory)
+            ProductListFragment(vmFactory, onProductClicked, FakeImageLoader())
         }
     }
 }

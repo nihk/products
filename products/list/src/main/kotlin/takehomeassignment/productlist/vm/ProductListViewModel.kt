@@ -51,10 +51,9 @@ class ProductListViewModel(
             )
             .also { viewResults ->
                 viewStates = viewResults.toViewStates(initialState)
-                    .distinctUntilChanged()
                     .shareIn(
                         scope = viewModelScope,
-                        started = SharingStarted.Lazily,
+                        started = SharingStarted.WhileSubscribed(5_000L),
                         replay = 1 // Cache the most recent state
                     )
                 viewEffects = viewResults.toViewEffects()
@@ -102,9 +101,9 @@ class ProductListViewModel(
                         error = viewResult.error
                     )
                 }
-                else -> viewState // No-op
+                else -> viewState
             }
-        }
+        }.distinctUntilChanged()
     }
 
     private fun Flow<ViewResult>.toViewEffects(): Flow<ViewEffect> {
