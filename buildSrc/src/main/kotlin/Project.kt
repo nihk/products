@@ -13,7 +13,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 fun Project.androidAppConfig(extras: (BaseAppModuleExtension.() -> Unit) = {}) = androidConfig<BaseAppModuleExtension>().run {
     defaultConfig {
-        buildToolsVersion(BuildVersion.buildTools)
+        buildToolsVersion = BuildVersion.buildTools
         multiDexEnabled = true
     }
 
@@ -42,8 +42,8 @@ private fun <T : BaseExtension> Project.androidConfig() = android<T>().apply {
     compileSdkVersion(BuildVersion.compileSdk)
 
     defaultConfig {
-        minSdkVersion(BuildVersion.minSdk)
-        targetSdkVersion(BuildVersion.targetSdk)
+        minSdk = BuildVersion.minSdk
+        targetSdk = BuildVersion.targetSdk
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
