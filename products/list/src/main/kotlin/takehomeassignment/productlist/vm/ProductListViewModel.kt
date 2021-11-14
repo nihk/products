@@ -8,9 +8,11 @@ import androidx.savedstate.SavedStateRegistryOwner
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flatMapLatest
@@ -19,6 +21,7 @@ import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import takehomeassignment.core.Logger
 import takehomeassignment.productlist.models.FetchProductsEvent
@@ -39,22 +42,22 @@ class ProductListViewModel(
     private val handle: SavedStateHandle,
     initialState: ViewState
 ) : ViewModel() {
-    val viewStates: Flow<ViewState>
+    val viewStates: StateFlow<ViewState>
     val viewEffects: Flow<ViewEffect>
     private val viewEvents = MutableSharedFlow<ViewEvent>()
 
     init {
         viewEvents.toViewResults()
-            .shareIn( // Only trigger toViewResults once in the `also` block mappings, below
+            .shareIn( // Share emissions to viewStates and viewEffects
                 scope = viewModelScope,
                 started = SharingStarted.Eagerly
             )
             .also { viewResults ->
                 viewStates = viewResults.toViewStates(initialState)
-                    .shareIn(
+                    .stateIn(
                         scope = viewModelScope,
-                        started = SharingStarted.WhileSubscribed(5_000L),
-                        replay = 1 // Cache the most recent state
+                        started = SharingStarted.WhileSubscribed(TimeUnit.SECONDS.toMillis(5L)),
+                        initialValue = initialState
                     )
                 viewEffects = viewResults.toViewEffects()
             }
