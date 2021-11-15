@@ -42,7 +42,8 @@ class ProductListFragment @Inject constructor(
         val adapter = ProductListAdapter(imageLoader)
 
         binding.recyclerView.run {
-            addItemDecoration(MarginItemDecoration(resources.getDimension(R.dimen.item_outer_gap).roundToInt()))
+            val decoration = MarginItemDecoration(resources.getDimension(R.dimen.item_outer_gap).roundToInt())
+            addItemDecoration(decoration)
             this.adapter = adapter
         }
 
