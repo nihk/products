@@ -82,7 +82,7 @@ class ProductListViewModel(
         return flatMapLatest { repository.products() }
             .map { productsResult ->
                 FetchProductsResult(
-                    isLoading = productsResult is ProductsResult.Cached,
+                    isLoading = productsResult is ProductsResult.Started || productsResult is ProductsResult.Cached,
                     products = productsResult.products,
                     error = (productsResult as? ProductsResult.Error)?.throwable
                 )

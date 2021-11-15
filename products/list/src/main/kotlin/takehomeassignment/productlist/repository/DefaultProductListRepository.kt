@@ -18,6 +18,7 @@ class DefaultProductListRepository @Inject constructor(
 ) : ProductListRepository {
 
     override fun products(): Flow<ProductsResult> = flow {
+        emit(ProductsResult.Started)
         emit(ProductsResult.Cached(dao.queryAll().first()))
 
         val flow = try {

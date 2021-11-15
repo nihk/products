@@ -9,7 +9,7 @@ data class ProductClickedEvent(val id: String) : ViewEvent()
 sealed class ViewResult
 data class FetchProductsResult(
     val isLoading: Boolean,
-    val products: List<Product>,
+    val products: List<Product>?,
     val error: Throwable?
 ) : ViewResult()
 data class ProductClickedResult(val id: String) : ViewResult()
