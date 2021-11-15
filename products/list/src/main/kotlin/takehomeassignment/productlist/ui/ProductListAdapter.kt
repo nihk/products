@@ -13,6 +13,7 @@ import takehomeassignment.productlist.databinding.ProductItemBinding
 class ProductListAdapter(
     private val imageLoader: ImageLoader
 ) : ListAdapter<Product, ProductViewHolder>(ProductDiffCallback) {
+    private val productClick: (Product) -> Unit = { product -> productClicks.tryEmit(product) }
     private val productClicks = MutableSharedFlow<Product>(extraBufferCapacity = 1)
     fun productClicks(): Flow<Product> = productClicks
 
@@ -23,7 +24,7 @@ class ProductListAdapter(
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        holder.bind(getItem(position), productClicks, imageLoader)
+        holder.bind(getItem(position), productClick, imageLoader)
     }
 }
 
