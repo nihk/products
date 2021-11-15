@@ -13,6 +13,8 @@ import com.google.android.material.transition.MaterialSharedAxis
 import javax.inject.Inject
 import kotlin.math.roundToInt
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import takehomeassignment.productlist.R
 import takehomeassignment.productlist.databinding.ProductListFragmentBinding
@@ -21,6 +23,7 @@ import takehomeassignment.productlist.models.ProductClickedEffect
 import takehomeassignment.productlist.models.ProductClickedEvent
 import takehomeassignment.productlist.vm.ProductListViewModel
 import takehomeassignment.uiutils.MarginItemDecoration
+import takehomeassignment.uiutils.clicks
 import takehomeassignment.uiutils.isEmpty
 
 class ProductListFragment @Inject constructor(
@@ -36,18 +39,19 @@ class ProductListFragment @Inject constructor(
         val binding = ProductListFragmentBinding.bind(view)
         prepareTransitions()
 
-        val adapter = ProductListAdapter(imageLoader) { productIdClicked ->
-            viewModel.processEvent(ProductClickedEvent(productIdClicked))
-        }
+        val adapter = ProductListAdapter(imageLoader)
 
         binding.recyclerView.run {
             addItemDecoration(MarginItemDecoration(resources.getDimension(R.dimen.item_outer_gap).roundToInt()))
             this.adapter = adapter
         }
 
-        binding.retry.setOnClickListener {
-            viewModel.processEvent(FetchProductsEvent)
-        }
+        merge(
+            adapter.productClicks().map { product -> ProductClickedEvent(product.id) },
+            binding.retry.clicks().map { FetchProductsEvent }
+        )
+            .onEach(viewModel::processEvent)
+            .launchIn(viewLifecycleOwner.lifecycleScope)
 
         viewModel.viewStates
             .onEach { viewState ->

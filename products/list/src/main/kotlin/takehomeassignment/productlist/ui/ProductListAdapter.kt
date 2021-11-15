@@ -5,13 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import coil.ImageLoader
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import takehomeassignment.localproducts.models.Product
 import takehomeassignment.productlist.databinding.ProductItemBinding
 
 class ProductListAdapter(
-    private val imageLoader: ImageLoader,
-    private val productClicks: (String) -> Unit
+    private val imageLoader: ImageLoader
 ) : ListAdapter<Product, ProductViewHolder>(ProductDiffCallback) {
+    private val productClicks = MutableSharedFlow<Product>(extraBufferCapacity = 1)
+    fun productClicks(): Flow<Product> = productClicks
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         return LayoutInflater.from(parent.context)
