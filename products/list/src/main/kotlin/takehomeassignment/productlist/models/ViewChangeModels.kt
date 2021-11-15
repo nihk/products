@@ -8,7 +8,7 @@ data class ProductClickedEvent(val id: String) : ViewEvent()
 
 sealed class ViewResult
 data class FetchProductsResult(
-    val isCached: Boolean,
+    val isLoading: Boolean,
     val products: List<Product>,
     val error: Throwable?
 ) : ViewResult()

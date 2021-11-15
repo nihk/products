@@ -82,7 +82,7 @@ class ProductListViewModel(
         return flatMapLatest { repository.products() }
             .map { productsResult ->
                 FetchProductsResult(
-                    isCached = productsResult is ProductsResult.Cached,
+                    isLoading = productsResult is ProductsResult.Cached,
                     products = productsResult.products,
                     error = (productsResult as? ProductsResult.Error)?.throwable
                 )
@@ -99,7 +99,7 @@ class ProductListViewModel(
             when (viewResult) {
                 is FetchProductsResult -> {
                     viewState.copy(
-                        isLoading = viewResult.isCached,
+                        isLoading = viewResult.isLoading,
                         products = viewResult.products,
                         error = viewResult.error
                     )
