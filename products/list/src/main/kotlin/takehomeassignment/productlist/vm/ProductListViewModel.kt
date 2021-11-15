@@ -50,7 +50,7 @@ class ProductListViewModel(
         viewEvents.toViewResults()
             .shareIn( // Share emissions to viewStates and viewEffects
                 scope = viewModelScope,
-                started = SharingStarted.Eagerly
+                started = SharingStarted.Eagerly // Allow event processing immediately
             )
             .also { viewResults ->
                 viewStates = viewResults.toViewStates(initialState)
