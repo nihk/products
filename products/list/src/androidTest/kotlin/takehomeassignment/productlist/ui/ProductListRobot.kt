@@ -19,6 +19,7 @@ import org.junit.Assert.assertEquals
 import takehomeassignment.NoOpLogger
 import takehomeassignment.productlist.R
 import takehomeassignment.productlist.models.ProductsResult
+import takehomeassignment.productlist.models.ViewState
 import takehomeassignment.productlist.repository.ProductListRepository
 import takehomeassignment.productlist.vm.ProductListViewModel
 import takehomeassignment.testutils.FakeImageLoader
@@ -70,8 +71,11 @@ class ProductListRobot {
             override fun products(): Flow<ProductsResult> = results.filterNotNull()
         }
         val vmFactory = object : ProductListViewModel.Factory.Factory {
-            override fun create(owner: SavedStateRegistryOwner): ProductListViewModel.Factory {
-                return ProductListViewModel.Factory(repository, NoOpLogger(), owner)
+            override fun create(
+                owner: SavedStateRegistryOwner,
+                initialState: ViewState
+            ): ProductListViewModel.Factory {
+                return ProductListViewModel.Factory(repository, NoOpLogger(), owner, initialState)
             }
         }
 

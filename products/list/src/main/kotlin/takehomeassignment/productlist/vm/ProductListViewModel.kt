@@ -119,7 +119,8 @@ class ProductListViewModel(
     class Factory @AssistedInject constructor(
         private val repository: ProductListRepository,
         private val logger: Logger,
-        @Assisted owner: SavedStateRegistryOwner
+        @Assisted owner: SavedStateRegistryOwner,
+        @Assisted private val initialState: ViewState
     ) : AbstractSavedStateViewModelFactory(owner, null) {
         override fun <T : ViewModel?> create(
             key: String,
@@ -127,12 +128,15 @@ class ProductListViewModel(
             handle: SavedStateHandle
         ): T {
             @Suppress("UNCHECKED_CAST")
-            return ProductListViewModel(repository, logger, handle, ViewState()) as T
+            return ProductListViewModel(repository, logger, handle, initialState) as T
         }
 
         @AssistedFactory
         interface Factory {
-            fun create(owner: SavedStateRegistryOwner): ProductListViewModel.Factory
+            fun create(
+                owner: SavedStateRegistryOwner,
+                initialState: ViewState
+            ): ProductListViewModel.Factory
         }
     }
 }

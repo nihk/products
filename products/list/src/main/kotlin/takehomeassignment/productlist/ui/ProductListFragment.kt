@@ -21,6 +21,7 @@ import takehomeassignment.productlist.databinding.ProductListFragmentBinding
 import takehomeassignment.productlist.models.FetchProductsEvent
 import takehomeassignment.productlist.models.ProductClickedEffect
 import takehomeassignment.productlist.models.ProductClickedEvent
+import takehomeassignment.productlist.models.ViewState
 import takehomeassignment.productlist.vm.ProductListViewModel
 import takehomeassignment.uiutils.MarginItemDecoration
 import takehomeassignment.uiutils.clicks
@@ -32,7 +33,7 @@ class ProductListFragment @Inject constructor(
     private val imageLoader: ImageLoader
 ) : Fragment(R.layout.product_list_fragment) {
 
-    private val viewModel by viewModels<ProductListViewModel> { vmFactory.create(this) }
+    private val viewModel by viewModels<ProductListViewModel> { vmFactory.create(this, ViewState()) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
