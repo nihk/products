@@ -13,6 +13,7 @@ object Modules {
     object Utils {
         private const val utils = ":utils"
         const val async = "$utils:async"
+        const val mvi = "$utils:mvi"
         const val test = "$utils:test"
         const val ui = "$utils:ui"
     }

@@ -21,7 +21,7 @@ import takehomeassignment.productlist.databinding.ProductListFragmentBinding
 import takehomeassignment.productlist.models.FetchProductsEvent
 import takehomeassignment.productlist.models.ProductClickedEffect
 import takehomeassignment.productlist.models.ProductClickedEvent
-import takehomeassignment.productlist.models.ViewState
+import takehomeassignment.productlist.models.ProductListState
 import takehomeassignment.productlist.vm.ProductListViewModel
 import takehomeassignment.uiutils.MarginItemDecoration
 import takehomeassignment.uiutils.clicks
@@ -33,7 +33,7 @@ class ProductListFragment @Inject constructor(
     private val imageLoader: ImageLoader
 ) : Fragment(R.layout.product_list_fragment) {
 
-    private val viewModel by viewModels<ProductListViewModel> { vmFactory.create(this, ViewState()) }
+    private val viewModel by viewModels<ProductListViewModel> { vmFactory.create(this, ProductListState()) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,23 +55,23 @@ class ProductListFragment @Inject constructor(
             .onEach(viewModel::processEvent)
             .launchIn(viewLifecycleOwner.lifecycleScope)
 
-        viewModel.viewStates
-            .onEach { viewState ->
-                viewState.products?.let { products ->
+        viewModel.states
+            .onEach { state ->
+                state.products?.let { products ->
                     adapter.submitList(products)
                     startTransitions()
                 }
 
-                binding.progressBar.isVisible = viewState.isLoading
-                binding.errorMessage.isVisible = viewState.error != null && adapter.isEmpty
+                binding.progressBar.isVisible = state.isLoading
+                binding.errorMessage.isVisible = state.error != null && adapter.isEmpty
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
 
-        viewModel.viewEffects
-            .onEach { viewEffect ->
-                when (viewEffect) {
+        viewModel.effects
+            .onEach { effect ->
+                when (effect) {
                     is ProductClickedEffect -> {
-                        val id = viewEffect.id
+                        val id = effect.id
                         val image = binding.recyclerView.findViewWithTag<View>(id)
                         onProductClicked.onProductClicked(id, image)
                     }

@@ -13,7 +13,7 @@ import org.junit.Rule
 import org.junit.Test
 import takehomeassignment.NoOpLogger
 import takehomeassignment.productlist.models.ProductsResult
-import takehomeassignment.productlist.models.ViewState
+import takehomeassignment.productlist.models.ProductListState
 import takehomeassignment.productlist.repository.ProductListRepository
 import takehomeassignment.testutils.CoroutinesTestRule
 import takehomeassignment.utils.products
@@ -32,12 +32,12 @@ class ProductListViewModelTest {
                     .onStart { delay(Long.MAX_VALUE - 1L) }
             }
         }
-        val viewModel = ProductListViewModel(repository, NoOpLogger(), SavedStateHandle(), ViewState())
+        val viewModel = ProductListViewModel(repository, NoOpLogger(), SavedStateHandle(), ProductListState())
 
-        val viewState = viewModel.viewStates
+        val state = viewModel.states
             .drop(1) // Skip initial state
             .first()
 
-        assertEquals(products, viewState.products)
+        assertEquals(products, state.products)
     }
 }

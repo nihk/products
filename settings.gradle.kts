@@ -4,6 +4,7 @@ include(
     ":utils:ui",
     ":utils:test",
     ":utils:async",
+    ":utils:mvi",
     ":products:remote",
     ":products:local",
     ":products:list",

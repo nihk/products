@@ -3,26 +3,16 @@ package takehomeassignment.productlist.vm
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.savedstate.SavedStateRegistryOwner
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.scan
-import kotlinx.coroutines.flow.shareIn
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import takehomeassignment.core.Logger
 import takehomeassignment.productlist.models.FetchProductsEvent
 import takehomeassignment.productlist.models.FetchProductsResult
@@ -30,55 +20,52 @@ import takehomeassignment.productlist.models.ProductClickedEffect
 import takehomeassignment.productlist.models.ProductClickedEvent
 import takehomeassignment.productlist.models.ProductClickedResult
 import takehomeassignment.productlist.models.ProductsResult
-import takehomeassignment.productlist.models.ViewEffect
-import takehomeassignment.productlist.models.ViewEvent
-import takehomeassignment.productlist.models.ViewResult
-import takehomeassignment.productlist.models.ViewState
+import takehomeassignment.productlist.models.ProductListEffect
+import takehomeassignment.productlist.models.ProductListEvent
+import takehomeassignment.productlist.models.ProductListResult
+import takehomeassignment.productlist.models.ProductListState
 import takehomeassignment.productlist.repository.ProductListRepository
+import takehomeassignment.utils.mvi.MviViewModel
 
 class ProductListViewModel(
     private val repository: ProductListRepository,
     private val logger: Logger,
     private val handle: SavedStateHandle,
-    initialState: ViewState
-) : ViewModel() {
-    val viewStates: StateFlow<ViewState>
-    val viewEffects: Flow<ViewEffect>
-    private val viewEvents = MutableSharedFlow<ViewEvent>()
+    initialState: ProductListState
+) : MviViewModel<ProductListEvent, ProductListResult, ProductListState, ProductListEffect>(initialState) {
 
     init {
-        viewEvents.toViewResults()
-            .shareIn( // Share emissions to viewStates and viewEffects
-                scope = viewModelScope,
-                started = SharingStarted.Eagerly // Allow event processing immediately
-            )
-            .also { viewResults ->
-                viewStates = viewResults.toViewStates(initialState)
-                    .stateIn(
-                        scope = viewModelScope,
-                        started = SharingStarted.WhileSubscribed(TimeUnit.SECONDS.toMillis(5L)),
-                        initialValue = initialState
-                    )
-                viewEffects = viewResults.toViewEffects()
-            }
-
         processEvent(FetchProductsEvent)
     }
 
-    fun processEvent(viewEvent: ViewEvent) {
-        viewModelScope.launch {
-            viewEvents.emit(viewEvent)
-        }
-    }
-
-    private fun Flow<ViewEvent>.toViewResults(): Flow<ViewResult> {
+    override fun Flow<ProductListEvent>.toResults(): Flow<ProductListResult> {
         return merge(
             filterIsInstance<FetchProductsEvent>().toFetchProductsResults(),
             filterIsInstance<ProductClickedEvent>().toProductClickedResults()
         )
     }
 
-    private fun Flow<FetchProductsEvent>.toFetchProductsResults(): Flow<ViewResult> {
+    override fun ProductListResult.reduce(state: ProductListState): ProductListState {
+        return when (this) {
+            is FetchProductsResult -> {
+                state.copy(
+                    isLoading = isLoading,
+                    products = products,
+                    error = error
+                )
+            }
+            else -> state
+        }
+    }
+
+    override fun Flow<ProductListResult>.toEffects(): Flow<ProductListEffect> {
+        return merge(
+            filterIsInstance<ProductClickedResult>()
+                .map { result -> ProductClickedEffect(result.id) }
+        )
+    }
+
+    private fun Flow<FetchProductsEvent>.toFetchProductsResults(): Flow<ProductListResult> {
         return flatMapLatest { repository.products() }
             .map { productsResult ->
                 FetchProductsResult(
@@ -89,38 +76,16 @@ class ProductListViewModel(
             }
     }
 
-    private fun Flow<ProductClickedEvent>.toProductClickedResults(): Flow<ViewResult> {
+    private fun Flow<ProductClickedEvent>.toProductClickedResults(): Flow<ProductListResult> {
         return onEach { event -> logger.d("Clicked product with id: ${event.id}") }
             .map { event -> ProductClickedResult(event.id) }
-    }
-
-    private fun Flow<ViewResult>.toViewStates(initialState: ViewState): Flow<ViewState> {
-        return scan(initialState) { viewState, viewResult ->
-            when (viewResult) {
-                is FetchProductsResult -> {
-                    viewState.copy(
-                        isLoading = viewResult.isLoading,
-                        products = viewResult.products,
-                        error = viewResult.error
-                    )
-                }
-                else -> viewState
-            }
-        }.distinctUntilChanged()
-    }
-
-    private fun Flow<ViewResult>.toViewEffects(): Flow<ViewEffect> {
-        return merge(
-            filterIsInstance<ProductClickedResult>()
-                .map { result -> ProductClickedEffect(result.id) }
-        )
     }
 
     class Factory @AssistedInject constructor(
         private val repository: ProductListRepository,
         private val logger: Logger,
         @Assisted owner: SavedStateRegistryOwner,
-        @Assisted private val initialState: ViewState
+        @Assisted private val initialState: ProductListState
     ) : AbstractSavedStateViewModelFactory(owner, null) {
         override fun <T : ViewModel?> create(
             key: String,
@@ -135,7 +100,7 @@ class ProductListViewModel(
         interface Factory {
             fun create(
                 owner: SavedStateRegistryOwner,
-                initialState: ViewState
+                initialState: ProductListState
             ): ProductListViewModel.Factory
         }
     }

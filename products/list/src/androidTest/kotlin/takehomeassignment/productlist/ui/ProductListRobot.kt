@@ -19,7 +19,7 @@ import org.junit.Assert.assertEquals
 import takehomeassignment.NoOpLogger
 import takehomeassignment.productlist.R
 import takehomeassignment.productlist.models.ProductsResult
-import takehomeassignment.productlist.models.ViewState
+import takehomeassignment.productlist.models.ProductListState
 import takehomeassignment.productlist.repository.ProductListRepository
 import takehomeassignment.productlist.vm.ProductListViewModel
 import takehomeassignment.testutils.FakeImageLoader
@@ -73,7 +73,7 @@ class ProductListRobot {
         val vmFactory = object : ProductListViewModel.Factory.Factory {
             override fun create(
                 owner: SavedStateRegistryOwner,
-                initialState: ViewState
+                initialState: ProductListState
             ): ProductListViewModel.Factory {
                 return ProductListViewModel.Factory(repository, NoOpLogger(), owner, initialState)
             }
