@@ -49,8 +49,7 @@ abstract class MviViewModel<Event, Result, State, Effect>(
     open fun Flow<Result>.toEffects(): Flow<Effect> = emptyFlow()
 
     private fun Flow<Result>.toStates(initialState: State): Flow<State> {
-        return scan(initialState) { state, result ->
-            result.reduce(state)
-        }.distinctUntilChanged()
+        return scan(initialState) { state, result -> result.reduce(state) }
+            .distinctUntilChanged()
     }
 }

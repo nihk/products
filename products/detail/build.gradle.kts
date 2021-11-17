@@ -9,6 +9,7 @@ androidLibraryConfig()
 dependencies {
     implementation(project(Modules.core))
     implementation(project(Modules.Products.local))
+    implementation(project(Modules.Utils.mvi))
     implementation(project(Modules.Utils.ui))
 
     implementation(Dependencies.inject)
