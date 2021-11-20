@@ -12,7 +12,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import takehomeassignment.NoOpLogger
-import takehomeassignment.productlist.models.ProductsResult
+import takehomeassignment.productlist.models.ProductsPacket
 import takehomeassignment.productlist.models.ProductListState
 import takehomeassignment.productlist.repository.ProductListRepository
 import takehomeassignment.testutils.CoroutinesTestRule
@@ -25,8 +25,8 @@ class ProductListViewModelTest {
     @Test
     fun `viewModel emits state from repository`() = rule.dispatcher.runBlockingTest {
         val repository = object : ProductListRepository {
-            override fun products(): Flow<ProductsResult> {
-                return flowOf(ProductsResult.Fresh(products))
+            override fun products(): Flow<ProductsPacket> {
+                return flowOf(ProductsPacket.Fresh(products))
                     // Workaround for kotlinx-coroutines-test badness.
                     // See: https://github.com/Kotlin/kotlinx.coroutines/issues/1204
                     .onStart { delay(Long.MAX_VALUE - 1L) }

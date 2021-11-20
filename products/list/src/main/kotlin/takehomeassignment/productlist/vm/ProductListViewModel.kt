@@ -13,17 +13,19 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import takehomeassignment.core.Logger
 import takehomeassignment.productlist.models.FetchProductsEvent
 import takehomeassignment.productlist.models.FetchProductsResult
 import takehomeassignment.productlist.models.ProductClickedEffect
 import takehomeassignment.productlist.models.ProductClickedEvent
 import takehomeassignment.productlist.models.ProductClickedResult
-import takehomeassignment.productlist.models.ProductsResult
 import takehomeassignment.productlist.models.ProductListEffect
 import takehomeassignment.productlist.models.ProductListEvent
 import takehomeassignment.productlist.models.ProductListResult
 import takehomeassignment.productlist.models.ProductListState
+import takehomeassignment.productlist.models.ProductsPacket
+import takehomeassignment.productlist.models.StartLoadingResult
 import takehomeassignment.productlist.repository.ProductListRepository
 import takehomeassignment.utils.mvi.MviViewModel
 
@@ -47,13 +49,12 @@ class ProductListViewModel(
 
     override fun ProductListResult.reduce(state: ProductListState): ProductListState {
         return when (this) {
-            is FetchProductsResult -> {
-                state.copy(
-                    isLoading = isLoading,
-                    products = products,
-                    error = error
-                )
-            }
+            is StartLoadingResult -> state.copy(isLoading = true)
+            is FetchProductsResult -> state.copy(
+                isLoading = isCached,
+                products = products,
+                error = error
+            )
             else -> state
         }
     }
@@ -66,14 +67,17 @@ class ProductListViewModel(
     }
 
     private fun Flow<FetchProductsEvent>.toFetchProductsResults(): Flow<ProductListResult> {
-        return flatMapLatest { repository.products() }
-            .map { productsResult ->
-                FetchProductsResult(
-                    isLoading = productsResult is ProductsResult.Transient,
-                    products = productsResult.products,
-                    error = (productsResult as? ProductsResult.Error)?.throwable
-                )
-            }
+        return flatMapLatest {
+            repository.products()
+                .map<ProductsPacket, ProductListResult> { packet ->
+                    FetchProductsResult(
+                        isCached = packet is ProductsPacket.Cached,
+                        products = packet.products,
+                        error = (packet as? ProductsPacket.Error)?.throwable
+                    )
+                }
+                .onStart { emit(StartLoadingResult) }
+        }
     }
 
     private fun Flow<ProductClickedEvent>.toProductClickedResults(): Flow<ProductListResult> {

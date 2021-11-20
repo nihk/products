@@ -1,8 +1,8 @@
 package takehomeassignment.productlist.repository
 
 import kotlinx.coroutines.flow.Flow
-import takehomeassignment.productlist.models.ProductsResult
+import takehomeassignment.productlist.models.ProductsPacket
 
 interface ProductListRepository {
-    fun products(): Flow<ProductsResult>
+    fun products(): Flow<ProductsPacket>
 }

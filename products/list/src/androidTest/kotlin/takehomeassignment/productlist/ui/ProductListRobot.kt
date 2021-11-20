@@ -18,7 +18,7 @@ import org.hamcrest.CoreMatchers.not
 import org.junit.Assert.assertEquals
 import takehomeassignment.NoOpLogger
 import takehomeassignment.productlist.R
-import takehomeassignment.productlist.models.ProductsResult
+import takehomeassignment.productlist.models.ProductsPacket
 import takehomeassignment.productlist.models.ProductListState
 import takehomeassignment.productlist.repository.ProductListRepository
 import takehomeassignment.productlist.vm.ProductListViewModel
@@ -30,15 +30,15 @@ fun productList(block: ProductListRobot.() -> Unit) {
 }
 
 class ProductListRobot {
-    private val results = MutableStateFlow<ProductsResult?>(null)
+    private val packets = MutableStateFlow<ProductsPacket?>(null)
     private val onProductClicked = FakeOnProductClicked()
 
     init {
         launchProductList()
     }
 
-    fun render(result: ProductsResult) {
-        results.value = result
+    fun render(packet: ProductsPacket) {
+        packets.value = packet
     }
 
     fun clickOn(position: Int) {
@@ -68,7 +68,7 @@ class ProductListRobot {
 
     private fun launchProductList() {
         val repository = object : ProductListRepository {
-            override fun products(): Flow<ProductsResult> = results.filterNotNull()
+            override fun products(): Flow<ProductsPacket> = packets.filterNotNull()
         }
         val vmFactory = object : ProductListViewModel.Factory.Factory {
             override fun create(

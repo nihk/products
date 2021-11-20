@@ -2,12 +2,10 @@ package takehomeassignment.utils.mvi
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.shareIn
@@ -25,16 +23,24 @@ abstract class MviViewModel<Event, Result, State, Effect>(
         events.toResults()
             .shareIn( // Share emissions to states and effects
                 scope = viewModelScope,
+                replay = Int.MAX_VALUE, // Carry forward any events emitted before states/effects collection
                 started = SharingStarted.Eagerly // Allow event processing immediately
             )
             .also { results ->
+                // Delay consuming results replay cache until the time of subscription
+                val started = SharingStarted.Lazily
+
                 states = results.toStates(initialState)
                     .stateIn(
                         scope = viewModelScope,
-                        started = SharingStarted.WhileSubscribed(TimeUnit.SECONDS.toMillis(5L)),
+                        started = started,
                         initialValue = initialState
                     )
                 effects = results.toEffects()
+                    .shareIn(
+                        scope = viewModelScope,
+                        started = started
+                    )
             }
     }
 
@@ -50,6 +56,5 @@ abstract class MviViewModel<Event, Result, State, Effect>(
 
     private fun Flow<Result>.toStates(initialState: State): Flow<State> {
         return scan(initialState) { state, result -> result.reduce(state) }
-            .distinctUntilChanged()
     }
 }

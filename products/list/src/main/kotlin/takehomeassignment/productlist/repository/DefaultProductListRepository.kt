@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import takehomeassignment.core.Logger
 import takehomeassignment.localproducts.dao.ProductsDao
-import takehomeassignment.productlist.models.ProductsResult
+import takehomeassignment.productlist.models.ProductsPacket
 import takehomeassignment.remoteproducts.services.ProductsService
 
 class DefaultProductListRepository @Inject constructor(
@@ -17,17 +17,16 @@ class DefaultProductListRepository @Inject constructor(
     private val logger: Logger
 ) : ProductListRepository {
 
-    override fun products(): Flow<ProductsResult> = flow {
-        emit(ProductsResult.Started)
-        emit(ProductsResult.Cached(dao.queryAll().first()))
+    override fun products(): Flow<ProductsPacket> = flow {
+        emit(ProductsPacket.Cached(dao.queryAll().first()))
 
         val flow = try {
             val products = service.cart().entries.toLocalProducts()
             dao.nukeThenInsert(products)
-            dao.queryAll().map { ProductsResult.Fresh(it) }
+            dao.queryAll().map { ProductsPacket.Fresh(it) }
         } catch (throwable: Throwable) {
             logger.e("Failed to get products", throwable)
-            dao.queryAll().map { ProductsResult.Error(throwable, it) }
+            dao.queryAll().map { ProductsPacket.Error(throwable, it) }
         }
 
         emitAll(flow)

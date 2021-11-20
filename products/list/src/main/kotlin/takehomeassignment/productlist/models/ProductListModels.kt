@@ -7,8 +7,9 @@ object FetchProductsEvent : ProductListEvent()
 data class ProductClickedEvent(val id: String) : ProductListEvent()
 
 sealed class ProductListResult
+object StartLoadingResult : ProductListResult()
 data class FetchProductsResult(
-    val isLoading: Boolean,
+    val isCached: Boolean,
     val products: List<Product>?,
     val error: Throwable?
 ) : ProductListResult()
