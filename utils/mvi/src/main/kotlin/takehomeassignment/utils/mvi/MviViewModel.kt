@@ -50,9 +50,9 @@ abstract class MviViewModel<Event, Result, State, Effect>(
         }
     }
 
-    abstract fun Flow<Event>.toResults(): Flow<Result>
-    abstract fun Result.reduce(state: State): State
-    open fun Flow<Result>.toEffects(): Flow<Effect> = emptyFlow()
+    protected abstract fun Flow<Event>.toResults(): Flow<Result>
+    protected abstract fun Result.reduce(state: State): State
+    protected open fun Flow<Result>.toEffects(): Flow<Effect> = emptyFlow()
 
     private fun Flow<Result>.toStates(initialState: State): Flow<State> {
         return scan(initialState) { state, result -> result.reduce(state) }
