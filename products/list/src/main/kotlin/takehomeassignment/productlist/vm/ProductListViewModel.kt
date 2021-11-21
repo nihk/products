@@ -34,11 +34,10 @@ class ProductListViewModel(
     private val logger: Logger,
     private val handle: SavedStateHandle,
     initialState: ProductListState
-) : MviViewModel<ProductListEvent, ProductListResult, ProductListState, ProductListEffect>(initialState) {
-
-    init {
-        processEvent(FetchProductsEvent)
-    }
+) : MviViewModel<ProductListEvent, ProductListResult, ProductListState, ProductListEffect>(
+    initialState,
+    FetchProductsEvent
+) {
 
     override fun Flow<ProductListEvent>.toResults(): Flow<ProductListResult> {
         return merge(

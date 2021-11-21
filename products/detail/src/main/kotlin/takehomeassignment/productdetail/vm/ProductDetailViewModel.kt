@@ -20,11 +20,10 @@ class ProductDetailViewModel(
     private val dao: ProductsDao,
     id: String,
     initialState: ProductDetailState
-) : MviViewModel<ProductDetailEvent, ProductDetailResult, ProductDetailState, ProductDetailEffect>(initialState) {
-
-    init {
-        processEvent(LoadProductEvent(id))
-    }
+) : MviViewModel<ProductDetailEvent, ProductDetailResult, ProductDetailState, ProductDetailEffect>(
+    initialState,
+    LoadProductEvent(id)
+) {
 
     override fun Flow<ProductDetailEvent>.toResults(): Flow<ProductDetailResult> {
         return merge(
