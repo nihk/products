@@ -33,7 +33,9 @@ class ProductListFragment @Inject constructor(
     private val imageLoader: ImageLoader
 ) : Fragment(R.layout.product_list_fragment) {
 
-    private val viewModel by viewModels<ProductListViewModel> { vmFactory.create(this, ProductListState()) }
+    private val viewModel by viewModels<ProductListViewModel> {
+        vmFactory.create(this, ProductListState(), listOf(FetchProductsEvent))
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

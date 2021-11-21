@@ -33,10 +33,11 @@ class ProductListViewModel(
     private val repository: ProductListRepository,
     private val logger: Logger,
     private val handle: SavedStateHandle,
-    initialState: ProductListState
+    initialState: ProductListState,
+    initialEvents: List<ProductListEvent>
 ) : MviViewModel<ProductListEvent, ProductListResult, ProductListState, ProductListEffect>(
     initialState,
-    FetchProductsEvent
+    initialEvents
 ) {
 
     override fun Flow<ProductListEvent>.toResults(): Flow<ProductListResult> {
@@ -88,7 +89,8 @@ class ProductListViewModel(
         private val repository: ProductListRepository,
         private val logger: Logger,
         @Assisted owner: SavedStateRegistryOwner,
-        @Assisted private val initialState: ProductListState
+        @Assisted private val initialState: ProductListState,
+        @Assisted private val initialEvents: List<ProductListEvent>
     ) : AbstractSavedStateViewModelFactory(owner, null) {
         override fun <T : ViewModel?> create(
             key: String,
@@ -96,14 +98,15 @@ class ProductListViewModel(
             handle: SavedStateHandle
         ): T {
             @Suppress("UNCHECKED_CAST")
-            return ProductListViewModel(repository, logger, handle, initialState) as T
+            return ProductListViewModel(repository, logger, handle, initialState, initialEvents) as T
         }
 
         @AssistedFactory
         interface Factory {
             fun create(
                 owner: SavedStateRegistryOwner,
-                initialState: ProductListState
+                initialState: ProductListState,
+                initialEvents: List<ProductListEvent>
             ): ProductListViewModel.Factory
         }
     }

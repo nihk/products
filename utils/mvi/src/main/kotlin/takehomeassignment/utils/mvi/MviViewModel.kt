@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 abstract class MviViewModel<Event, Result, State, Effect>(
     initialState: State,
-    vararg initialEvents: Event
+    initialEvents: List<Event>
 ) : ViewModel() {
     val states: StateFlow<State>
     val effects: Flow<Effect>
