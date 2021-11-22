@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.merge
 import takehomeassignment.localproducts.dao.ProductsDao
 import takehomeassignment.productdetail.models.LoadProductEvent
 import takehomeassignment.productdetail.models.LoadProductResult
-import takehomeassignment.productdetail.models.ProductDetailEffect
 import takehomeassignment.productdetail.models.ProductDetailEvent
 import takehomeassignment.productdetail.models.ProductDetailResult
 import takehomeassignment.productdetail.models.ProductDetailState
@@ -20,7 +19,7 @@ class ProductDetailViewModel(
     private val dao: ProductsDao,
     private val id: String,
     initialState: ProductDetailState
-) : MviViewModel<ProductDetailEvent, ProductDetailResult, ProductDetailState, ProductDetailEffect>(
+) : MviViewModel<ProductDetailEvent, ProductDetailResult, ProductDetailState, Nothing>(
     initialState
 ) {
 
