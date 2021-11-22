@@ -39,7 +39,7 @@ class ProductListViewModel(
     initialState
 ) {
 
-    override fun onFirstSubscription() {
+    override fun onStart() {
         initialEvents.forEach(::processEvent)
     }
 

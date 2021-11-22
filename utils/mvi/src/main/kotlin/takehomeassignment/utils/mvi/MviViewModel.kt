@@ -22,7 +22,7 @@ abstract class MviViewModel<Event, Result, State, Effect>(initialState: State) :
         events
             .onSubscription {
                 if (events.subscriptionCount.value == 1) {
-                    onFirstSubscription()
+                    onStart()
                 }
             }
             .toResults()
@@ -47,7 +47,7 @@ abstract class MviViewModel<Event, Result, State, Effect>(initialState: State) :
         }
     }
 
-    protected open fun onFirstSubscription() = Unit
+    protected open fun onStart() = Unit
     protected abstract fun Flow<Event>.toResults(): Flow<Result>
     protected abstract fun Result.reduce(state: State): State
     protected open fun Flow<Result>.toEffects(): Flow<Effect> = emptyFlow()

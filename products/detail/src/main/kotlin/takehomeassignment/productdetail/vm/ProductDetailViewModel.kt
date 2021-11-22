@@ -24,7 +24,7 @@ class ProductDetailViewModel(
     initialState
 ) {
 
-    override fun onFirstSubscription() {
+    override fun onStart() {
         processEvent(LoadProductEvent(id))
     }
 
