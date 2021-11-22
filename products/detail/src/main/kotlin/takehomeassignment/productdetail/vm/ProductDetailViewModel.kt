@@ -18,12 +18,15 @@ import takehomeassignment.utils.mvi.MviViewModel
 
 class ProductDetailViewModel(
     private val dao: ProductsDao,
-    id: String,
+    private val id: String,
     initialState: ProductDetailState
 ) : MviViewModel<ProductDetailEvent, ProductDetailResult, ProductDetailState, ProductDetailEffect>(
-    initialState,
-    LoadProductEvent(id)
+    initialState
 ) {
+
+    override fun onFirstSubscription() {
+        processEvent(LoadProductEvent(id))
+    }
 
     override fun Flow<ProductDetailEvent>.toResults(): Flow<ProductDetailResult> {
         return merge(

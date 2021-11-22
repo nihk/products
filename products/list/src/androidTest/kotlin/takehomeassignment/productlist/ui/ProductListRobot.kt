@@ -18,6 +18,7 @@ import org.hamcrest.CoreMatchers.not
 import org.junit.Assert.assertEquals
 import takehomeassignment.NoOpLogger
 import takehomeassignment.productlist.R
+import takehomeassignment.productlist.models.ProductListEvent
 import takehomeassignment.productlist.models.ProductsPacket
 import takehomeassignment.productlist.models.ProductListState
 import takehomeassignment.productlist.repository.ProductListRepository
@@ -73,9 +74,10 @@ class ProductListRobot {
         val vmFactory = object : ProductListViewModel.Factory.Factory {
             override fun create(
                 owner: SavedStateRegistryOwner,
-                initialState: ProductListState
+                initialState: ProductListState,
+                initialEvents: List<ProductListEvent>
             ): ProductListViewModel.Factory {
-                return ProductListViewModel.Factory(repository, NoOpLogger(), owner, initialState)
+                return ProductListViewModel.Factory(repository, NoOpLogger(), owner, initialState, initialEvents)
             }
         }
 
