@@ -2,6 +2,7 @@ plugins {
     `android-application`
     kotlin("android")
     kotlin("kapt")
+    ksp
     hilt
 }
 
@@ -51,7 +52,7 @@ dependencies {
 
     debugImplementation(Dependencies.leakCanary)
 
-    kapt(Dependencies.Room.compiler)
+    ksp(Dependencies.Room.compiler)
     kapt(Dependencies.Dagger.compiler)
     kapt(Dependencies.Dagger.Hilt.compiler)
 }

@@ -2,6 +2,7 @@ plugins {
     `android-library`
     kotlin("android")
     kotlin("kapt")
+    ksp
     hilt
 }
 
@@ -24,5 +25,5 @@ dependencies {
     kapt(Dependencies.Dagger.compiler)
     kapt(Dependencies.Dagger.Hilt.compiler)
 
-    kaptAndroidTest(Dependencies.Room.compiler)
+    kspAndroidTest(Dependencies.Room.compiler)
 }
