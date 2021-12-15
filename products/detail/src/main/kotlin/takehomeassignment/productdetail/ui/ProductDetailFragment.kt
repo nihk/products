@@ -15,7 +15,6 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.take
 import takehomeassignment.productdetail.R
 import takehomeassignment.productdetail.databinding.ProductDetailFragmentBinding
 import takehomeassignment.productdetail.models.ProductDetailState
@@ -48,7 +47,6 @@ class ProductDetailFragment @Inject constructor(
 
         viewModel.states
             .mapNotNull { state -> state.product }
-            .take(1) // Only need one valid Product emission.
             .onEach { product ->
                 with(binding) {
                     image.load(product.imageUrl, imageLoader) {

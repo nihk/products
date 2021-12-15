@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.merge
 import takehomeassignment.localproducts.dao.ProductsDao
@@ -43,10 +45,8 @@ class ProductDetailViewModel(
     }
 
     private fun Flow<LoadProductEvent>.toLoadProductResults(): Flow<ProductDetailResult> {
-        return mapLatest { event ->
-            val product = dao.queryById(event.id)
-            LoadProductResult(product)
-        }
+        return flatMapLatest { event -> dao.queryById(event.id) }
+            .map { product -> LoadProductResult(product) }
     }
 
     class Factory @Inject constructor(private val dao: ProductsDao) {

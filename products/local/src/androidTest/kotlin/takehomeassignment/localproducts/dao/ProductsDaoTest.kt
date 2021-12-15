@@ -1,5 +1,6 @@
 package takehomeassignment.localproducts.dao
 
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -19,7 +20,7 @@ class ProductsDaoTest {
         val products = createProducts("1", "2")
         dao.insert(products)
 
-        val product = dao.queryById("2")
+        val product = dao.queryById("2").firstOrNull()
 
         assertNotNull(product)
         assertEquals(createProducts("2").first(), product)
@@ -32,7 +33,7 @@ class ProductsDaoTest {
         val newProducts = createProducts("3", "4")
 
         dao.nukeThenInsert(newProducts)
-        val product = dao.queryById("1")
+        val product = dao.queryById("1").firstOrNull()
 
         assertNull(product)
     }
