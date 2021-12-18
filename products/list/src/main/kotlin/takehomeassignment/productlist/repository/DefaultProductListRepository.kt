@@ -18,15 +18,15 @@ class DefaultProductListRepository @Inject constructor(
 ) : ProductListRepository {
 
     override fun products(): Flow<ProductsPacket> = flow {
-        emit(ProductsPacket.Cached(dao.queryAll().first()))
+        emit(ProductsPacket.Cached(dao.queryAll().first().toProductItems()))
 
         val flow = try {
             val products = service.cart().entries.toLocalProducts()
             dao.nukeThenInsert(products)
-            dao.queryAll().map { ProductsPacket.Fresh(it) }
+            dao.queryAll().map { ProductsPacket.Fresh(it.toProductItems()) }
         } catch (throwable: Throwable) {
             logger.e("Failed to get products", throwable)
-            dao.queryAll().map { ProductsPacket.Error(throwable, it) }
+            dao.queryAll().map { ProductsPacket.Error(throwable, it.toProductItems()) }
         }
 
         emitAll(flow)

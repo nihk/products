@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.merge
 import takehomeassignment.localproducts.dao.ProductsDao
 import takehomeassignment.productdetail.models.LoadProductEvent
@@ -46,7 +45,7 @@ class ProductDetailViewModel(
 
     private fun Flow<LoadProductEvent>.toLoadProductResults(): Flow<ProductDetailResult> {
         return flatMapLatest { event -> dao.queryById(event.id) }
-            .map { product -> LoadProductResult(product) }
+            .map { product -> LoadProductResult(product.toProductDetailItem()) }
     }
 
     class Factory @Inject constructor(private val dao: ProductsDao) {

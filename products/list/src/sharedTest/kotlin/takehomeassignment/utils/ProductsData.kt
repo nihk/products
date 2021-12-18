@@ -4,8 +4,9 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import takehomeassignment.localproducts.models.Product
+import takehomeassignment.productlist.models.ProductListItem
 import takehomeassignment.productlist.repository.toLocalProducts
+import takehomeassignment.productlist.repository.toProductItems
 import takehomeassignment.remoteproducts.models.Cart
 
 val products by lazy {
@@ -16,8 +17,11 @@ private object ProductsData {
     private val moshi = Moshi.Builder().build()
     val cartAdapter: JsonAdapter<Cart> = moshi.adapter(Cart::class.java)
 
-    fun get(relativeFilename: String): List<Product> {
-        return cartAdapter.fromJson(relativeFilename.fileToJson())?.entries?.toLocalProducts()!!
+    fun get(relativeFilename: String): List<ProductListItem> {
+        return cartAdapter.fromJson(relativeFilename.fileToJson())
+            ?.entries
+            ?.toLocalProducts()
+            ?.toProductItems()!!
     }
 
     private fun String.fileToJson(): String {
