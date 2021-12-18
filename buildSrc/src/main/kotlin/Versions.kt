@@ -15,7 +15,7 @@ object Versions {
     const val compose = "1.0.0-alpha11"
     const val constraintLayout = "2.1.0-beta02"
     const val coreKtx = "1.7.0-alpha01"
-    const val coroutines = "1.5.0"
+    const val coroutines = "1.6.0-RC3"
     const val dagger = "2.37"
     const val dataStore = "1.0.0-alpha06"
     const val espresso = "3.4.0"

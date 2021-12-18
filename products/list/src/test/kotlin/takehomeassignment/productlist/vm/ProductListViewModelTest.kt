@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.test.TestCoroutineScope
+import kotlinx.coroutines.test.TestScope
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -76,11 +76,11 @@ class ProductListViewModelTest {
         assertEffects(ProductClickedEffect(id = "1234"))
     }
 
-    fun viewModel(
+    private fun viewModel(
         packets: Flow<ProductsPacket> = emptyFlow(),
         initialState: ProductListState = ProductListState(),
         initialEvents: List<ProductListEvent> = emptyList(),
-        scope: CoroutineScope = TestCoroutineScope(rule.dispatcher),
+        scope: CoroutineScope = TestScope(rule.dispatcher),
         block: ProductListViewModelRobot.() -> Unit
     ) {
         ProductListViewModelRobot(packets, initialState, initialEvents, scope).block()
