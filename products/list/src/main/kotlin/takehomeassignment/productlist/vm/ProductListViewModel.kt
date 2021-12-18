@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
@@ -70,17 +71,15 @@ class ProductListViewModel(
     }
 
     private fun Flow<FetchProductsEvent>.toFetchProductsResults(): Flow<ProductListResult> {
-        return flatMapLatest {
-            repository.products()
-                .map<ProductsPacket, ProductListResult> { packet ->
-                    FetchProductsResult(
-                        isCached = packet is ProductsPacket.Cached,
-                        products = packet.products,
-                        error = (packet as? ProductsPacket.Error)?.throwable
-                    )
-                }
-                .onStart { emit(StartLoadingResult) }
-        }
+        return flatMapLatest { repository.products() }
+            .mapLatest<ProductsPacket, ProductListResult> { packet ->
+                FetchProductsResult(
+                    isCached = packet is ProductsPacket.Cached,
+                    products = packet.products,
+                    error = (packet as? ProductsPacket.Error)?.throwable
+                )
+            }
+            .onStart { emit(StartLoadingResult) }
     }
 
     private fun Flow<ProductClickedEvent>.toProductClickedResults(): Flow<ProductListResult> {

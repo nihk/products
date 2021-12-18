@@ -1,14 +1,15 @@
 package takehomeassignment.testutils
 
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.TestDispatcher
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
 class CoroutinesTestRule(
-    val dispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
+    val dispatcher: TestDispatcher = UnconfinedTestDispatcher()
 ) : TestWatcher() {
     override fun starting(description: Description) {
         Dispatchers.setMain(dispatcher)
@@ -16,6 +17,5 @@ class CoroutinesTestRule(
 
     override fun finished(description: Description) {
         Dispatchers.resetMain()
-        dispatcher.cleanupTestCoroutines()
     }
 }

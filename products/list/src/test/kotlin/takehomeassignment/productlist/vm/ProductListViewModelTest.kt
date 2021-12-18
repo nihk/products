@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.test.TestScope
 import org.junit.Assert.assertEquals
@@ -80,10 +81,15 @@ class ProductListViewModelTest {
         packets: Flow<ProductsPacket> = emptyFlow(),
         initialState: ProductListState = ProductListState(),
         initialEvents: List<ProductListEvent> = emptyList(),
-        scope: CoroutineScope = TestScope(rule.dispatcher),
         block: ProductListViewModelRobot.() -> Unit
     ) {
-        ProductListViewModelRobot(packets, initialState, initialEvents, scope).block()
+        ProductListViewModelRobot(
+            packets = packets,
+            initialState = initialState,
+            initialEvents = initialEvents,
+            scope = TestScope(rule.dispatcher)
+        )
+            .block()
     }
 
     class ProductListViewModelRobot(
@@ -108,8 +114,10 @@ class ProductListViewModelTest {
         private val collectedEffects = mutableListOf<ProductListEffect>()
 
         init {
-            viewModel.states.onEach(collectedStates::add).launchIn(scope)
-            viewModel.effects.onEach(collectedEffects::add).launchIn(scope)
+            merge(
+                viewModel.states.onEach(collectedStates::add),
+                viewModel.effects.onEach(collectedEffects::add)
+            ).launchIn(scope)
         }
 
         fun fetchProducts() {
