@@ -2,6 +2,7 @@ package takehomeassignment.app.di.main
 
 import android.app.Activity
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.FragmentManager
 import dagger.Binds
 import dagger.Module
@@ -9,7 +10,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import takehomeassignment.app.R
-import takehomeassignment.app.navigation.OnProductClickedDirections
+import takehomeassignment.app.navigation.ToProductDetails
+import takehomeassignment.app.ui.MainFragmentFactory
 import takehomeassignment.productlist.ui.OnProductClicked
 
 @Module
@@ -26,5 +28,8 @@ interface MainModule {
     }
 
     @Binds
-    fun onProductClicked(onProductClickedDirections: OnProductClickedDirections): OnProductClicked
+    fun onProductClicked(toProductDetails: ToProductDetails): OnProductClicked
+
+    @Binds
+    fun fragmentFactory(fragmentFactory: MainFragmentFactory): FragmentFactory
 }

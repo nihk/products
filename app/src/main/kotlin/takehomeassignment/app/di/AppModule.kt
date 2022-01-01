@@ -19,6 +19,7 @@ import takehomeassignment.app.data.AppDatabase
 import takehomeassignment.app.initializers.AppInitializers
 import takehomeassignment.app.initializers.Initializer
 import takehomeassignment.app.initializers.InitializerComparator
+import takehomeassignment.app.initializers.MainInitializer
 import takehomeassignment.app.initializers.StrictModeInitializer
 import takehomeassignment.app.initializers.TimberInitializer
 import takehomeassignment.app.logging.TimberLogger
@@ -73,6 +74,10 @@ interface AppModule {
     @Binds
     @IntoSet
     fun strictModeInitializer(strictModeInitializer: StrictModeInitializer): Initializer
+
+    @Binds
+    @IntoSet
+    fun mainInitializer(mainInitializer: MainInitializer): Initializer
 
     @Binds
     fun appInitializers(appInitializers: AppInitializers): Initializer
