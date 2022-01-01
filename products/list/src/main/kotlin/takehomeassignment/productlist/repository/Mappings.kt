@@ -1,12 +1,13 @@
 package takehomeassignment.productlist.repository
 
-import takehomeassignment.localproducts.models.Product
+import takehomeassignment.productlist.models.LocalProduct
 import takehomeassignment.productlist.models.ProductListItem
+import takehomeassignment.productlist.models.RemoteProduct
 
-internal fun List<takehomeassignment.remoteproducts.models.Product>.toLocalProducts(): List<Product> {
+internal fun List<RemoteProduct>.toLocalProducts(): List<LocalProduct> {
     return map { remoteProduct ->
         with(remoteProduct) {
-            Product(
+            LocalProduct(
                 id = code,
                 imageUrl = image,
                 name = name,
@@ -17,7 +18,7 @@ internal fun List<takehomeassignment.remoteproducts.models.Product>.toLocalProdu
     }
 }
 
-internal fun List<Product>.toProductItems(): List<ProductListItem> {
+internal fun List<LocalProduct>.toProductItems(): List<ProductListItem> {
     return map { product ->
         ProductListItem(
             id = product.id,
