@@ -93,8 +93,4 @@ class ProductListFragment @Inject constructor(
             startPostponedEnterTransition()
         }
     }
-
-    companion object {
-        const val ROUTE = "products/list"
-    }
 }

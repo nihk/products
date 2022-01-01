@@ -20,8 +20,6 @@ dependencies {
     implementation(Dependencies.recyclerView)
     implementation(Dependencies.coreKtx)
     implementation(Dependencies.constraintLayout)
-    implementation(Dependencies.Navigation.runtime)
-    implementation(Dependencies.Navigation.fragment)
     implementation(Dependencies.multidex)
     implementation(Dependencies.coil)
     implementation(Dependencies.Lifecycle.viewModel)

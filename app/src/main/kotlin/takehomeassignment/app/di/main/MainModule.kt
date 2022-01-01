@@ -1,9 +1,8 @@
 package takehomeassignment.app.di.main
 
 import android.app.Activity
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -15,17 +14,17 @@ import takehomeassignment.productlist.ui.OnProductClicked
 
 @Module
 @InstallIn(ActivityComponent::class)
-abstract class MainModule {
+interface MainModule {
 
     companion object {
         @Provides
-        fun navController(activity: Activity): NavController {
-            val navHostFragment = (activity as AppCompatActivity).supportFragmentManager
-                .findFragmentById(R.id.navHostContainer) as NavHostFragment
-            return navHostFragment.navController
-        }
+        fun fragmentManager(activity: Activity): FragmentManager = (activity as FragmentActivity).supportFragmentManager
+
+        @Provides
+        @FragmentContainer
+        fun fragmentContainer() = R.id.fragment_container
     }
 
     @Binds
-    abstract fun onProductClicked(onProductClickedDirections: OnProductClickedDirections): OnProductClicked
+    fun onProductClicked(onProductClickedDirections: OnProductClickedDirections): OnProductClicked
 }

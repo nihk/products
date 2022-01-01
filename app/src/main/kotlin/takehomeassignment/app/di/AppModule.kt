@@ -30,7 +30,7 @@ import takehomeassignment.localproducts.dao.ProductsDaoProvider
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class AppModule {
+interface AppModule {
     companion object {
         @Provides
         fun appResources(application: Application): Resources = application.resources
@@ -57,29 +57,29 @@ abstract class AppModule {
     }
 
     @Binds
-    abstract fun gradleAppConfig(gradleAppConfig: GradleAppConfig): AppConfig
+    fun gradleAppConfig(gradleAppConfig: GradleAppConfig): AppConfig
 
     @Binds
-    abstract fun multicastLogger(multicastLogger: MulticastLogger): Logger
-
-    @Binds
-    @IntoSet
-    abstract fun timberLogger(timberLogger: TimberLogger): Logger
+    fun multicastLogger(multicastLogger: MulticastLogger): Logger
 
     @Binds
     @IntoSet
-    abstract fun timberInitializer(timberInitializer: TimberInitializer): Initializer
+    fun timberLogger(timberLogger: TimberLogger): Logger
 
     @Binds
     @IntoSet
-    abstract fun strictModeInitializer(strictModeInitializer: StrictModeInitializer): Initializer
+    fun timberInitializer(timberInitializer: TimberInitializer): Initializer
 
     @Binds
-    abstract fun appInitializers(appInitializers: AppInitializers): Initializer
+    @IntoSet
+    fun strictModeInitializer(strictModeInitializer: StrictModeInitializer): Initializer
 
     @Binds
-    abstract fun productsDaoProvider(appDatabase: AppDatabase): ProductsDaoProvider
+    fun appInitializers(appInitializers: AppInitializers): Initializer
 
     @Binds
-    abstract fun defaultDispatchers(standardCoroutineDispatchers: StandardCoroutineDispatchers): CoroutineDispatchers
+    fun productsDaoProvider(appDatabase: AppDatabase): ProductsDaoProvider
+
+    @Binds
+    fun defaultDispatchers(standardCoroutineDispatchers: StandardCoroutineDispatchers): CoroutineDispatchers
 }

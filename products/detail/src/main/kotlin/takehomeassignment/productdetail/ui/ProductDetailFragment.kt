@@ -3,6 +3,7 @@ package takehomeassignment.productdetail.ui
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -65,11 +66,10 @@ class ProductDetailFragment @Inject constructor(
     }
 
     companion object {
-        const val ARG_ID = "id"
-        const val ROUTE = "products/detail/{id}"
+        private const val ARG_ID = "id"
 
-        fun route(id: String): String {
-            return ROUTE.replace("{id}", id)
+        fun bundle(id: String): Bundle {
+            return bundleOf(ARG_ID to id)
         }
     }
 }

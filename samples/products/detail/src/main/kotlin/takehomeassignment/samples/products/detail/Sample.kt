@@ -3,10 +3,10 @@ package takehomeassignment.samples.products.detail
 import android.app.Application
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Database
 import androidx.room.Room
@@ -44,9 +44,13 @@ class ProductDetailActivity : AppCompatActivity() {
                         )
                     )
                 )
-                val args = bundleOf(ProductDetailFragment.ARG_ID to "062600300751")
+
                 supportFragmentManager.commit {
-                    replace(R.id.container, ProductDetailFragment::class.java, args)
+                    setReorderingAllowed(true)
+                    replace<ProductDetailFragment>(
+                        containerViewId = R.id.container,
+                        args = ProductDetailFragment.bundle("062600300751")
+                    )
                 }
             }
         }
