@@ -1,6 +1,7 @@
 package takehomeassignment.productlist.repository
 
 import javax.inject.Inject
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
@@ -26,6 +27,7 @@ class DefaultProductListRepository @Inject constructor(
                 val products = service.cart().entries
                 emit(State.Success(products))
             } catch (throwable: Throwable) {
+                if (throwable is CancellationException) throw throwable
                 logger.e("Failed to get products", throwable)
                 emit(State.Error(throwable))
             }
