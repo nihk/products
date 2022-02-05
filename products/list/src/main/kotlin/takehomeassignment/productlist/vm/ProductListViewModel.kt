@@ -3,10 +3,8 @@ package takehomeassignment.productlist.vm
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.savedstate.SavedStateRegistryOwner
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flatMapLatest
@@ -30,18 +28,15 @@ import takehomeassignment.productlist.models.StartLoadingResult
 import takehomeassignment.productlist.repository.ProductListRepository
 import takehomeassignment.utils.mvi.MviViewModel
 
-class ProductListViewModel(
+internal class ProductListViewModel(
     private val repository: ProductListRepository,
     private val logger: Logger,
     private val handle: SavedStateHandle,
-    initialState: ProductListState,
-    private val initialEvents: List<ProductListEvent>
 ) : MviViewModel<ProductListEvent, ProductListResult, ProductListState, ProductListEffect>(
-    initialState
+    ProductListState()
 ) {
-
     override fun onStart() {
-        initialEvents.forEach(::processEvent)
+        processEvent(FetchProductsEvent)
     }
 
     override fun Flow<ProductListEvent>.toResults(): Flow<ProductListResult> {
@@ -87,29 +82,21 @@ class ProductListViewModel(
             .map { event -> ProductClickedResult(event.id) }
     }
 
-    class Factory @AssistedInject constructor(
+    class Factory(
         private val repository: ProductListRepository,
-        private val logger: Logger,
-        @Assisted owner: SavedStateRegistryOwner,
-        @Assisted private val initialState: ProductListState,
-        @Assisted private val initialEvents: List<ProductListEvent>
-    ) : AbstractSavedStateViewModelFactory(owner, null) {
-        override fun <T : ViewModel?> create(
-            key: String,
-            modelClass: Class<T>,
-            handle: SavedStateHandle
-        ): T {
-            @Suppress("UNCHECKED_CAST")
-            return ProductListViewModel(repository, logger, handle, initialState, initialEvents) as T
-        }
-
-        @AssistedFactory
-        interface Factory {
-            fun create(
-                owner: SavedStateRegistryOwner,
-                initialState: ProductListState,
-                initialEvents: List<ProductListEvent>
-            ): ProductListViewModel.Factory
+        private val logger: Logger
+    ) {
+        fun create(owner: SavedStateRegistryOwner): ViewModelProvider.Factory {
+            return object : AbstractSavedStateViewModelFactory(owner, null) {
+                override fun <T : ViewModel> create(
+                    key: String,
+                    modelClass: Class<T>,
+                    handle: SavedStateHandle
+                ): T {
+                    @Suppress("UNCHECKED_CAST")
+                    return ProductListViewModel(repository, logger, handle) as T
+                }
+            }
         }
     }
 }

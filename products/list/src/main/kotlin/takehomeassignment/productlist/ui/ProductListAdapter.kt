@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import takehomeassignment.productlist.databinding.ProductItemBinding
 import takehomeassignment.productlist.models.ProductListItem
 
-class ProductListAdapter(
+internal class ProductListAdapter(
     private val imageLoader: ImageLoader
 ) : ListAdapter<ProductListItem, ProductViewHolder>(ProductDiffCallback) {
     private val productClick: (ProductListItem) -> Unit = { product -> productClicks.tryEmit(product) }

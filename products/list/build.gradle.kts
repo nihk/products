@@ -1,8 +1,7 @@
 plugins {
     `android-library`
+    ksp
     kotlin("android")
-    kotlin("kapt")
-    hilt
 }
 
 androidLibraryConfig {
@@ -17,8 +16,6 @@ dependencies {
     implementation(project(Modules.Utils.ui))
 
     implementation(Dependencies.inject)
-    implementation(Dependencies.Dagger.runtime)
-    implementation(Dependencies.Dagger.Hilt.runtime)
     implementation(Dependencies.Fragment.runtime)
     implementation(Dependencies.appCompat)
     implementation(Dependencies.material)
@@ -47,8 +44,5 @@ dependencies {
     androidTestImplementation(Dependencies.Moshi.runtime)
     androidTestImplementation(Dependencies.Moshi.adapters)
 
-    kapt(Dependencies.Dagger.compiler)
-    kapt(Dependencies.Dagger.Hilt.compiler)
-
-    kaptAndroidTest(Dependencies.Room.compiler)
+    kspAndroidTest(Dependencies.Room.compiler)
 }

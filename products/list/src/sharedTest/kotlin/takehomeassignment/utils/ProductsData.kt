@@ -9,7 +9,7 @@ import takehomeassignment.productlist.repository.toLocalProducts
 import takehomeassignment.productlist.repository.toProductItems
 import takehomeassignment.remoteproducts.models.Cart
 
-val products by lazy {
+internal val products by lazy {
     ProductsData.get("cart.json")
 }
 

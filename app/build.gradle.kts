@@ -1,9 +1,7 @@
 plugins {
     `android-application`
     kotlin("android")
-    kotlin("kapt")
     ksp
-    hilt
 }
 
 androidAppConfig {
@@ -11,18 +9,6 @@ androidAppConfig {
         applicationId = "app.products"
         versionCode = 1
         versionName = "1.0"
-
-        kapt {
-            arguments {
-                arg("room.schemaLocation", "$projectDir/schemas")
-                arg("room.incremental", true)
-            }
-            correctErrorTypes = true // https://dagger.dev/hilt/gradle-setup.html
-        }
-    }
-
-    hilt {
-        enableExperimentalClasspathAggregation = true
     }
 }
 
@@ -41,16 +27,13 @@ dependencies {
     implementation(Dependencies.coreKtx)
     implementation(Dependencies.constraintLayout)
     implementation(Dependencies.material)
-    implementation(Dependencies.Dagger.runtime)
-    implementation(Dependencies.Dagger.Hilt.runtime)
     implementation(Dependencies.Room.runtime)
     implementation(Dependencies.Room.roomKtx)
     implementation(Dependencies.timber)
     implementation(Dependencies.multidex)
+    implementation(Dependencies.coil)
 
     debugImplementation(Dependencies.leakCanary)
 
     ksp(Dependencies.Room.compiler)
-    kapt(Dependencies.Dagger.compiler)
-    kapt(Dependencies.Dagger.Hilt.compiler)
 }

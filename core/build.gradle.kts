@@ -1,10 +1,11 @@
 plugins {
-    `java-library`
-    kotlin("jvm")
+    `android-library`
+    kotlin("android")
 }
 
-jvmConfig()
+androidLibraryConfig()
 
 dependencies {
     implementation(Dependencies.inject)
+    implementation(Dependencies.Fragment.runtime)
 }

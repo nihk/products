@@ -9,7 +9,9 @@ import takehomeassignment.localproducts.models.Product
     entities = [Product::class],
     version = 1
 )
-abstract class AppDatabase : RoomDatabase(), ProductsDaoProvider {
+abstract class AppDatabase :
+    RoomDatabase(),
+    ProductsDaoProvider {
     companion object {
         const val name = "products.db"
     }

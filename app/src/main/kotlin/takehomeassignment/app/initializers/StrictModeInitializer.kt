@@ -3,13 +3,12 @@ package takehomeassignment.app.initializers
 import android.os.Build
 import android.os.StrictMode
 import android.os.strictmode.Violation
-import javax.inject.Inject
 import kotlinx.coroutines.asExecutor
 import takehomeassignment.app.config.AppConfig
 import takehomeassignment.asyncutils.CoroutineDispatchers
 import takehomeassignment.core.Logger
 
-class StrictModeInitializer @Inject constructor(
+class StrictModeInitializer(
     private val appConfig: AppConfig,
     private val logger: Logger,
     private val dispatchers: CoroutineDispatchers

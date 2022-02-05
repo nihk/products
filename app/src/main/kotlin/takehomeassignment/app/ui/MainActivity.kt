@@ -2,15 +2,20 @@ package takehomeassignment.app.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import dagger.hilt.android.AndroidEntryPoint
 import takehomeassignment.app.R
-import takehomeassignment.app.di.entryPoint
-import takehomeassignment.app.di.main.MainEntryPoint
+import takehomeassignment.app.di.AppGraph
+import takehomeassignment.app.di.MainGraph
 
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity(R.layout.main_activity) {
     override fun onCreate(savedInstanceState: Bundle?) {
+        val mainGraph = MainGraph(
+            appGraph = (application as AppGraph.Holder).appGraph,
+            fragmentManager = supportFragmentManager
+        )
+        supportFragmentManager.fragmentFactory = mainGraph.fragmentFactory
+
         super.onCreate(savedInstanceState)
-        entryPoint<MainEntryPoint>().toProductList.navigate()
+
+        mainGraph.toProductList.go()
     }
 }

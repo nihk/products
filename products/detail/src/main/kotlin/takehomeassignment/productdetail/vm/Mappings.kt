@@ -3,7 +3,7 @@ package takehomeassignment.productdetail.vm
 import takehomeassignment.localproducts.models.Product
 import takehomeassignment.productdetail.models.ProductDetailItem
 
-fun Product.toProductDetailItem(): ProductDetailItem {
+internal fun Product.toProductDetailItem(): ProductDetailItem {
     return ProductDetailItem(
         id = id,
         imageUrl = imageUrl,

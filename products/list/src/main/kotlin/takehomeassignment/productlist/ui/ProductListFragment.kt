@@ -7,10 +7,11 @@ import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.savedstate.SavedStateRegistryOwner
 import coil.ImageLoader
 import com.google.android.material.transition.MaterialSharedAxis
-import javax.inject.Inject
 import kotlin.math.roundToInt
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -27,14 +28,14 @@ import takehomeassignment.uiutils.MarginItemDecoration
 import takehomeassignment.uiutils.clicks
 import takehomeassignment.uiutils.isEmpty
 
-class ProductListFragment @Inject constructor(
-    vmFactory: ProductListViewModel.Factory.Factory,
+internal class ProductListFragment(
+    viewModelFactory: (SavedStateRegistryOwner) -> ViewModelProvider.Factory,
     private val onProductClicked: OnProductClicked,
     private val imageLoader: ImageLoader
 ) : Fragment(R.layout.product_list_fragment) {
 
     private val viewModel by viewModels<ProductListViewModel> {
-        vmFactory.create(this, ProductListState(), listOf(FetchProductsEvent))
+        viewModelFactory(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

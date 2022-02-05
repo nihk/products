@@ -1,7 +1,7 @@
 plugins {
     `android-application`
     kotlin("android")
-    kotlin("kapt")
+    ksp
 }
 
 androidAppConfig {
@@ -9,17 +9,11 @@ androidAppConfig {
         applicationId = "sample.products.detail"
         versionCode = 1
         versionName = "1.0"
-
-        kapt {
-            arguments {
-                arg("room.schemaLocation", "$projectDir/schemas")
-                arg("room.incremental", true)
-            }
-        }
     }
 }
 
 dependencies {
+    implementation(project(Modules.core))
     implementation(project(Modules.Products.detail))
     implementation(project(Modules.Products.local))
 
@@ -39,5 +33,5 @@ dependencies {
 
     defaultAndroidTestDependencies()
 
-    kapt(Dependencies.Room.compiler)
+    ksp(Dependencies.Room.compiler)
 }

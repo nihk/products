@@ -1,4 +1,4 @@
 package takehomeassignment.productlist.models
 
-typealias RemoteProduct = takehomeassignment.remoteproducts.models.Product
-typealias LocalProduct = takehomeassignment.localproducts.models.Product
+internal typealias RemoteProduct = takehomeassignment.remoteproducts.models.Product
+internal typealias LocalProduct = takehomeassignment.localproducts.models.Product

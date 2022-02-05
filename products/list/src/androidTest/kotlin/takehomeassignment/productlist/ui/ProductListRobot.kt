@@ -2,6 +2,7 @@ package takehomeassignment.productlist.ui
 
 import android.view.View
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.lifecycle.ViewModelProvider
 import androidx.savedstate.SavedStateRegistryOwner
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -18,19 +19,17 @@ import org.hamcrest.CoreMatchers.not
 import org.junit.Assert.assertEquals
 import takehomeassignment.NoOpLogger
 import takehomeassignment.productlist.R
-import takehomeassignment.productlist.models.ProductListEvent
 import takehomeassignment.productlist.models.ProductsPacket
-import takehomeassignment.productlist.models.ProductListState
 import takehomeassignment.productlist.repository.ProductListRepository
 import takehomeassignment.productlist.vm.ProductListViewModel
 import takehomeassignment.testutils.FakeImageLoader
 
-fun productList(block: ProductListRobot.() -> Unit) {
+internal fun productList(block: ProductListRobot.() -> Unit) {
     val robot = ProductListRobot()
     robot.block()
 }
 
-class ProductListRobot {
+internal class ProductListRobot {
     private val packets = MutableStateFlow<ProductsPacket?>(null)
     private val onProductClicked = FakeOnProductClicked()
 
@@ -71,18 +70,15 @@ class ProductListRobot {
         val repository = object : ProductListRepository {
             override fun products(): Flow<ProductsPacket> = packets.filterNotNull()
         }
-        val vmFactory = object : ProductListViewModel.Factory.Factory {
-            override fun create(
-                owner: SavedStateRegistryOwner,
-                initialState: ProductListState,
-                initialEvents: List<ProductListEvent>
-            ): ProductListViewModel.Factory {
-                return ProductListViewModel.Factory(repository, NoOpLogger(), owner, initialState, initialEvents)
-            }
+        val viewModelFactory: (SavedStateRegistryOwner) -> ViewModelProvider.Factory = { owner ->
+            ProductListViewModel.Factory(
+                repository = repository,
+                logger = NoOpLogger()
+            ).create(owner)
         }
 
         launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents_DayNight_DarkActionBar) {
-            ProductListFragment(vmFactory, onProductClicked, FakeImageLoader())
+            ProductListFragment(viewModelFactory, onProductClicked, FakeImageLoader())
         }
     }
 }

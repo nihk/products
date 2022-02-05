@@ -6,7 +6,9 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.savedstate.SavedStateRegistryOwner
 import coil.ImageLoader
 import coil.load
 import com.google.android.material.transition.MaterialArcMotion
@@ -18,15 +20,15 @@ import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onEach
 import takehomeassignment.productdetail.R
 import takehomeassignment.productdetail.databinding.ProductDetailFragmentBinding
-import takehomeassignment.productdetail.models.ProductDetailState
 import takehomeassignment.productdetail.vm.ProductDetailViewModel
 
-class ProductDetailFragment @Inject constructor(
-    vmFactory: ProductDetailViewModel.Factory,
+internal class ProductDetailFragment @Inject constructor(
+    viewModelFactory: (SavedStateRegistryOwner, id: String) -> ViewModelProvider.Factory,
     private val imageLoader: ImageLoader
 ) : Fragment(R.layout.product_detail_fragment) {
-
-    private val viewModel by viewModels<ProductDetailViewModel> { vmFactory.create(id, ProductDetailState()) }
+    private val viewModel by viewModels<ProductDetailViewModel> {
+        viewModelFactory(this, id)
+    }
     private val id: String get() = arguments?.getString(ARG_ID)!!
 
     private fun prepareTransitions() {

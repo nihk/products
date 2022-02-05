@@ -1,16 +1,19 @@
 package takehomeassignment.app.navigation
 
 import androidx.fragment.app.commit
-import androidx.fragment.app.replace
-import javax.inject.Inject
-import takehomeassignment.productlist.ui.ProductListFragment
+import takehomeassignment.productlist.ui.ProductListDirections
 
-class ToProductList @Inject constructor(private val navigation: Navigation) {
-    fun navigate() {
+class ToProductList(private val navigation: Navigation) {
+    fun go() {
         if (navigation.fragmentManager.findFragmentById(navigation.container) == null) {
             navigation.fragmentManager.commit {
                 setReorderingAllowed(true)
-                replace<ProductListFragment>(containerViewId = navigation.container)
+                val directions = ProductListDirections()
+                replace(
+                    navigation.container,
+                    directions.screen,
+                    directions.arguments
+                )
             }
         }
     }

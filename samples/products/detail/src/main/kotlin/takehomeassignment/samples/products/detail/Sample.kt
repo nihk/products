@@ -6,25 +6,30 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import coil.ImageLoader
 import coil.imageLoader
 import kotlinx.coroutines.launch
 import takehomeassignment.localproducts.dao.ProductsDaoProvider
 import takehomeassignment.localproducts.models.Product
-import takehomeassignment.productdetail.ui.ProductDetailFragment
-import takehomeassignment.productdetail.vm.ProductDetailViewModel
+import takehomeassignment.productdetail.di.ProductDetailGraph
+import takehomeassignment.productdetail.ui.ProductDetailDirections
 import takehomeassignment.samples.products.detail.databinding.ProductDetailActivityBinding
 
 class ProductDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        val productDao = (application as SampleApplication).database.productsDao()
-        val vmFactory = ProductDetailViewModel.Factory(productDao)
-        supportFragmentManager.fragmentFactory = SampleFragmentFactory(vmFactory, application.imageLoader)
+        val dao = (application as SampleApplication).database.productsDao()
+        supportFragmentManager.fragmentFactory = object : FragmentFactory() {
+            override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
+                val graph = ProductDetailGraph(
+                    dao = dao,
+                    imageLoader = application.imageLoader
+                )
+                return graph.productDetailFragment.second.invoke()
+            }
+        }
 
         super.onCreate(savedInstanceState)
 
@@ -33,7 +38,7 @@ class ProductDetailActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             lifecycleScope.launch {
-                productDao.nukeThenInsert(
+                dao.nukeThenInsert(
                     listOf(
                         Product(
                             id = "062600300751",
@@ -47,22 +52,15 @@ class ProductDetailActivity : AppCompatActivity() {
 
                 supportFragmentManager.commit {
                     setReorderingAllowed(true)
-                    replace<ProductDetailFragment>(
-                        containerViewId = R.id.container,
-                        args = ProductDetailFragment.bundle("062600300751")
+                    val directions = ProductDetailDirections("062600300751")
+                    replace(
+                        R.id.container,
+                        directions.screen,
+                        directions.arguments
                     )
                 }
             }
         }
-    }
-}
-
-class SampleFragmentFactory(
-    private val vmFactory: ProductDetailViewModel.Factory,
-    private val imageLoader: ImageLoader
-) : FragmentFactory() {
-    override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
-        return ProductDetailFragment(vmFactory, imageLoader)
     }
 }
 

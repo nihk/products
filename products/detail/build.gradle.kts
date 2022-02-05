@@ -1,7 +1,6 @@
 plugins {
     `android-library`
     kotlin("android")
-    kotlin("kapt")
 }
 
 androidLibraryConfig()
@@ -13,7 +12,6 @@ dependencies {
     implementation(project(Modules.Utils.ui))
 
     implementation(Dependencies.inject)
-    implementation(Dependencies.Dagger.runtime)
     implementation(Dependencies.Fragment.runtime)
     implementation(Dependencies.appCompat)
     implementation(Dependencies.material)
@@ -35,6 +33,4 @@ dependencies {
     testImplementation(Dependencies.Kotlin.coroutinesTest)
 
     defaultAndroidTestDependencies()
-
-    kapt(Dependencies.Dagger.compiler)
 }

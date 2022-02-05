@@ -6,7 +6,7 @@ import coil.load
 import takehomeassignment.productlist.databinding.ProductItemBinding
 import takehomeassignment.productlist.models.ProductListItem
 
-class ProductViewHolder(private val binding: ProductItemBinding) : RecyclerView.ViewHolder(binding.root) {
+internal class ProductViewHolder(private val binding: ProductItemBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(product: ProductListItem, productClick: (ProductListItem) -> Unit, imageLoader: ImageLoader) {
         with(binding) {
             name.text = product.name

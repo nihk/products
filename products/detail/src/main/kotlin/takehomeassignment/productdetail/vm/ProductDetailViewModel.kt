@@ -1,8 +1,10 @@
 package takehomeassignment.productdetail.vm
 
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import javax.inject.Inject
+import androidx.savedstate.SavedStateRegistryOwner
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flatMapLatest
@@ -16,12 +18,11 @@ import takehomeassignment.productdetail.models.ProductDetailResult
 import takehomeassignment.productdetail.models.ProductDetailState
 import takehomeassignment.utils.mvi.MviViewModel
 
-class ProductDetailViewModel(
+internal class ProductDetailViewModel(
     private val dao: ProductsDao,
-    private val id: String,
-    initialState: ProductDetailState
+    private val id: String
 ) : MviViewModel<ProductDetailEvent, ProductDetailResult, ProductDetailState, Nothing>(
-    initialState
+    ProductDetailState()
 ) {
 
     override fun onStart() {
@@ -48,12 +49,19 @@ class ProductDetailViewModel(
             .map { product -> LoadProductResult(product.toProductDetailItem()) }
     }
 
-    class Factory @Inject constructor(private val dao: ProductsDao) {
-        fun create(id: String, initialState: ProductDetailState): ViewModelProvider.Factory {
-            return object : ViewModelProvider.Factory {
-                override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    class Factory(
+        private val dao: ProductsDao,
+        private val id: String
+    ) {
+        fun create(owner: SavedStateRegistryOwner): ViewModelProvider.Factory {
+            return object : AbstractSavedStateViewModelFactory(owner, null) {
+                override fun <T : ViewModel> create(
+                    key: String,
+                    modelClass: Class<T>,
+                    handle: SavedStateHandle
+                ): T {
                     @Suppress("UNCHECKED_CAST")
-                    return ProductDetailViewModel(dao, id, initialState) as T
+                    return ProductDetailViewModel(dao, id) as T
                 }
             }
         }

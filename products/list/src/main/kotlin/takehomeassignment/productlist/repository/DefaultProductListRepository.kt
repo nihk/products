@@ -1,6 +1,5 @@
 package takehomeassignment.productlist.repository
 
-import javax.inject.Inject
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -13,7 +12,7 @@ import takehomeassignment.productlist.models.ProductsPacket
 import takehomeassignment.productlist.models.RemoteProduct
 import takehomeassignment.remoteproducts.services.ProductsService
 
-class DefaultProductListRepository @Inject constructor(
+internal class DefaultProductListRepository(
     private val service: ProductsService,
     private val dao: ProductsDao,
     private val logger: Logger

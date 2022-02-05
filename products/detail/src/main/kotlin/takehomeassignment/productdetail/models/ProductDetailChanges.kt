@@ -1,11 +1,11 @@
 package takehomeassignment.productdetail.models
 
-sealed class ProductDetailEvent
-data class LoadProductEvent(val id: String) : ProductDetailEvent()
+internal sealed class ProductDetailEvent
+internal data class LoadProductEvent(val id: String) : ProductDetailEvent()
 
-sealed class ProductDetailResult
-data class LoadProductResult(val product: ProductDetailItem?) : ProductDetailResult()
+internal sealed class ProductDetailResult
+internal data class LoadProductResult(val product: ProductDetailItem?) : ProductDetailResult()
 
-data class ProductDetailState(
+internal data class ProductDetailState(
     val product: ProductDetailItem? = null
 )

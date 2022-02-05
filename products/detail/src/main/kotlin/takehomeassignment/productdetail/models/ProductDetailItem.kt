@@ -1,6 +1,6 @@
 package takehomeassignment.productdetail.models
 
-data class ProductDetailItem(
+internal data class ProductDetailItem(
     val id: String,
     val imageUrl: String,
     val name: String,

@@ -17,7 +17,6 @@ import takehomeassignment.productlist.models.FetchProductsEvent
 import takehomeassignment.productlist.models.ProductClickedEffect
 import takehomeassignment.productlist.models.ProductClickedEvent
 import takehomeassignment.productlist.models.ProductListEffect
-import takehomeassignment.productlist.models.ProductListEvent
 import takehomeassignment.productlist.models.ProductListState
 import takehomeassignment.productlist.models.ProductsPacket
 import takehomeassignment.productlist.repository.ProductListRepository
@@ -79,23 +78,17 @@ class ProductListViewModelTest {
 
     private fun viewModel(
         packets: Flow<ProductsPacket> = emptyFlow(),
-        initialState: ProductListState = ProductListState(),
-        initialEvents: List<ProductListEvent> = emptyList(),
         block: ProductListViewModelRobot.() -> Unit
     ) {
         ProductListViewModelRobot(
             packets = packets,
-            initialState = initialState,
-            initialEvents = initialEvents,
             scope = TestScope(rule.dispatcher)
         )
             .block()
     }
 
-    class ProductListViewModelRobot(
+    internal class ProductListViewModelRobot(
         packets: Flow<ProductsPacket>,
-        initialState: ProductListState,
-        initialEvents: List<ProductListEvent>,
         scope: CoroutineScope
     ) {
         private val repository = object : ProductListRepository {
@@ -106,9 +99,7 @@ class ProductListViewModelTest {
         private val viewModel = ProductListViewModel(
             repository = repository,
             logger = NoOpLogger(),
-            handle = SavedStateHandle(),
-            initialState = initialState,
-            initialEvents = initialEvents
+            handle = SavedStateHandle()
         )
         private val collectedStates = mutableListOf<ProductListState>()
         private val collectedEffects = mutableListOf<ProductListEffect>()
