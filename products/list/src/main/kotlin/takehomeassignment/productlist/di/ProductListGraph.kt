@@ -16,17 +16,15 @@ class ProductListGraph(
     private val logger: Logger,
     private val dao: ProductsDao,
     private val onProductClicked: OnProductClicked,
-    appResources: Resources
+    private val appResources: Resources
 ) {
-    private val remoteProductsGraph = RemoteProductsGraph(appResources, logger)
-
     val productListFragment: Pair<Class<out Fragment>, () -> Fragment> get() {
         return ProductListFragment::class.java to {
             ProductListFragment(
                 viewModelFactory = { owner ->
                     ProductListViewModel.Factory(
                         repository = DefaultProductListRepository(
-                            service = remoteProductsGraph.productsService,
+                            service = RemoteProductsGraph(appResources, logger).productsService,
                             dao = dao,
                             logger = logger
                         ),
