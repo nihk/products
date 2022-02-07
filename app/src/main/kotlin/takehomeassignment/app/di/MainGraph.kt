@@ -17,23 +17,19 @@ class MainGraph(
 ) {
     private val navigation = Navigation(fragmentManager, R.id.fragment_container)
 
-    private val productDetailGraph = ProductDetailGraph(
-        dao = appGraph.productsDao,
-        imageLoader = appGraph.imageLoader
-    )
-
-    private val productListGraph = ProductListGraph(
-        imageLoader = appGraph.imageLoader,
-        logger = appGraph.logger,
-        dao = appGraph.productsDao,
-        onProductClicked = ToProductDetails(navigation),
-        appResources = appGraph.appResources
-    )
-
     val fragmentFactory: FragmentFactory = AppFragmentFactory(
         fragments = mapOf(
-            productListGraph.productListFragment,
-            productDetailGraph.productDetailFragment
+            ProductListGraph(
+                imageLoader = appGraph.imageLoader,
+                logger = appGraph.logger,
+                dao = appGraph.productsDao,
+                onProductClicked = ToProductDetails(navigation),
+                appResources = appGraph.appResources
+            ).screen,
+            ProductDetailGraph(
+                dao = appGraph.productsDao,
+                imageLoader = appGraph.imageLoader
+            ).screen,
         )
     )
 
